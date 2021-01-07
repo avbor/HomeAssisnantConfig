@@ -8,6 +8,5 @@ views:
   - !include lovelace/views/vi_security.yaml
   - !include lovelace/views/vi_water.yaml
   - !include lovelace/views/vi_stats.yaml
-  - !include lovelace/views/vi_system.yaml
-  - !include lovelace/views/vi_radio_quality_gw3.yaml
-#  - !include lovelace/views/vi_ble.yaml
+#  - !include lovelace/views/vi_system.yaml
+#  - !include lovelace/views/vi_radio_quality_gw3.yaml

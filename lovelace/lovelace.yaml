@@ -6,3 +6,11 @@ mode: yaml
 resources:
   - url: /hacsfiles/flex-table-card/flex-table-card.js
     type: module
+dashboards:
+  dash-system:
+    mode: yaml
+    filename: lovelace/dash-system.yaml
+    title: System Tools
+    icon: mdi:tools
+    show_in_sidebar: true
+    require_admin: true
