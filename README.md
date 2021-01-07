@@ -103,6 +103,9 @@ Some **screenshots** from my HA can be found [here](docs/screenshots.md).
   - Xiaomi TH Sensor 2 (LYWSD03MMC, miaomiaoche.sensor_ht.t2)\
   Via Xiaomi Gateway 3
 
+  - Xiaomi TH Digital Clock (LYWSD02MMC, miaomiaoche.sensor_ht.t1)\
+  Via Xiaomi Gateway 3
+
 **Media Players:**
   - Google Chromecast (Gen 1)\
   Integration "Google Cast"
