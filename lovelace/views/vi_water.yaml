@@ -20,6 +20,8 @@ cards:
               confirmation:
                 text: |
                   Убедитесь что вода не используется потребителями.
+                  (стиральная или посудомоечная машины)
+
                   Перекрыть подачу воды?
               service: script.turn_on
               service_data:
@@ -36,6 +38,7 @@ cards:
               confirmation:
                 text: |
                   Убедитесь что протечка устранена.
+
                   Открыть подачу воды?
               service: script.turn_on
               service_data:
