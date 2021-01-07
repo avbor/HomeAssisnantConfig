@@ -1,4 +1,5 @@
 title: Home
+path: home
 icon: 'hass:home-assistant'
 #    badges:
 # Настройка карточек:

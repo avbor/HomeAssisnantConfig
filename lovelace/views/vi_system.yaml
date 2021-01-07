@@ -1,4 +1,5 @@
 title: System
+path: system
 icon: mdi:cog-outline
 cards:
   - type: vertical-stack

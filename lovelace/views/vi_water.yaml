@@ -1,4 +1,5 @@
 title: Water
+path: water
 icon: mdi:water-alert
 cards:
   - type: vertical-stack

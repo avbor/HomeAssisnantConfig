@@ -1,4 +1,5 @@
 title: Vacuum
+path: vacuum
 icon: mdi:broom
 cards:
   - type: vertical-stack
