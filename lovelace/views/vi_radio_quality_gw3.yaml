@@ -89,7 +89,10 @@ cards:
             name: Received
             modify: 'isNaN(parseInt(x, 10)) ? 0 : parseInt(x, 10)'
           - data: msg_missed
-            name: Missed
+            name: Missed (Total)
+            modify: 'isNaN(parseInt(x, 10)) ? 0 : parseInt(x, 10)'
+          - data: last_missed
+            name: Missed (Last)
             modify: 'isNaN(parseInt(x, 10)) ? 0 : parseInt(x, 10)'
           - data: unresponsive
             name: Unresponsive
