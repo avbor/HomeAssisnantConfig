@@ -1,4 +1,5 @@
 title: 'System Tools'
 views:
   - !include views/vi_system.yaml
+  - !include views/vi_battery.yaml
   - !include views/vi_radio_quality_gw3.yaml

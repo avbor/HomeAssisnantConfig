@@ -41,6 +41,9 @@ cards:
           name: "Warnings:"
         - entity: counter.syslog_errors
           name: "Errors:"
+
+  - type: vertical-stack
+    cards:
     - type: markdown
       content: >
         ### Control:
@@ -96,6 +99,22 @@ cards:
             service_data:
               entity_id: script.mi_gw3_enable_ftp
           entity: script.mi_gw3_enable_ftp
+    - type: markdown
+      content: >
+        ### Scripts:
+    - type: horizontal-stack
+      cards:
+      - type: button
+        entity: script.start_vacuum_hallway_by_door_sensor
+        name: Отмена уборки прихожей
+        icon: mdi:stop-circle-outline
+        icon_height: 64px
+        show_state: true
+        tap_action: 
+          action: call-service
+          service: script.turn_off
+          service_data:
+            entity_id: script.start_vacuum_hallway_by_door_sensor
 
   - type: vertical-stack
     cards:
@@ -132,42 +151,6 @@ cards:
             icon: mdi:lightbulb-off
           - entity: group.nursery_switch_autos
             name: Работа кнопок в детской
-
-      - type: markdown
-        content: >
-          ### Scripts:
-      - type: horizontal-stack
-        cards:
-        - type: button
-          entity: script.start_vacuum_hallway_by_door_sensor
-          name: Отмена уборки прихожей
-          icon: mdi:stop-circle-outline
-          icon_height: 64px
-          show_state: true
-          tap_action: 
-            action: call-service
-            service: script.turn_off
-            service_data:
-              entity_id: script.start_vacuum_hallway_by_door_sensor
-#        - type: button
-#          entity: binary_sensor.neptun_water_leakage
-#          name: Сброс состояния Нептуна
-#          icon: mdi:water-off
-#          icon_height: 64px
-#          show_state: true
-#          tap_action:
-#            action: call-service
-#            service: script.turn_on
-#            service_data:
-#              entity_id: script.neptun_state_reset
-#      - type: entity-button
-#        name: Уборка прихожей
-#        tap_action:
-#          action: call-service
-#          service: script.turn_off
-#          service_data:
-#            entity_id: script.start_vacuum_hallway_by_door_sensor
-#        entity: script.start_vacuum_hallway_by_door_sensor
 
   - type: vertical-stack
     cards:
@@ -239,72 +222,72 @@ cards:
             state_filter:
               - unavailable
 
-  - type: vertical-stack
-    cards:
-      - type: markdown
-        content: >
-          ### Заряд батарей:
-      - type: entities
-        entities:
-          - entity: sensor.battery_status_158d0003230618
-            name: Датчик температуры (Гостинная)
-            icon: mdi:battery-outline
-          - entity: sensor.battery_status_158d0003931aec
-            name: Датчик температуры (Детская)
-            icon: mdi:battery-outline
-          - entity: sensor.battery_status_158d0003931b0e
-            name: Датчик температуры (Спальня)
-            icon: mdi:battery-outline
-          - entity: sensor.battery_status_158d0003931a55
-            name: Датчик температуры (Ванная)
-            icon: mdi:battery-outline
-          - entity: sensor.battery_status_158d00039e2ecb
-            name: Датчик температуры (Кладовая)
-            icon: mdi:battery-outline
-          - entity: sensor.0x158d00035ff631_battery
-            name: Кнопка (Кухня)
-          - entity: sensor.battery_status_158d00033efd9e
-            name: Кнопка (свет Детская)
-            icon: mdi:battery-outline
-          - entity: sensor.0x158d000400e77d_battery
-            name: Датчик протечки (Кладовая)
-          - entity: sensor.0x158d0004030d84_battery
-            name: Датчик протечки (под Ванной)
-          - entity: sensor.0x158d0003045123_battery
-            name: Датчик движения (Кладовая)
-          - entity: sensor.battery_status_158d000309920a
-            name: Датчик движения (Прихожая)
-            icon: mdi:battery-outline
-          - entity: sensor.battery_status_158d00044cea8e
-            name: Датчик движения (Детская)
-            icon: mdi:battery-outline
-          - entity: sensor.0x158d0003fac0ec_battery
-            name: Датчик движения Aqara (Кухня)
-          - entity: sensor.battery_status_158d00031c790f
-            name: Датчик входной двери
-            icon: mdi:battery-outline
-          - entity: sensor.battery_status_158d00039cf974
-            name: Датчик кондиционера (Детская)
-            icon: mdi:battery-outline
-          - entity: sensor.battery_status_158d0004073b67
-            name: Датчик кондиционера (Спальня)
-            icon: mdi:battery-outline
-          - entity: sensor.battery_status_158d0003d54725
-            name: Датчик кондиционера (Гостиная)
-            icon: mdi:battery-outline
-          - entity: sensor.0x158d00035a9bc5_battery
-            name: Кнопка Xiaomi 1
-          - entity: sensor.a4c138414e9a_battery
-            name: Датчик температуры (Туалет)
-          - entity: sensor.0x158d00044ee524_battery
-            name: Нептун (Активация)
-          - entity: sensor.0x158d0004ab468e_battery
-            name: Кнопка Aqara 1
-          - entity: sensor.0x158d00054859d5_battery
-            name: Кнопка Aqara 2
-          - entity: sensor.e72e0081ac21_battery
-            name: Часы TH (Гостиная)
-          - entity: sensor.a4c1387179f4_battery
-            name: Датчик температуры (Холодитьник)
-          - entity: sensor.a4c1381b3d13_battery
-            name: Датчик температуры (Хьюмидор)
+#  - type: vertical-stack
+#    cards:
+#      - type: markdown
+#        content: >
+#          ### Заряд батарей:
+#      - type: entities
+#        entities:
+#          - entity: sensor.battery_status_158d0003230618
+#            name: Датчик температуры (Гостинная)
+#            icon: mdi:battery-outline
+#          - entity: sensor.battery_status_158d0003931aec
+#            name: Датчик температуры (Детская)
+#            icon: mdi:battery-outline
+#          - entity: sensor.battery_status_158d0003931b0e
+#            name: Датчик температуры (Спальня)
+#            icon: mdi:battery-outline
+#          - entity: sensor.battery_status_158d0003931a55
+#            name: Датчик температуры (Ванная)
+#            icon: mdi:battery-outline
+#          - entity: sensor.battery_status_158d00039e2ecb
+#            name: Датчик температуры (Кладовая)
+#            icon: mdi:battery-outline
+#          - entity: sensor.0x158d00035ff631_battery
+#            name: Кнопка (Кухня)
+#          - entity: sensor.battery_status_158d00033efd9e
+#            name: Кнопка (свет Детская)
+#            icon: mdi:battery-outline
+#          - entity: sensor.0x158d000400e77d_battery
+#            name: Датчик протечки (Кладовая)
+#          - entity: sensor.0x158d0004030d84_battery
+#            name: Датчик протечки (под Ванной)
+#          - entity: sensor.0x158d0003045123_battery
+#            name: Датчик движения (Кладовая)
+#          - entity: sensor.battery_status_158d000309920a
+#            name: Датчик движения (Прихожая)
+#            icon: mdi:battery-outline
+#          - entity: sensor.battery_status_158d00044cea8e
+#            name: Датчик движения (Детская)
+#            icon: mdi:battery-outline
+#          - entity: sensor.0x158d0003fac0ec_battery
+#            name: Датчик движения Aqara (Кухня)
+#          - entity: sensor.battery_status_158d00031c790f
+#            name: Датчик входной двери
+#            icon: mdi:battery-outline
+#          - entity: sensor.battery_status_158d00039cf974
+#            name: Датчик кондиционера (Детская)
+#            icon: mdi:battery-outline
+#          - entity: sensor.battery_status_158d0004073b67
+#            name: Датчик кондиционера (Спальня)
+#            icon: mdi:battery-outline
+#          - entity: sensor.battery_status_158d0003d54725
+#            name: Датчик кондиционера (Гостиная)
+#            icon: mdi:battery-outline
+#          - entity: sensor.0x158d00035a9bc5_battery
+#            name: Кнопка Xiaomi 1
+#          - entity: sensor.a4c138414e9a_battery
+#            name: Датчик температуры (Туалет)
+#          - entity: sensor.0x158d00044ee524_battery
+#            name: Нептун (Активация)
+#          - entity: sensor.0x158d0004ab468e_battery
+#            name: Кнопка Aqara 1
+#          - entity: sensor.0x158d00054859d5_battery
+#            name: Кнопка Aqara 2
+#          - entity: sensor.e72e0081ac21_battery
+#            name: Часы TH (Гостиная)
+#          - entity: sensor.a4c1387179f4_battery
+#            name: Датчик температуры (Холодитьник)
+#          - entity: sensor.a4c1381b3d13_battery
+#            name: Датчик температуры (Хьюмидор)
