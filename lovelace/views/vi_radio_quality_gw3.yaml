@@ -15,6 +15,7 @@ cards:
         entities:
           include: 
             - sensor.*_gateway
+        sort_by: friendly_name 
         columns:
           - data: friendly_name
             name: Friendly Name
@@ -50,8 +51,8 @@ cards:
               hrs = (hrs < 10) ? "0" + hrs : hrs;
               min = (min < 10) ? "0" + min : min;
               sec = (sec < 10) ? "0" + sec : sec;
-              dt.toLocaleString(['ru-RU', 'en-US']) +
-              " (Up: " + hrs + ":" + min + ":" + sec + ")"
+              isFinite(dt) ? dt.toLocaleString(['ru-RU', 'en-US']) +
+              " (Up: " + hrs + ":" + min + ":" + sec + ")" : ""
         css:
           table+: 'padding-top: 15px;'
           'tbody tr:nth-child(even)': 'background-color: #a2542f6;'
