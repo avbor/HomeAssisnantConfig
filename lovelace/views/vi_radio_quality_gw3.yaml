@@ -118,6 +118,12 @@ cards:
           'tbody tr:nth-child(even)': 'background-color: #a2542f6;'
           td.left: 'padding: 10px 10px 10px 10px'
           th.left: 'padding: 0px 0px 10px 10px'
+      ### iframe with the graph of the last missed from Grafana ###
+      ### Query example: 'SELECT "last_missed" FROM "autogen"."state" WHERE ("domain" = 'sensor') GROUP BY "friendly_name"'
+      - type: iframe
+        url: !secret graf_url_zigbee_last_missed
+        aspect_ratio: 10%
+      ###----------------------------------------
       # Bluetooth
       - type: markdown
         #content: '<center> <ha-icon icon="mdi:bluetooth"></ha-icon> </center>'

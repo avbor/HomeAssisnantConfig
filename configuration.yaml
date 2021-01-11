@@ -105,12 +105,15 @@ influxdb:
   password: !secret influxdb_pass
   max_retries: 5
   default_measurement: state
+  tags_attributes:
+    - friendly_name
 #  exclude:
 #    domains:
 #      - automation
 #      - sun
   include:
     entities: !include influxdb_conf/influxdb_include_entities.yaml
+    entity_globs: !include influxdb_conf/influxdb_include_entity_globs.yaml
 
 lovelace: !include lovelace/lovelace.yaml
 
