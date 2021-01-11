@@ -107,10 +107,6 @@ influxdb:
   default_measurement: state
   tags_attributes:
     - friendly_name
-#  exclude:
-#    domains:
-#      - automation
-#      - sun
   include:
     entities: !include influxdb_conf/influxdb_include_entities.yaml
     entity_globs: !include influxdb_conf/influxdb_include_entity_globs.yaml
@@ -134,13 +130,6 @@ discovery:
 auto_backup:
   auto_purge: true
 
-#xiaomi_aqara:
-#  discovery_retry: 30
-#  gateways:
-#    - mac: 04cf8ca0db1e
-#      host: 172.16.16.215
-#      key: !secret xiaomi_aqara_key
-
 light:
   - platform: switch
     name: Детская - подсветка на окне
@@ -148,12 +137,6 @@ light:
   - platform: switch
     name: Гостиная - подсветка на окне
     entity_id: switch.plug_158d000391fb00
-
-#tuya:
-#  platform: smart_life
-#  username: !secret tuya_user
-#  password: !secret tuya_pass
-#  country_code: "7"
 
 sonoff:
   username: !secret sonoff_username
@@ -174,9 +157,6 @@ tplink:
   switch:
     - host: 172.16.16.213
     - host: 172.16.16.216
-
-#transmission:
-#  host: 172.16.16.253
 
 #zabbix:
 #  host: home.intra
