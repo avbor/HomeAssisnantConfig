@@ -110,6 +110,12 @@ influxdb:
   include:
     entities: !include influxdb_conf/influxdb_include_entities.yaml
     entity_globs: !include influxdb_conf/influxdb_include_entity_globs.yaml
+  component_config_glob:
+    sensor.*_zigbee:
+      ignore_attributes:
+        - state
+        - msg_received
+        - last_msg
 
 lovelace: !include lovelace/lovelace.yaml
 
