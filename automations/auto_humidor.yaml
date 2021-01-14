@@ -7,13 +7,13 @@
   trigger:
     platform: numeric_state
     entity_id: sensor.a4c1381b3d13_humidity
-    below: 70
+    below: 65
     for:
       minutes: 30
   action:
     - service: notify.telegram_stall
       data:
-        message: Влажность в хьюмидоре ниже 70% (текущая {{ states("sensor.a4c1381b3d13_humidity") }}%)
+        message: Влажность в хьюмидоре ниже 65% (текущая {{ states("sensor.a4c1381b3d13_humidity") }}%)
 
 - alias: 'Humidity in humidor too high'
   initial_state: true
