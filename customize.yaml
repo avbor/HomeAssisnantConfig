@@ -26,6 +26,10 @@ light.sonoff_1000b72483:
   friendly_name: Кухня - Споты
 light.sonoff_1000ab3c28:
   friendly_name: Гостиная - Бра
+light.sonoff_1000f3035d:
+  friendly_name: Гостиная - Люстра
+light.sonoff_1000f30a9e:
+  friendly_name: Гостиная - Споты
 sensor.temperature_158d0003230618:
   friendly_name: Гостинная
 sensor.humidity_158d0003230618:

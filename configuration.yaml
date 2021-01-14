@@ -157,6 +157,12 @@ sonoff:
     1000ab3c28:
       devicekey: 4158540f-d7c0-4453-aeac-958355a85756
       device_class: light
+    1000f3035d:
+      devicekey: 71f2d399-79e7-4bf4-9543-1420a806dda7
+      device_class: light
+    1000f30a9e:
+      devicekey: 10541ed9-c3bd-476e-9229-3c852bbfcfe5
+      device_class: light
 
 tplink:
   discovery: false

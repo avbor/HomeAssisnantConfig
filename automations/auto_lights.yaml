@@ -243,6 +243,27 @@
 #    data:
 #      entity_id: light.0x86bd7fffe616b72_light
 
+  # Споты
+- alias: 'Кнопка Xiaomi в Гостиной single'
+  trigger:
+    platform: state
+    entity_id: sensor.0x158d00035a9bc5_action
+    to: 'single'
+  action:
+    - service: light.toggle
+      data:
+          entity_id: light.sonoff_1000ab3c28
+  # Люстра
+- alias: 'Кнопка Xiaomi Гостиная double'
+  trigger:
+    platform: state
+    entity_id: sensor.0x158d00035a9bc5_action
+    to: 'double'
+  action:
+    - service: light.toggle
+      data:
+          entity_id: light.sonoff_1000f3035d
+
 - alias: 'Кнопка Aqara 1 single'
   trigger:
     platform: state

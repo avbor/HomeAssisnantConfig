@@ -188,6 +188,12 @@ cards:
           - entity: binary_sensor.lamp_status_workdesk_gostinaya
             name: Лампа на столе в гостиной
             icon: mdi:desk-lamp
+          - entity: binary_sensor.lamp_status_gostinaya_liustra
+            name: Люстра в гостиной
+            icon: mdi:ceiling-light
+          - entity: binary_sensor.lamp_status_gostinaya_spots
+            name: Споты в гостиной
+            icon: mdi:spotlight-beam
           # Кондиционеры
           - type: section
           - entity: binary_sensor.ac_nursery_status

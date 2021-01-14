@@ -46,12 +46,32 @@ cards:
         cards:
           - type: conditional
             conditions:
+              - entity: light.sonoff_1000f30a9e
+                state_not: "unavailable"
+            card:
+              type: light
+              entity: light.sonoff_1000f30a9e
+              name: Споты
+
+      - type: horizontal-stack
+        cards:
+          - type: conditional
+            conditions:
+              - entity: light.sonoff_1000f3035d
+                state_not: "unavailable"
+            card:
+              type: light
+              entity: light.sonoff_1000f3035d
+              name: Люстра
+          - type: conditional
+            conditions:
               - entity: light.sonoff_1000ab3c28
                 state_not: "unavailable"
             card:
               type: light
               entity: light.sonoff_1000ab3c28
               name: Бра
+
       - type: horizontal-stack
         cards:
           - type: conditional
@@ -62,7 +82,6 @@ cards:
               type: light
               entity: light.0x86bd7fffe616b72_light
               name: Рабочий стол
-            
           - type: conditional
             conditions:
               - entity: light.gostinaia_podsvetka_na_okne
@@ -148,7 +167,7 @@ cards:
         card:
           type: light
           entity: light.sonoff_1000b6831b
-          name: Кладовая
+          name: Люстра
 
   - type: button
     entity: group.all_lamps

@@ -19,6 +19,12 @@
     lamp_status_gostinaya_bra:
       device_class: power
       value_template: "{{ is_state('light.sonoff_1000ab3c28', 'on') }}"
+    lamp_status_gostinaya_liustra:
+      device_class: power
+      value_template: "{{ is_state('light.sonoff_1000f3035d', 'on') }}"
+    lamp_status_gostinaya_spots:
+      device_class: power
+      value_template: "{{ is_state('light.sonoff_1000f30a9e', 'on') }}"
     lamp_status_kukhnia_lenta:
       device_class: power
       value_template: "{{ is_state('light.kukhnia_lenta', 'on') }}"

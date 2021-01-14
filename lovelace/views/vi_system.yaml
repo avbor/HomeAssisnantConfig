@@ -219,6 +219,12 @@ cards:
               - entity: light.sonoff_1000ab3c28
                 name: Бра в гостиной
                 icon: mdi:wall-sconce-flat
+              - entity: light.sonoff_1000f3035d
+                name: Люстра в гостиной
+                icon: mdi:ceiling-light
+              - entity: light.sonoff_1000f30a9e
+                name: Споты в гостиной
+                icon: mdi:spotlight-beam
             state_filter:
               - unavailable
 
@@ -276,7 +282,7 @@ cards:
 #            name: Датчик кондиционера (Гостиная)
 #            icon: mdi:battery-outline
 #          - entity: sensor.0x158d00035a9bc5_battery
-#            name: Кнопка Xiaomi 1
+#            name: Кнопка Xiaomi в Гостиной
 #          - entity: sensor.a4c138414e9a_battery
 #            name: Датчик температуры (Туалет)
 #          - entity: sensor.0x158d00044ee524_battery
