@@ -6,6 +6,8 @@ mode: yaml
 resources:
   - url: /hacsfiles/flex-table-card/flex-table-card.js
     type: module
+  - url: /hacsfiles/mini-graph-card/mini-graph-card-bundle.js
+    type: module
 dashboards:
   dash-system:
     mode: yaml
