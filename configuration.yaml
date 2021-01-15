@@ -213,4 +213,5 @@ input_datetime: !include_dir_merge_named entities/input_datetime
 input_boolean: !include_dir_merge_named entities/input_boolean
 input_text: !include_dir_merge_named entities/input_text
 shell_command: !include_dir_merge_named entities/shell_commands
+rest_command: !include_dir_merge_named entities/rest_command
 yeelight: !include entities/yeelight/yeelight.yaml
