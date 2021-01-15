@@ -10,42 +10,6 @@ cards:
         entities:
           - sensor.date
           - sensor.time
-    # --- COVID-19
-      - type: markdown
-        content: >
-          ### COVID-19:
-      - type: horizontal-stack
-        cards:
-        - type: sensor
-          entity: sensor.worldwide_coronavirus_confirmed
-          name: Всего в мире
-          icon: mdi:earth
-          unit: чел.
-          graph: line
-          hours_to_show: 72
-        - type: sensor
-          entity: sensor.russia_coronavirus_confirmed
-          name: Всего в России
-          icon: mdi:flag
-          unit: чел.
-          graph: line
-          hours_to_show: 72
-      - type: horizontal-stack
-        cards:
-        - type: sensor
-          entity: sensor.worldwide_coronavirus_current
-          name: Сейчас в мире
-          icon: mdi:earth
-          unit: чел.
-          graph: line
-          hours_to_show: 72
-        - type: sensor
-          entity: sensor.russia_coronavirus_current
-          name: Сейчас в России
-          icon: mdi:flag
-          unit: чел.
-          graph: line
-          hours_to_show: 72
     # --- Сейчас дома:
       - type: markdown
         content: >
@@ -228,27 +192,6 @@ cards:
 # --- Weather
   - type: vertical-stack
     cards:
-      - type: 'custom:mini-graph-card'
-        name: Хьюмидор
-        icon: mdi:cigar
-        points_per_hour: 4
-        line_width: 3
-        hour24: true
-        align_state: center
-        entities:
-          - entity: sensor.a4c1381b3d13_humidity
-            name: Влажность
-            show_state: true
-            color: blue
-          - entity: sensor.a4c1381b3d13_temperature
-            name: Температура
-            show_state: true
-            color: orange
-            y_axis: secondary
-        show:
-          fill: false
-          labels: true
-          labels_secondary: true
     # --- Погода:
       - type: markdown
         content: >
@@ -278,3 +221,42 @@ cards:
         entities:
           - sun.sun
           - sensor.moon
+
+# --- COVID-19
+  - type: vertical-stack
+    cards:
+      - type: markdown
+        content: >
+          ### COVID-19:
+      - type: horizontal-stack
+        cards:
+        - type: sensor
+          entity: sensor.worldwide_coronavirus_confirmed
+          name: Всего в мире
+          icon: mdi:earth
+          unit: чел.
+          graph: line
+          hours_to_show: 72
+        - type: sensor
+          entity: sensor.russia_coronavirus_confirmed
+          name: Всего в России
+          icon: mdi:flag
+          unit: чел.
+          graph: line
+          hours_to_show: 72
+      - type: horizontal-stack
+        cards:
+        - type: sensor
+          entity: sensor.worldwide_coronavirus_current
+          name: Сейчас в мире
+          icon: mdi:earth
+          unit: чел.
+          graph: line
+          hours_to_show: 72
+        - type: sensor
+          entity: sensor.russia_coronavirus_current
+          name: Сейчас в России
+          icon: mdi:flag
+          unit: чел.
+          graph: line
+          hours_to_show: 72
