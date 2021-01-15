@@ -226,19 +226,19 @@ cards:
         hour24: true
         align_state: center
         entities:
-          - entity: sensor.a4c1381b3d13_humidity
-            name: Влажность
-            show_state: true
-            color: blue
           - entity: sensor.a4c1381b3d13_temperature
             name: Температура
             show_state: true
             color: orange
+          - entity: sensor.a4c1381b3d13_humidity
+            name: Влажность
+            show_state: true
+            color: blue
             y_axis: secondary
         show:
           fill: false
-          labels: true
-          labels_secondary: true
+#          labels: true
+#          labels_secondary: true
   # Ванная
   - type: vertical-stack
     cards:
