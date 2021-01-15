@@ -1,0 +1,8 @@
+#################################################
+# Input text
+#################################################
+
+xiaomi_gateway3_id:
+  name: 'Xiaomi Gateway 3 ID'
+  initial: remote.0x588e81fffedca899_pair
+  icon: mdi:router-wireless

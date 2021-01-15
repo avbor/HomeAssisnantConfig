@@ -20,17 +20,15 @@ hass_check_config:
     - service: homeassistant.check_config
 
 mi_gw3_reboot:
-  alias: Reboot Xiaomi Gateway 3
   sequence:
     - service: remote.send_command
-      entity_id: remote.0x588e81fffedca899_pair
       data:
+        entity_id: "{{ states('input_text.xiaomi_gateway3_id') }}"
         command: reboot
 
 mi_gw3_enable_ftp:
-  alias: Enable FTP on Xiaomi Gateway 3
   sequence:
     - service: remote.send_command
-      entity_id: remote.0x588e81fffedca899_pair
       data:
+        entity_id: "{{ states('input_text.xiaomi_gateway3_id') }}"
         command: ftp
