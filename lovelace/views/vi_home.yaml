@@ -88,9 +88,7 @@ cards:
             - type: map
               aspect_ratio: "16:9"
               entities:
-#                - device_tracker.oneplus_a3003
                 - person.alexander
-#                - device_tracker.mi_8
                 - person.irina
       # --- Время в пути (Утро)
       - type: conditional
@@ -230,22 +228,50 @@ cards:
 # --- Weather
   - type: vertical-stack
     cards:
+      - type: 'custom:mini-graph-card'
+        name: Хьюмидор
+        icon: mdi:cigar
+        points_per_hour: 4
+        line_width: 3
+        hour24: true
+        align_state: center
+        entities:
+          - entity: sensor.a4c1381b3d13_humidity
+            name: Влажность
+            show_state: true
+            color: blue
+          - entity: sensor.a4c1381b3d13_temperature
+            name: Температура
+            show_state: true
+            color: orange
+            y_axis: secondary
+        show:
+          fill: false
+          labels: true
+          labels_secondary: true
+    # --- Погода:
       - type: markdown
         content: >
           ### Погода:
-    # --- Погода:
-      #- type: weather-forecast
-      #  entity: weather.home_assistant
       - type: weather-forecast
         entity: weather.gismeteo
-      - type: history-graph
+      - type: 'custom:mini-graph-card'
+        name: Атмосферное давление
+        icon: mdi:gauge
         hours_to_show: 72
-        refresh_interval: 600
+        points_per_hour: 1
+        line_width: 3
+        decimals: 0
+        hour24: true
+        align_state: center
         entities:
-          - entity:  sensor.gismeteo_pressure_mmhg
-            name: Gismeteo
-          - entity: sensor.local_pressure_mmhg
-            name: Датчик (Гостинная)
+            - entity: sensor.local_pressure_mmhg
+              name: Aqara (Гостиная)
+            - entity: sensor.gismeteo_pressure_mmhg
+              name: Gismeteo
+              #show_fill: false
+        show:
+          fill: false
     # --- Солнце\Луна:
       - type: entities
         show_header_toggle: false
