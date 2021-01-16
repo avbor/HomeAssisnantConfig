@@ -24,12 +24,11 @@ Big cards are very useful in both - mobile and desktop.
 **Some statistics**\
 ![Stats](screenshots/Stats.png)
 
+**Some system controls**\
+![Sys](screenshots/System.png)
+
 **Xiaomi Gateway 3 Radio Stats**\
 ![GW3](screenshots/GW3_Stats.png)
-
-|**System information**|**Some system controls**|
-|----------------------|------------------------|
-|![Sys_Info](screenshots/Sys_Info.png)|![Sys_Controls](screenshots/Sys_Control.png)|
 
 **Mobile App Look**
 |![Mob_Climate](screenshots/Mob_Climate.jpg)|![Mob_Light](screenshots/Mob_Light.jpg)|![Mob_Vacuum](screenshots/Mob_Vacuum.jpg)|
