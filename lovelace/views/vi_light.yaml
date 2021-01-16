@@ -184,7 +184,7 @@ cards:
   - type: button
     entity: group.all_lamps
     name: Выключить весь свет
-    icon: mdi:lightbulb-group-off-outline
+    icon: mdi:lightbulb-group-off
     icon_height: 64px
     show_state: false
     tap_action: 
