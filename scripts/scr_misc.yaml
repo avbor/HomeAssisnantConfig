@@ -32,3 +32,15 @@ mi_gw3_enable_ftp:
       data:
         entity_id: "{{ states('input_text.xiaomi_gateway3_id') }}"
         command: ftp
+
+mi_gw3_pair_on:
+  sequence:
+    - service: remote.turn_on
+      data:
+        entity_id: "{{ states('input_text.xiaomi_gateway3_id') }}"
+
+mi_gw3_pair_off:
+  sequence:
+    - service: remote.turn_off
+      data:
+        entity_id: "{{ states('input_text.xiaomi_gateway3_id') }}"
