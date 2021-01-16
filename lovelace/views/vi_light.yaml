@@ -20,9 +20,11 @@ cards:
               cards:
               - type: light
                 entity: light.detskaia
+                icon: mdi:ceiling-light
               - type: light
                 entity: light.detskaia_podsvetka_na_okne
                 name: Подсветка на окне
+                icon: mdi:string-lights
             - type: entities
               entities:
                 - entity: automation.sunrise_lighting_nursery
@@ -52,6 +54,7 @@ cards:
               type: light
               entity: light.sonoff_1000f30a9e
               name: Споты
+              icon: mdi:spotlight-beam
 
       - type: horizontal-stack
         cards:
@@ -63,6 +66,7 @@ cards:
               type: light
               entity: light.sonoff_1000f3035d
               name: Люстра
+              icon: mdi:ceiling-light
           - type: conditional
             conditions:
               - entity: light.sonoff_1000ab3c28
@@ -71,6 +75,7 @@ cards:
               type: light
               entity: light.sonoff_1000ab3c28
               name: Бра
+              icon: mdi:wall-sconce-flat
 
       - type: horizontal-stack
         cards:
@@ -82,6 +87,7 @@ cards:
               type: light
               entity: light.0x86bd7fffe616b72_light
               name: Рабочий стол
+              icon: mdi:desk-lamp
           - type: conditional
             conditions:
               - entity: light.gostinaia_podsvetka_na_okne
@@ -90,6 +96,7 @@ cards:
               type: light
               entity: light.gostinaia_podsvetka_na_okne
               name: Подсветка на окне
+              icon: mdi:string-lights
 
   # Кухня
   - type: vertical-stack
@@ -105,6 +112,7 @@ cards:
           type: light
           entity: light.sonoff_1000b72483
           name: Споты
+          icon: mdi:spotlight-beam
       - type: horizontal-stack
         cards:
           - type: conditional
@@ -115,6 +123,7 @@ cards:
               type: light
               entity: light.kukhnia_liustra
               name: Люстра
+              icon: mdi:ceiling-light
           - type: conditional
             conditions:
               - entity: light.kukhnia_lenta
@@ -123,6 +132,7 @@ cards:
               type: light
               entity: light.kukhnia_lenta
               name: Подсветка
+              icon: mdi:led-strip-variant
       - type: entities
         show_header_toggle: false
         entities:
@@ -146,6 +156,7 @@ cards:
             - type: light
               entity: light.spalnia_stol
               name: Стол
+              icon: mdi:desk-lamp
             - type: entities
               entities:
                 - entity: automation.sunrise_lighting_bedroom
@@ -168,6 +179,7 @@ cards:
           type: light
           entity: light.sonoff_1000b6831b
           name: Люстра
+          icon: mdi:vanity-light
 
   - type: button
     entity: group.all_lamps
