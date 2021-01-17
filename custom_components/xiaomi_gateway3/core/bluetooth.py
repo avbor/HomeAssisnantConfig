@@ -1,10 +1,13 @@
 from datetime import datetime
 from typing import Optional, Union
 
-DEVICES = {
+# Bluetooth Model: [Manufacturer, Device Name, Device Model]
+# params: [siid, piid, hass attr name, hass domain]
+DEVICES = [{
     # BLE
     152: ["Xiaomi", "Flower Care", "HHCCJCY01"],
     426: ["Xiaomi", "TH Sensor", "LYWSDCGQ/01ZM"],
+    794: ["Xiaomi", "Door Lock", "MJZNMS02LM"],
     839: ["Xiaomi", "Qingping TH Sensor", "CGG1"],
     1034: ["Xiaomi", "Mosquito Repellent", "WX08ZM"],
     1115: ["Xiaomi", "TH Clock", "LYWSD02MMC"],
@@ -17,9 +20,12 @@ DEVICES = {
     1983: ["Yeelight", "Button S1", "YLAI003"],
     2038: ["Xiaomi", "Night Light 2", "MJYD02YL-A"],
     2443: ["Xiaomi", "Door Sensor 2", "MCCGQ02HL"],
+    2444: ["Xiaomi", "Door Lock", "XMZNMST02YD"],
     2480: ["Xiaomi", "Safe Box", "BGX-5/X1-3001"],
     2701: ["Xiaomi", "Motion Sensor 2", "RTCGQ02LM"],
-    # Mesh
+}, {
+    # Mesh Light
+    0: ["Xiaomi", "Mesh Group", "Mesh Group"],
     948: ["Yeelight", "Mesh Downlight", "YLSD01YL"],
     995: ["Yeelight", "Mesh Bulb E14", "YLDP09YL"],
     996: ["Yeelight", "Mesh Bulb E27", "YLDP10YL"],
@@ -28,9 +34,51 @@ DEVICES = {
     1772: ["Xiaomi", "Mesh Downlight", "MJTS01YL"],
     2076: ["Yeelight", "Mesh Downlight M2", "YLTS02YL/YLTS04YL"],
     2342: ["Yeelight", "Mesh Bulb M2", "YLDP25YL/YLDP26YL"],
-    # Mesh Group
-    0: ["Xiaomi", "Mesh Group", "Mesh Group"]
-}
+    'params': [
+        [2, 1, 'light', 'light'],
+        [2, 2, 'brightness', None],
+        [2, 3, 'color_temp', None],
+    ]
+}, {
+    # Mesh Switches
+    1946: ["Xiaomi", "Mesh Wall Double Switch", "DHKG02ZM"],
+    'params': [
+        [2, 1, 'left_switch', 'switch'],
+        [3, 1, 'right_switch', 'switch'],
+    ]
+}, {
+    2007: ["Unknown", "Mesh Switch Controller", "2007"],
+    'params': [
+        [2, 1, None, 'switch']
+    ]
+}, {
+    2093: ["PTX", "Mesh Wall Triple Switch", "PTX-TK3/M"],
+    'params': [
+        [2, 1, 'left_switch', 'switch'],
+        [3, 1, 'middle_switch', 'switch'],
+        [4, 1, 'right_switch', 'switch'],
+        [8, 1, 'backlight', 'switch'],
+        [8, 2, 'left_smart', 'switch'],
+        [8, 3, 'middle_smart', 'switch'],
+        [8, 4, 'right_smart', 'switch']
+    ]
+}, {
+    2257: ["PTX", "Mesh Wall Double Switch", "PTX-SK2M"],
+    'params': [
+        [2, 1, 'left_switch', 'switch'],
+        [3, 1, 'right_switch', 'switch'],
+        [8, 1, 'backlight', 'switch'],
+        [8, 2, 'left_smart', 'switch'],
+        [8, 3, 'right_smart', 'switch'],
+    ]
+}, {
+    2258: ["PTX", "Mesh Wall Single Switch", "PTX-SK1M"],
+    'params': [
+        [2, 1, 'switch', 'switch'],
+        [8, 1, 'backlight', 'switch'],
+        [8, 2, 'smart', 'switch'],
+    ]
+}]
 
 BLE_FINGERPRINT_ACTION = [
     "Match successful", "Match failed", "Timeout", "Low quality",
@@ -276,50 +324,27 @@ def parse_xiaomi_ble(event: dict, pdid: int) -> Optional[dict]:
     return None
 
 
-MESH_PROPS = [None, 'light', 'brightness', 'color_temp']
-
-
-def parse_xiaomi_mesh(data: list):
-    """Can receive multiple properties from multiple devices."""
-    result = {}
-
-    for payload in data:
-        if payload['siid'] != 2 or payload.get('code', 0) != 0:
-            continue
-
-        did = payload['did']
-        key = MESH_PROPS[payload['piid']]
-        result.setdefault(did, {})[key] = payload['value']
-
-    return result
-
-
-def pack_xiaomi_mesh(did: str, data: Union[dict, list]):
-    if isinstance(data, dict):
-        return [{
-            'did': did,
-            'siid': 2,
-            'piid': MESH_PROPS.index(k),
-            'value': v
-        } for k, v in data.items()]
-    else:
-        return [{
-            'did': did,
-            'siid': 2,
-            'piid': MESH_PROPS.index(k),
-        } for k in data]
-
-
 def get_device(pdid: int, default_name: str) -> Optional[dict]:
-    if pdid in DEVICES:
-        desc = DEVICES[pdid]
-        return {
-            'device_manufacturer': desc[0],
-            'device_name': desc[0] + ' ' + desc[1],
-            'device_model': desc[2] if len(desc) > 2 else pdid
-        }
-    else:
-        return {
-            'device_name': default_name,
-            'device_model': pdid
-        }
+    for device in DEVICES:
+        if pdid in device:
+            desc = device[pdid]
+            return {
+                'device_manufacturer': desc[0],
+                'device_name': desc[0] + ' ' + desc[1],
+                'device_model': desc[2] if len(desc) > 2 else pdid,
+                'params': device.get('params')
+            }
+
+    return {
+        'device_name': default_name,
+        'device_model': pdid,
+        # default Mesh device will be Bulb
+        'params': [
+            [2, 1, 'light', 'light'],
+            [2, 2, 'brightness', None],
+            [2, 3, 'color_temp', None],
+        ]
+    } if default_name == 'Mesh' else {
+        'device_name': default_name,
+        'device_model': pdid,
+    }

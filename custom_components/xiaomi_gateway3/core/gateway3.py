@@ -1,7 +1,9 @@
 import json
 import logging
+import random
 import re
 import socket
+import string
 import time
 from threading import Thread
 from typing import Optional
@@ -9,7 +11,7 @@ from typing import Optional
 from paho.mqtt.client import Client, MQTTMessage
 from . import bluetooth, utils
 from .mini_miio import SyncmiIO
-from .shell import TelnetShell
+from .shell import TelnetShell, ntp_time
 from .unqlite import Unqlite, SQLite
 from .utils import GLOBAL_PROP
 
@@ -59,12 +61,15 @@ class GatewayMesh:
         raise NotImplemented
 
     def mesh_start(self):
-        self.mesh_params = [
-            {'did': device['did'], 'siid': 2, 'piid': 1}
-            for device in self.devices.values()
-            # cannot get state of mesh group
-            if device['type'] == 'mesh' and 'childs' not in device
-        ]
+        self.mesh_params = []
+
+        for device in self.devices.values():
+            if device['type'] == 'mesh' and 'childs' not in device:
+                # TODO: rewrite more clear logic for lights and switches
+                p = device['params'][0]
+                self.mesh_params.append({
+                    'did': device['did'], 'siid': p[0], 'piid': p[1]
+                })
 
         if self.mesh_params:
             self.mesh_ts = time.time() + 30
@@ -81,18 +86,21 @@ class GatewayMesh:
             try:
                 resp = self.miio.send_bulk('get_properties', self.mesh_params)
                 if resp:
-                    # get turn on bulbs
-                    params = [
-                        {'did': item['did'], 'siid': 2, 'piid': 2}
-                        for item in resp if item.get('value')
-                    ]
+                    params2 = []
+                    for item in resp:
+                        if 'value' not in item:
+                            continue
 
-                    if params:
-                        params += [
-                            {'did': item['did'], 'siid': 2, 'piid': 3}
-                            for item in params
-                        ]
-                        resp2 = self.miio.send_bulk('get_properties', params)
+                        did = item['did']
+                        device_params = self.devices[did]['params']
+                        # get other props for turn on lights or live switches
+                        if device_params[0][3] == 'switch' or item['value']:
+                            params2 += [{
+                                'did': did, 'siid': p[0], 'piid': p[1]
+                            } for p in device_params[1:]]
+
+                    if params2:
+                        resp2 = self.miio.send_bulk('get_properties', params2)
                         if resp2:
                             resp += resp2
 
@@ -108,21 +116,60 @@ class GatewayMesh:
             self.mesh_ts = time.time() + 30
 
     def process_mesh_data(self, data: list):
-        data = bluetooth.parse_xiaomi_mesh(data)
-        for did, payload in data.items():
-            if did in self.updates:
-                for handler in self.updates[did]:
-                    handler(payload)
+        """Can receive multiple properties from multiple devices.
+
+           data = [{'did':123,'siid':2,'piid':1,'value:True}]
+        """
+        bulk = {}
+
+        for param in data:
+            if param.get('code', 0) != 0:
+                continue
+
+            did = param['did']
+            if did not in self.updates:
+                continue
+
+            device = self.devices[did]
+
+            prop = next((
+                p[2] for p in device['params']
+                if p[0] == param['siid'] and p[1] == param['piid']
+            ), None)
+            if not prop:
+                continue
+
+            if did not in bulk:
+                bulk[did] = {}
+
+            bulk[did][prop] = param['value']
+
+        for did, payload in bulk.items():
+            self.debug(f"Process Mesh Data for {did}: {payload}")
+            for handler in self.updates[did]:
+                handler(payload)
 
     def send_mesh(self, device: dict, data: dict):
-        did = device['did']
-        payload = bluetooth.pack_xiaomi_mesh(did, data)
+        # data = {'light':True}
+        payload = []
+        for k, v in data.items():
+            param = next(
+                p for p in device['params']
+                if p[2] == k
+            )
+            payload.append({
+                'did': device['did'],
+                'siid': param[0],
+                'piid': param[1],
+                'value': v if param[0] != 8 else int(v)
+            })
+
         try:
             # 2 seconds are selected experimentally
             if self.miio.send('set_properties', payload):
                 self.mesh_force_update()
         except:
-            self.debug(f"Can't send mesh {did} => {data}")
+            self.debug(f"Can't send mesh {device['did']} => {data}")
 
     def mesh_force_update(self):
         self.mesh_ts = time.time() + 2
@@ -289,6 +336,7 @@ class GatewayStats:
 
 # noinspection PyUnusedLocal
 class Gateway3(Thread, GatewayV, GatewayMesh, GatewayStats):
+    time_offset = 0
     pair_model = None
     pair_payload = None
 
@@ -311,6 +359,9 @@ class Gateway3(Thread, GatewayV, GatewayMesh, GatewayStats):
                                      else options['parent'])
         self.default_devices = config['devices'] if config else None
 
+        if 'true' in self._debug:
+            self.miio.debug = True
+
         self.devices = {}
         self.updates = {}
         self.setups = {}
@@ -332,7 +383,9 @@ class Gateway3(Thread, GatewayV, GatewayMesh, GatewayStats):
         self.setups[domain] = handler
 
     def debug(self, message: str):
-        _LOGGER.debug(f"{self.host} | {message}")
+        # basic logs
+        if 'true' in self._debug:
+            _LOGGER.debug(f"{self.host} | {message}")
 
     def stop(self):
         self.enabled = False
@@ -351,12 +404,13 @@ class Gateway3(Thread, GatewayV, GatewayMesh, GatewayStats):
                 time.sleep(30)
                 continue
 
-            devices = self._prepeare_gateway(with_devices=True)
+            devices = self._prepare_gateway(with_devices=True)
             if devices:
                 self.gw_topic = f"gw/{devices[0]['mac'][2:].upper()}/"
                 self.setup_devices(devices)
                 break
 
+        self.update_time_offset()
         self.mesh_start()
 
         while self.enabled:
@@ -366,13 +420,19 @@ class Gateway3(Thread, GatewayV, GatewayMesh, GatewayStats):
                 continue
 
             # if not mqtt - enable it (handle Mi Home and ZHA mode)
-            if not self._prepeare_gateway() or not self._mqtt_connect():
+            if not self._prepare_gateway() or not self._mqtt_connect():
                 time.sleep(60)
                 continue
 
             self.mqtt.loop_forever()
 
         self.debug("Stop main thread")
+
+    def update_time_offset(self):
+        gw_time = ntp_time(self.host)
+        if gw_time:
+            self.time_offset = gw_time - time.time()
+            self.debug(f"Gateway time offset: {self.time_offset}")
 
     def _check_port(self, port: int):
         """Check if gateway port open."""
@@ -389,7 +449,7 @@ class Gateway3(Thread, GatewayV, GatewayMesh, GatewayStats):
             return False
         return True
 
-    def _prepeare_gateway(self, with_devices: bool = False):
+    def _prepare_gateway(self, with_devices: bool = False):
         """Launching the required utilities on the hub, if they are not already
         running.
         """
@@ -406,6 +466,10 @@ class Gateway3(Thread, GatewayV, GatewayMesh, GatewayStats):
             if "mosquitto -d" not in ps:
                 self.debug("Run public mosquitto")
                 shell.run_public_mosquitto()
+
+            if "ntpd" not in ps:
+                # run NTPd for sync time
+                shell.run_ntpd()
 
             # all data or only necessary events
             pattern = '\\{"' if 'miio' in self._debug \
@@ -657,26 +721,20 @@ class Gateway3(Thread, GatewayV, GatewayMesh, GatewayStats):
                 self.process_message(payload)
 
             elif topic == 'log/miio':
-                if 'miio' in self._debug:
-                    self.debug(f"[MI] {msg.payload}")
-
-                if self._ble and (
-                        b'_async.ble_event' in msg.payload or
-                        b'properties_changed' in msg.payload or
-                        b'event.gw.heartbeat' in msg.payload
-                ):
-                    for raw in utils.extract_jsons(msg.payload):
-                        if b'_async.ble_event' in raw:
-                            data = json.loads(raw)['params']
-                            self.process_ble_event(data)
-                            self.process_ble_stats(data)
-                        elif b'properties_changed' in raw:
-                            data = json.loads(raw)['params']
-                            self.debug(f"Process props {data}")
-                            self.process_mesh_data(data)
-                        elif b'event.gw.heartbeat' in raw:
-                            payload = json.loads(raw)['params'][0]
-                            self.process_gw_stats(payload)
+                for raw in utils.extract_jsons(msg.payload):
+                    if self._ble and b'_async.ble_event' in raw:
+                        data = json.loads(raw)['params']
+                        self.process_ble_event(data)
+                        self.process_ble_stats(data)
+                    elif self._ble and b'properties_changed' in raw:
+                        data = json.loads(raw)['params']
+                        self.debug(f"Process props {data}")
+                        self.process_mesh_data(data)
+                    elif b'event.gw.heartbeat' in raw:
+                        payload = json.loads(raw)['params'][0]
+                        self.process_gw_stats(payload)
+                        # time offset may changed right after gw.heartbeat
+                        self.update_time_offset()
 
             elif topic == 'log/z3':
                 self.process_z3(msg.payload.decode())
@@ -732,8 +790,7 @@ class Gateway3(Thread, GatewayV, GatewayMesh, GatewayStats):
                     while domain not in self.setups:
                         time.sleep(1)
 
-                    attr = param[2]
-                    self.setups[domain](self, device, attr)
+                    self.setups[domain](self, device, param[2])
 
             elif device['type'] == 'mesh':
                 desc = bluetooth.get_device(device['model'], 'Mesh')
@@ -750,11 +807,16 @@ class Gateway3(Thread, GatewayV, GatewayMesh, GatewayStats):
 
                 self.devices[device['did']] = device
 
-                # wait domain init
-                while 'light' not in self.setups:
-                    time.sleep(1)
+                for param in device['params']:
+                    domain = param[3]
+                    if not domain:
+                        continue
 
-                self.setups['light'](self, device, 'light')
+                    # wait domain init
+                    while domain not in self.setups:
+                        time.sleep(1)
+
+                    self.setups[domain](self, device, param[2])
 
             elif device['type'] == 'ble':
                 # only save info for future
@@ -797,6 +859,8 @@ class Gateway3(Thread, GatewayV, GatewayMesh, GatewayStats):
         # skip without callback
         if did not in self.updates:
             return
+
+        ts = time.time()
 
         device = self.devices[did]
         payload = {}
@@ -855,7 +919,8 @@ class Gateway3(Thread, GatewayV, GatewayMesh, GatewayStats):
                 else:
                     payload[prop] = param['arguments']
 
-        self.debug(f"{device['did']} {device['model']} <= {payload}")
+        ts = round(ts - data['time'] * 0.001 + self.time_offset, 2)
+        self.debug(f"{device['did']} {device['model']} <= {payload} [{ts}]")
 
         if payload:
             device['online'] = True
@@ -1054,3 +1119,18 @@ def is_gw3(host: str, token: str) -> Optional[str]:
         return 'wrong_model'
 
     return None
+
+
+def get_lan_key(device: dict):
+    device = SyncmiIO(device['localip'], device['token'])
+    resp = device.send('get_lumi_dpf_aes_key')
+    if resp is None:
+        return "Can't connect to gateway"
+    if len(resp[0]) == 16:
+        return resp[0]
+    key = ''.join(random.choice(string.ascii_lowercase + string.digits)
+                  for _ in range(16))
+    resp = device.send('set_lumi_dpf_aes_key', [key])
+    if resp[0] == 'ok':
+        return key
+    return "Can't update gateway key"
