@@ -142,7 +142,7 @@
         Розетка TP-Link SmartPlug 01: *{{ states('switch.tplink_smartplug_01') }}*
         Розетка TP-Link SmartPlug 02: *{{ states('switch.tplink_smartplug_02') }}*
         Розетка Xiaomi ZigBee Plug 01: *{{ states('switch.plug_158d00033b702e') }}*
-        Розетка Xiaomi ZigBee Plug 02: *{{ states('switch.plug_158d000391fb00') }}*
+        Розетка Xiaomi ZigBee Plug 02: *{{ states('switch.0x158d000391fb00_switch') }}*
         Розетка Xiaomi WiFi Plug 01: *{{ states('switch.mi_smartplugwifi_01') }}*
         Розетка Xiaomi WiFi Plug 02: *{{ states('switch.mi_smartplugwifi_02') }}*
         `-= ТВ =-`

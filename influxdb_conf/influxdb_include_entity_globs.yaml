@@ -10,3 +10,5 @@
 - sensor.*_humidity
 - sensor.illumination_*
 - sensor.*_illuminance
+- sensor.*_power
+- sensor.*_consumption

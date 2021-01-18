@@ -62,8 +62,6 @@ sensor.0x158d0004ab468e_action:
   friendly_name: Кнопка Aqara 1
 switch.plug_158d00033b702e:
   friendly_name: Розетка Xiaomi ZigBee Plug 01
-switch.plug_158d000391fb00:
-  friendly_name: Розетка Xiaomi ZigBee Plug 02
 switch.sonoff_1000b68886:
   friendly_name: Нептун - Питание
 binary_sensor.0x158d0004030d84_moisture:

@@ -100,7 +100,7 @@ new_year_holidays_pack:
 #          entity_id: switch.plug_158d00033b702e
 #      - service: switch.turn_off
 #        data:
-#          entity_id: switch.plug_158d000391fb00
+#          entity_id: switch.0x158d000391fb00_switch
 #      - service: notify.telegram_stall
 #        data:
 #          message: Отключаем новогоднюю подсветку (никого нет дома).
@@ -118,7 +118,7 @@ new_year_holidays_pack:
 #          entity_id: switch.plug_158d00033b702e
 #      - service: switch.turn_on
 #        data:
-#          entity_id: switch.plug_158d000391fb00
+#          entity_id: switch.0x158d000391fb00_switch
 #      - service: notify.telegram_stall
 #        data:
 #          message: Включаем новогоднюю подсветку (кто-то пришел домой).

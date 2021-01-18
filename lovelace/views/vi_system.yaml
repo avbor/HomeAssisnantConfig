@@ -191,7 +191,7 @@ cards:
         entities:
           - entity: switch.plug_158d00033b702e
             name: Розетка Xiaomi ZigBee Plug 01
-          - entity: switch.plug_158d000391fb00
+          - entity: switch.0x158d000391fb00_switch
             name: Розетка Xiaomi ZigBee Plug 02
           - entity: switch.mi_smartplugwifi_01
             name: Розетка Xiaomi WiFi Plig 01
@@ -213,7 +213,7 @@ cards:
           - switch.mi_smartplugwifi_01
           - switch.mi_smartplugwifi_02
           - switch.plug_158d00033b702e
-          - switch.plug_158d000391fb00
+          - switch.0x158d000391fb00_switch
         state_filter:
           - unavailable
       # Недоступные лампы
