@@ -2,3 +2,11 @@
 # Entity Globs to include in InfluxDB
 #################################################
 - sensor.*_zigbee
+- sensor.battery_status_*
+- sensor.*_battery
+- sensor.temperature_*
+- sensor.*_temperature
+- sensor.humidity_*
+- sensor.*_humidity
+- sensor.illumination_*
+- sensor.*_illuminance
