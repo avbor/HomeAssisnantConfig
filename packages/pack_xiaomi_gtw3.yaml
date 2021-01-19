@@ -1,0 +1,66 @@
+#################################################
+# Package Xiaomi Gateway 3
+#################################################
+xiaomi_gateway_3:
+
+  # Input Select
+  input_select:
+    xiaomi_gateway3_name:
+      name: 'Select gateway for actions below'
+      options:
+        - Gateway 3-1
+        - Gateway 3-2
+      initial: Gateway 3-1
+      icon: mdi:router-wireless
+
+  # Input Text
+  input_text:
+    xiaomi_gateway3_id:
+      name: 'Xiaomi Gateway 3 ID'
+      initial: remote.0x588e81fffedca899_pair
+      icon: mdi:router-wireless
+
+  # Scripts
+  script:
+    mi_gw3_reboot:
+      sequence:
+        - service: remote.send_command
+          data:
+            entity_id: "{{ states('input_text.xiaomi_gateway3_id') }}"
+            command: reboot
+    
+    mi_gw3_enable_ftp:
+      sequence:
+        - service: remote.send_command
+          data:
+            entity_id: "{{ states('input_text.xiaomi_gateway3_id') }}"
+            command: ftp
+    
+    mi_gw3_pair_on:
+      sequence:
+        - service: remote.turn_on
+          data:
+            entity_id: "{{ states('input_text.xiaomi_gateway3_id') }}"
+    
+    mi_gw3_pair_off:
+      sequence:
+        - service: remote.turn_off
+          data:
+            entity_id: "{{ states('input_text.xiaomi_gateway3_id') }}"
+
+  # Automations
+  automation:
+    - alias: 'Mirror Gtw3 input_select Name to ID'
+      trigger:
+        platform: state
+        entity_id: input_select.xiaomi_gateway3_name
+      action:
+        - service: input_text.set_value
+          data:
+            entity_id: input_text.xiaomi_gateway3_id
+            value: >
+              {% if trigger.to_state.state == 'Gateway 3-1' %}
+                remote.0x588e81fffedca899_pair
+              {% elif trigger.to_state.state == 'Gateway 3-2' %}
+                remote.0x842e14fffe4dff7f_pair
+              {% endif %}

@@ -24,11 +24,3 @@ output_device:
       - Детская (TV)
     initial: Гостинная (Home Mini)
     icon: mdi:speaker-wireless
-
-xiaomi_gateway3_name:
-  name: 'Select gateway for actions below'
-  options:
-    - Gateway 3-1
-    - Gateway 3-2
-  initial: Gateway 3-1
-  icon: mdi:router-wireless

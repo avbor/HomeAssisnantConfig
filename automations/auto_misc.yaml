@@ -1,18 +1,3 @@
 #################################################
 # Miscellaneous automatization
 #################################################
-
-- alias: 'Mirror Gtw3 input_select Name to ID'
-  trigger:
-    platform: state
-    entity_id: input_select.xiaomi_gateway3_name
-  action:
-    - service: input_text.set_value
-      data:
-        entity_id: input_text.xiaomi_gateway3_id
-        value: >
-          {% if trigger.to_state.state == 'Gateway 3-1' %}
-            remote.0x588e81fffedca899_pair
-          {% elif trigger.to_state.state == 'Gateway 3-2' %}
-            remote.0x842e14fffe4dff7f_pair
-          {% endif %}
