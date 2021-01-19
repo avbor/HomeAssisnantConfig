@@ -51,12 +51,12 @@ cards:
         hours_to_show: 24
         refresh_interval: 600
         entities:
-          - sensor.temperature_158d0003230618
-          - sensor.temperature_158d0003931aec
-          - sensor.temperature_158d0003931b0e
-          - sensor.temperature_158d0003931a55
+          - sensor.0x158d0003230618_temperature
+          - sensor.0x158d0003931aec_temperature
+          - sensor.0x158d0003931b0e_temperature
+          - sensor.0x158d0003931a55_temperature
           - sensor.a4c138414e9a_temperature
-          - sensor.temperature_158d00039e2ecb
+          - sensor.0x158d00039e2ecb_temperature
       - type: history-graph
         hours_to_show: 24
         refresh_interval: 600
@@ -80,12 +80,12 @@ cards:
         hours_to_show: 24
         refresh_interval: 600
         entities:
-          - sensor.humidity_158d0003230618
-          - sensor.humidity_158d0003931aec
-          - sensor.humidity_158d0003931b0e
-          - sensor.humidity_158d0003931a55
+          - sensor.0x158d0003230618_humidity
+          - sensor.0x158d0003931aec_humidity
+          - sensor.0x158d0003931b0e_humidity
+          - sensor.0x158d0003931a55_humidity
           - sensor.a4c138414e9a_humidity
-          - sensor.humidity_158d00039e2ecb
+          - sensor.0x158d00039e2ecb_humidity
       - type: history-graph
         hours_to_show: 24
         refresh_interval: 600

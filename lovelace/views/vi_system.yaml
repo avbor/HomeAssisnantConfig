@@ -189,7 +189,7 @@ cards:
       - type: entities
         show_header_toggle: false
         entities:
-          - entity: switch.plug_158d00033b702e
+          - entity: switch.0x158d00033b702e_switch
             name: Розетка Xiaomi ZigBee Plug 01
           - entity: switch.0x158d000391fb00_switch
             name: Розетка Xiaomi ZigBee Plug 02
@@ -212,7 +212,7 @@ cards:
           - switch.tplink_smartplug_02
           - switch.mi_smartplugwifi_01
           - switch.mi_smartplugwifi_02
-          - switch.plug_158d00033b702e
+          - switch.0x158d00033b702e_switch
           - switch.0x158d000391fb00_switch
         state_filter:
           - unavailable
@@ -264,24 +264,24 @@ cards:
 #          ### Заряд батарей:
 #      - type: entities
 #        entities:
-#          - entity: sensor.battery_status_158d0003230618
+#          - entity: sensor.0x158d0003230618_battery
 #            name: Датчик температуры (Гостинная)
 #            icon: mdi:battery-outline
-#          - entity: sensor.battery_status_158d0003931aec
+#          - entity: sensor.0x158d0003931aec_battery
 #            name: Датчик температуры (Детская)
 #            icon: mdi:battery-outline
-#          - entity: sensor.battery_status_158d0003931b0e
+#          - entity: sensor.0x158d0003931b0e_battery
 #            name: Датчик температуры (Спальня)
 #            icon: mdi:battery-outline
-#          - entity: sensor.battery_status_158d0003931a55
+#          - entity: sensor.0x158d0003931a55_battery
 #            name: Датчик температуры (Ванная)
 #            icon: mdi:battery-outline
-#          - entity: sensor.battery_status_158d00039e2ecb
+#          - entity: sensor.0x158d00039e2ecb_battery
 #            name: Датчик температуры (Кладовая)
 #            icon: mdi:battery-outline
 #          - entity: sensor.0x158d00035ff631_battery
 #            name: Кнопка (Кухня)
-#          - entity: sensor.battery_status_158d00033efd9e
+#          - entity: sensor.0x158d00033efd9e_battery
 #            name: Кнопка (свет Детская)
 #            icon: mdi:battery-outline
 #          - entity: sensor.0x158d000400e77d_battery
@@ -290,10 +290,10 @@ cards:
 #            name: Датчик протечки (под Ванной)
 #          - entity: sensor.0x158d0003045123_battery
 #            name: Датчик движения (Кладовая)
-#          - entity: sensor.battery_status_158d000309920a
+#          - entity: sensor.0x158d000309920a_battery
 #            name: Датчик движения (Прихожая)
 #            icon: mdi:battery-outline
-#          - entity: sensor.battery_status_158d00044cea8e
+#          - entity: sensor.0x158d00044cea8e_battery
 #            name: Датчик движения (Детская)
 #            icon: mdi:battery-outline
 #          - entity: sensor.0x158d0003fac0ec_battery

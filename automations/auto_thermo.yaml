@@ -6,11 +6,11 @@
 - alias: Termo alert [Nursery]
   trigger:
     - platform: template
-      value_template: "{{ (states('sensor.temperature_158d0003931aec') | float) < 22 }}"
+      value_template: "{{ (states('sensor.0x158d0003931aec_temperature') | float) < 22 }}"
       for:
         minutes: 5
     - platform: template
-      value_template: "{{ (states('sensor.temperature_158d0003931aec') | float) > 25 }}"
+      value_template: "{{ (states('sensor.0x158d0003931aec_temperature') | float) > 25 }}"
       for:
         minutes: 5
   action:
@@ -26,11 +26,11 @@
 - alias: Termo alert [Living Room]
   trigger:
     - platform: template
-      value_template: "{{ (states('sensor.temperature_158d0003230618') | float) < 22 }}"
+      value_template: "{{ (states('sensor.0x158d0003230618_temperature') | float) < 22 }}"
       for:
         minutes: 5
     - platform: template
-      value_template: "{{ (states('sensor.temperature_158d0003230618') | float) > 25 }}"
+      value_template: "{{ (states('sensor.0x158d0003230618_temperature') | float) > 25 }}"
       for:
         minutes: 5
   action:
@@ -46,11 +46,11 @@
 - alias: Termo alert [Bedroom]
   trigger:
     - platform: template
-      value_template: "{{ (states('sensor.temperature_158d0003931b0e') | float) < 21 }}"
+      value_template: "{{ (states('sensor.0x158d0003931b0e_temperature') | float) < 21 }}"
       for:
         minutes: 5
     - platform: template
-      value_template: "{{ (states('sensor.temperature_158d0003931b0e') | float) > 24.5 }}"
+      value_template: "{{ (states('sensor.0x158d0003931b0e_temperature') | float) > 24.5 }}"
       for:
         minutes: 5
   action:

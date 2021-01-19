@@ -11,11 +11,11 @@ cards:
       - type: horizontal-stack
         cards:
           - type: sensor
-            entity: sensor.temperature_158d0003931aec
+            entity: sensor.0x158d0003931aec_temperature
             name: Температура
             graph: line
           - type: sensor
-            entity: sensor.humidity_158d0003931aec
+            entity: sensor.0x158d0003931aec_humidity
             name: Влажность
             graph: line
       - type: vertical-stack
@@ -97,11 +97,11 @@ cards:
       - type: horizontal-stack
         cards:
           - type: sensor
-            entity: sensor.temperature_158d0003230618
+            entity: sensor.0x158d0003230618_temperature
             name: Температура
             graph: line
           - type: sensor
-            entity: sensor.humidity_158d0003230618
+            entity: sensor.0x158d0003230618_humidity
             name: Влажность
             graph: line
       - type: vertical-stack
@@ -154,11 +154,11 @@ cards:
       - type: horizontal-stack
         cards:
           - type: sensor
-            entity: sensor.temperature_158d0003931b0e
+            entity: sensor.0x158d0003931b0e_temperature
             name: Температура
             graph: line
           - type: sensor
-            entity: sensor.humidity_158d0003931b0e
+            entity: sensor.0x158d0003931b0e_humidity
             name: Влажность
             graph: line
       - type: vertical-stack
@@ -211,11 +211,11 @@ cards:
       - type: horizontal-stack
         cards:
           - type: sensor
-            entity: sensor.temperature_158d00039e2ecb
+            entity: sensor.0x158d00039e2ecb_temperature
             name: Температура
             graph: line
           - type: sensor
-            entity: sensor.humidity_158d00039e2ecb
+            entity: sensor.0x158d00039e2ecb_humidity
             name: Влажность
             graph: line
       - type: 'custom:mini-graph-card'
@@ -248,11 +248,11 @@ cards:
       - type: horizontal-stack
         cards:
           - type: sensor
-            entity: sensor.temperature_158d0003931a55
+            entity: sensor.0x158d0003931a55_temperature
             name: Температура
             graph: line
           - type: sensor
-            entity: sensor.humidity_158d0003931a55
+            entity: sensor.0x158d0003931a55_humidity
             name: Влажность
             graph: line
   # Туалет

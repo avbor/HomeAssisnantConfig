@@ -101,7 +101,7 @@ humidifiers_pack:
           entity_id: fan.xiaomi_miio_device
           state: 'off'
         - condition: numeric_state
-          entity_id: sensor.humidity_158d0003931aec
+          entity_id: sensor.0x158d0003931aec_humidity
           below: 45
         - condition: numeric_state
           entity_id: sensor.smartmi_humidifier_01_water_level

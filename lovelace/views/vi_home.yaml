@@ -169,17 +169,17 @@ cards:
             icon: mdi:air-conditioner
           # Температура
           - type: section
-          - entity: sensor.temperature_158d0003230618
+          - entity: sensor.0x158d0003230618_temperature
             name: Гостинная
-          - entity: sensor.temperature_158d0003931aec
+          - entity: sensor.0x158d0003931aec_temperature
             name: Детская
-          - entity: sensor.temperature_158d0003931b0e
+          - entity: sensor.0x158d0003931b0e_temperature
             name: Спальня
-          - entity: sensor.temperature_158d0003931a55
+          - entity: sensor.0x158d0003931a55_temperature
             name: Ванная
           - entity: sensor.a4c138414e9a_temperature
             name: Туалет
-          - entity: sensor.temperature_158d00039e2ecb
+          - entity: sensor.0x158d00039e2ecb_temperature
             name: Кладовая
           # Разное
           - type: section

@@ -26,11 +26,14 @@
 - alias: 'Свет в детсокй Вкл-Выкл'
   initial_state: true
   trigger: 
-    platform: event
-    event_type: xiaomi_aqara.click
-    event_data:
-      entity_id: binary_sensor.switch_158d00033efd9e
-      click_type: single
+#    platform: event
+#    event_type: xiaomi_aqara.click
+#    event_data:
+#      entity_id: binary_sensor.switch_158d00033efd9e
+#      click_type: single
+    platform: state
+    entity_id: sensor.0x158d00033efd9e_action
+    to: 'single'
   action:
     service: light.toggle
     data:
@@ -39,24 +42,30 @@
 - alias: 'Подсветка окна в детской Вкл-Выкл'
   initial_state: true
   trigger: 
-    platform: event
-    event_type: xiaomi_aqara.click
-    event_data:
-      entity_id: binary_sensor.switch_158d00033efd9e
-      click_type: long_click_press
+#    platform: event
+#    event_type: xiaomi_aqara.click
+#    event_data:
+#      entity_id: binary_sensor.switch_158d00033efd9e
+#      click_type: long_click_press
+    platform: state
+    entity_id: sensor.0x158d00033efd9e_action
+    to: 'hold'
   action:
     service: switch.toggle
     data:
-      entity_id: switch.plug_158d00033b702e
+      entity_id: switch.0x158d00033b702e_switch
 
 - alias: 'Яркость света в детской'
   initial_state: true
   trigger:
-    platform: event
-    event_type: xiaomi_aqara.click
-    event_data:
-      entity_id: binary_sensor.switch_158d00033efd9e
-      click_type: double
+#    platform: event
+#    event_type: xiaomi_aqara.click
+#    event_data:
+#      entity_id: binary_sensor.switch_158d00033efd9e
+#      click_type: double
+    platform: state
+    entity_id: sensor.0x158d00033efd9e_action
+    to: 'double'
   action:
     service: light.turn_on
     data_template:

@@ -71,9 +71,9 @@
         {% endif %}
     local_pressure_mmhg:
       value_template: >
-        {% set pressure = states('sensor.pressure_158d0003230618') | float(default=-1) %}
-        {% if pressure != -1 and (((states('sensor.pressure_158d0003230618') | float) / 1.333) | round(2)) > 500 %}
-        {{ ((states('sensor.pressure_158d0003230618') | float) / 1.333) | round(2) }}
+        {% set pressure = states('sensor.0x158d0003230618_pressure') | float(default=-1) %}
+        {% if pressure != -1 and (((states('sensor.0x158d0003230618_pressure') | float) / 1.333) | round(2)) > 500 %}
+        {{ ((states('sensor.0x158d0003230618_pressure') | float) / 1.333) | round(2) }}
         {% else %}
         {{ states('sensor.local_pressure_mmhg') }}
         {% endif %}
@@ -94,22 +94,22 @@
       friendly_name: Температура в гостиной
       unit_of_measurement: °C
       device_class: temperature
-      value_template: "{{ states('sensor.temperature_158d0003230618') }}"
+      value_template: "{{ states('sensor.0x158d0003230618_temperature') }}"
 - platform: min_max
   name: Average Temperature In Flat
   type: median
   entity_ids:
-    - sensor.temperature_158d0003931aec
-    - sensor.temperature_158d0003230618
-    - sensor.temperature_158d0003931b0e
-    - sensor.temperature_158d00039e2ecb
+    - sensor.0x158d0003931aec_temperature
+    - sensor.0x158d0003230618_temperature
+    - sensor.0x158d0003931b0e_temperature
+    - sensor.0x158d00039e2ecb_temperature
     - sensor.a4c138414e9a_temperature
 - platform: min_max
   name: Average Humidity In Flat
   type: median
   entity_ids:
-    - sensor.humidity_158d0003931aec
-    - sensor.humidity_158d0003230618
-    - sensor.humidity_158d0003931b0e
-    - sensor.humidity_158d00039e2ecb
+    - sensor.0x158d0003931aec_humidity
+    - sensor.0x158d0003230618_humidity
+    - sensor.0x158d0003931b0e_humidity
+    - sensor.0x158d00039e2ecb_humidity
     - sensor.a4c138414e9a_humidity

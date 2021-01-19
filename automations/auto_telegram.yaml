@@ -111,12 +111,12 @@
       target: '{{ trigger.event.data.user_id }}'
       message: |
         *Климат*
-        Гостинная: *{{ states('sensor.temperature_158d0003230618') }}°C*, {{ states('sensor.humidity_158d0003230618') }}%
-        Детская: *{{ states('sensor.temperature_158d0003931aec') }}°C*, {{ states('sensor.humidity_158d0003931aec') }}%
-        Спальня: *{{ states('sensor.temperature_158d0003931b0e') }}°C*, {{ states('sensor.humidity_158d0003931b0e') }}%
-        Ванная: *{{ states('sensor.temperature_158d0003931a55') }}°C*, {{ states('sensor.humidity_158d0003931a55') }}%
+        Гостинная: *{{ states('sensor.0x158d0003230618_temperature') }}°C*, {{ states('sensor.0x158d0003230618_humidity') }}%
+        Детская: *{{ states('sensor.0x158d0003931aec_temperature') }}°C*, {{ states('sensor.0x158d0003931aec_humidity') }}%
+        Спальня: *{{ states('sensor.0x158d0003931b0e_temperature') }}°C*, {{ states('sensor.0x158d0003931b0e_humidity') }}%
+        Ванная: *{{ states('sensor.0x158d0003931a55_temperature') }}°C*, {{ states('sensor.0x158d0003931a55_humidity') }}%
         Туалет: *{{ states('sensor.a4c138414e9a_temperature') }}°C*, {{ states('sensor.a4c138414e9a_humidity') }}%
-        Кладовая: *{{ states('sensor.temperature_158d00039e2ecb') }}°C*, {{ states('sensor.humidity_158d00039e2ecb') }}%
+        Кладовая: *{{ states('sensor.0x158d00039e2ecb_temperature') }}°C*, {{ states('sensor.0x158d00039e2ecb_humidity') }}%
 
         *Статус устройств*
         `-= Датчики протечки =-`
@@ -141,7 +141,7 @@
         `-= Розетки =-`
         Розетка TP-Link SmartPlug 01: *{{ states('switch.tplink_smartplug_01') }}*
         Розетка TP-Link SmartPlug 02: *{{ states('switch.tplink_smartplug_02') }}*
-        Розетка Xiaomi ZigBee Plug 01: *{{ states('switch.plug_158d00033b702e') }}*
+        Розетка Xiaomi ZigBee Plug 01: *{{ states('switch.0x158d00033b702e_switch') }}*
         Розетка Xiaomi ZigBee Plug 02: *{{ states('switch.0x158d000391fb00_switch') }}*
         Розетка Xiaomi WiFi Plug 01: *{{ states('switch.mi_smartplugwifi_01') }}*
         Розетка Xiaomi WiFi Plug 02: *{{ states('switch.mi_smartplugwifi_02') }}*

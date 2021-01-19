@@ -144,21 +144,21 @@
   trigger:
     platform: numeric_state
     entity_id:
-      - sensor.battery_status_158d0003230618
-      - sensor.battery_status_158d0003931aec
-      - sensor.battery_status_158d0003931b0e
+      - sensor.0x158d0003230618_battery
+      - sensor.0x158d0003931aec_battery
+      - sensor.0x158d0003931b0e_battery
       - sensor.0x158d00035ff631_battery
       - sensor.0x158d0003045123_battery
-      - sensor.battery_status_158d0003931a55
-      - sensor.battery_status_158d00039e2ecb
+      - sensor.0x158d0003931a55_battery
+      - sensor.0x158d00039e2ecb_battery
       - sensor.0x158d000400e77d_battery
-      - sensor.battery_status_158d000309920a
-      - sensor.battery_status_158d00044cea8e
+      - sensor.0x158d000309920a_battery
+      - sensor.0x158d00044cea8e_battery
       - sensor.battery_status_158d00031c790f
       - sensor.battery_status_158d00039cf974
       - sensor.battery_status_158d0004073b67
       - sensor.battery_status_158d0003d54725
-      - sensor.battery_status_158d00033efd9e
+      - sensor.0x158d00033efd9e_battery
       - sensor.0x158d00035a9bc5_battery
       - sensor.a4c138414e9a_battery
       - sensor.0x158d00044ee524_battery

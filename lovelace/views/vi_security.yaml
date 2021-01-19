@@ -22,7 +22,7 @@ cards:
   - type: picture-glance
     title: Прихожая
     entities:
-      - binary_sensor.motion_sensor_158d000309920a
+      - binary_sensor.0x158d000309920a_motion
     camera_image: camera.dafangcam_02_rtsp
 #    camera_view: live
 #  - type: picture-entity

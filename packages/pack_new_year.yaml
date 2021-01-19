@@ -97,7 +97,7 @@ new_year_holidays_pack:
 #    action:
 #      - service: switch.turn_off
 #        data:
-#          entity_id: switch.plug_158d00033b702e
+#          entity_id: switch.0x158d00033b702e_switch
 #      - service: switch.turn_off
 #        data:
 #          entity_id: switch.0x158d000391fb00_switch
@@ -115,7 +115,7 @@ new_year_holidays_pack:
 #    action:
 #      - service: switch.turn_on
 #        data:
-#          entity_id: switch.plug_158d00033b702e
+#          entity_id: switch.0x158d00033b702e_switch
 #      - service: switch.turn_on
 #        data:
 #          entity_id: switch.0x158d000391fb00_switch

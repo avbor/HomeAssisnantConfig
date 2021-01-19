@@ -4,48 +4,48 @@
 
 - platform: template
   sensors:
-    battery_status_158d0003230618:
-      friendly_name: "Датчик температуры (Гостинная)"
-      value_template: >
-        {{ state_attr('sensor.temperature_158d0003230618', 'battery_level') | int }}
-      unit_of_measurement: '%'
-      device_class: "battery"
-    battery_status_158d0003931aec:
-      friendly_name: "Датчик температуры (Детская)"
-      value_template: >
-        {{ state_attr('sensor.temperature_158d0003931aec', 'battery_level') | int }}
-      unit_of_measurement: '%'
-      device_class: "battery"
-    battery_status_158d0003931b0e:
-      friendly_name: "Датчик температуры (Спальня)"
-      value_template: >
-        {{ state_attr('sensor.temperature_158d0003931b0e', 'battery_level') | int }}
-      unit_of_measurement: '%'
-      device_class: "battery"
-    battery_status_158d0003931a55:
-      friendly_name: "Датчик температуры (Ванная)"
-      value_template: >
-        {{ state_attr('sensor.temperature_158d0003931a55', 'battery_level') | int }}
-      unit_of_measurement: '%'
-      device_class: "battery"
-    battery_status_158d00039e2ecb:
-      friendly_name: "Датчик температуры (Кладовая)"
-      value_template: >
-        {{ state_attr('sensor.temperature_158d00039e2ecb', 'battery_level') | int }}
-      unit_of_measurement: '%'
-      device_class: "battery"
-    battery_status_158d000309920a:
-      friendly_name: "ДД Aqara Прихожая"
-      value_template: >
-        {{ state_attr('binary_sensor.motion_sensor_158d000309920a', 'battery_level') | int }}
-      unit_of_measurement: '%'
-      device_class: "battery"
-    battery_status_158d00044cea8e:
-      friendly_name: "ДД Aqara Детская"
-      value_template: >
-        {{ state_attr('binary_sensor.motion_sensor_158d00044cea8e', 'battery_level') | int }}
-      unit_of_measurement: '%'
-      device_class: "battery"
+#    battery_status_158d0003230618:
+#      friendly_name: "Датчик температуры (Гостинная)"
+#      value_template: >
+#        {{ state_attr('sensor.temperature_158d0003230618', 'battery_level') | int }}
+#      unit_of_measurement: '%'
+#      device_class: "battery"
+#    battery_status_158d0003931aec:
+#      friendly_name: "Датчик температуры (Детская)"
+#      value_template: >
+#        {{ state_attr('sensor.temperature_158d0003931aec', 'battery_level') | int }}
+#      unit_of_measurement: '%'
+#      device_class: "battery"
+#    battery_status_158d0003931b0e:
+#      friendly_name: "Датчик температуры (Спальня)"
+#      value_template: >
+#        {{ state_attr('sensor.temperature_158d0003931b0e', 'battery_level') | int }}
+#      unit_of_measurement: '%'
+#      device_class: "battery"
+#    battery_status_158d0003931a55:
+#      friendly_name: "Датчик температуры (Ванная)"
+#      value_template: >
+#        {{ state_attr('sensor.temperature_158d0003931a55', 'battery_level') | int }}
+#      unit_of_measurement: '%'
+#      device_class: "battery"
+#    battery_status_158d00039e2ecb:
+#      friendly_name: "Датчик температуры (Кладовая)"
+#      value_template: >
+#        {{ state_attr('sensor.temperature_158d00039e2ecb', 'battery_level') | int }}
+#      unit_of_measurement: '%'
+#      device_class: "battery"
+#    battery_status_158d000309920a:
+#      friendly_name: "ДД Aqara Прихожая"
+#      value_template: >
+#        {{ state_attr('binary_sensor.motion_sensor_158d000309920a', 'battery_level') | int }}
+#      unit_of_measurement: '%'
+#      device_class: "battery"
+#    battery_status_158d00044cea8e:
+#      friendly_name: "ДД Aqara Детская"
+#      value_template: >
+#        {{ state_attr('binary_sensor.motion_sensor_158d00044cea8e', 'battery_level') | int }}
+#      unit_of_measurement: '%'
+#      device_class: "battery"
     battery_status_158d00031c790f:
       friendly_name: "Датчик входной двери"
       value_template: >
@@ -70,9 +70,9 @@
         {{ state_attr('binary_sensor.door_window_sensor_158d0003d54725', 'battery_level') | int }}
       unit_of_measurement: '%'
       device_class: "battery"
-    battery_status_158d00033efd9e:
-      friendly_name: "Кнопка в Детской (Свет)"
-      value_template: >
-        {{ state_attr('binary_sensor.switch_158d00033efd9e', 'battery_level') | int }}
-      unit_of_measurement: '%'
-      device_class: "battery"
+#    battery_status_158d00033efd9e:
+#      friendly_name: "Кнопка в Детской (Свет)"
+#      value_template: >
+#        {{ state_attr('binary_sensor.switch_158d00033efd9e', 'battery_level') | int }}
+#      unit_of_measurement: '%'
+#      device_class: "battery"

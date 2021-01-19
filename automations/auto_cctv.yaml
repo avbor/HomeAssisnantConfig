@@ -6,7 +6,7 @@
   initial_state: false
   trigger:
     platform: state
-    entity_id: binary_sensor.motion_sensor_158d00044cea8e
+    entity_id: binary_sensor.0x158d00044cea8e_motion
     from: 'off'
     to: 'on'
   action:
@@ -64,7 +64,7 @@
     to: 'on'
   condition:
     - condition: state
-      entity_id: binary_sensor.motion_sensor_158d000309920a
+      entity_id: binary_sensor.0x158d000309920a_motion
       state: 'off'
   action:
     - delay:

@@ -2,12 +2,12 @@
 # Entities to include in InfluxDB
 #################################################
 - binary_sensor.0x158d0003045123_motion
-- binary_sensor.motion_sensor_158d000309920a
-- binary_sensor.motion_sensor_158d00044cea8e
+- binary_sensor.0x158d000309920a_motion
+- binary_sensor.0x158d00044cea8e_motion
 - binary_sensor.0x158d0003fac0ec_motion
 - sensor.average_temperature_in_flat
 - sensor.average_humidity_in_flat
-- sensor.pressure_158d0003230618
+- sensor.0x158d0003230618_pressure
 - sensor.local_pressure_mmhg
 - binary_sensor.door_window_sensor_158d00031c790f
 - device_tracker.mi8_miphone
