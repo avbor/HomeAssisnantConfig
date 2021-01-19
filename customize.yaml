@@ -32,14 +32,6 @@ light.sonoff_1000f30a9e:
   friendly_name: Гостиная - Споты
 switch.sonoff_1000b68886:
   friendly_name: Нептун - Питание
-binary_sensor.door_window_sensor_158d00031c790f:
-  friendly_name: Входная дверь
-binary_sensor.door_window_sensor_158d00039cf974:
-  friendly_name: Кондиционер в Детской
-binary_sensor.door_window_sensor_158d0004073b67:
-  friendly_name: Кондиционер в Спальне
-binary_sensor.door_window_sensor_158d0003d54725:
-  friendly_name: Кондиционер в Гостиной
 binary_sensor.0x158d00044ee524_contact:
   friendly_name: Датчик протечки - Нептун
 #light.0x86bd7fffe616b72_light:

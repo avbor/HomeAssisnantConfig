@@ -153,10 +153,10 @@
       - sensor.0x158d000400e77d_battery
       - sensor.0x158d000309920a_battery
       - sensor.0x158d00044cea8e_battery
-      - sensor.battery_status_158d00031c790f
-      - sensor.battery_status_158d00039cf974
-      - sensor.battery_status_158d0004073b67
-      - sensor.battery_status_158d0003d54725
+      - sensor.0x158d00031c790f_battery
+      - sensor.0x158d00039cf974_battery
+      - sensor.0x158d0004073b67_battery
+      - sensor.0x158d0003d54725_battery
       - sensor.0x158d00033efd9e_battery
       - sensor.0x158d00035a9bc5_battery
       - sensor.a4c138414e9a_battery
@@ -179,7 +179,7 @@
   initial_state: true
   trigger:
     platform: state
-    entity_id: binary_sensor.door_window_sensor_158d00031c790f
+    entity_id: binary_sensor.0x158d00031c790f_contact
     from: 'off'
     to: 'on'
   action:
@@ -191,7 +191,7 @@
   initial_state: true
   trigger:
     platform: state
-    entity_id: binary_sensor.door_window_sensor_158d00031c790f
+    entity_id: binary_sensor.0x158d00031c790f_contact
     from: 'on'
     to: 'off'
   action:

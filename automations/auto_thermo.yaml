@@ -68,9 +68,9 @@
   trigger:
     platform: state
     entity_id:
-      - binary_sensor.door_window_sensor_158d00039cf974
-      - binary_sensor.door_window_sensor_158d0003d54725
-      - binary_sensor.door_window_sensor_158d0004073b67
+      - binary_sensor.0x158d00039cf974_contact
+      - binary_sensor.0x158d0003d54725_contact
+      - binary_sensor.0x158d0004073b67_contact
     from: 'off'
     to: 'on'
     for:
@@ -86,9 +86,9 @@
   trigger:
     platform: state
     entity_id:
-      - binary_sensor.door_window_sensor_158d00039cf974
-      - binary_sensor.door_window_sensor_158d0003d54725
-      - binary_sensor.door_window_sensor_158d0004073b67
+      - binary_sensor.0x158d00039cf974_contact
+      - binary_sensor.0x158d0003d54725_contact
+      - binary_sensor.0x158d0004073b67_contact
     from: 'off'
     to: 'on'
     for:
@@ -104,9 +104,9 @@
   trigger:
     platform: state
     entity_id:
-      - binary_sensor.door_window_sensor_158d00039cf974
-      - binary_sensor.door_window_sensor_158d0003d54725
-      - binary_sensor.door_window_sensor_158d0004073b67
+      - binary_sensor.0x158d00039cf974_contact
+      - binary_sensor.0x158d0003d54725_contact
+      - binary_sensor.0x158d0004073b67_contact
     from: 'off'
     to: 'on'
     for:

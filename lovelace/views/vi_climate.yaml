@@ -51,7 +51,7 @@ cards:
                   service_data:
                     entity_id: scene.lzqqvmpmdxuf5a83
               #- entity: scene.doqgqwxyz36nmn1i
-              - entity: binary_sensor.door_window_sensor_158d00039cf974
+              - entity: binary_sensor.0x158d00039cf974_contact
                 name: Power Off
                 icon: mdi:power
                 tap_action:
@@ -137,7 +137,7 @@ cards:
                   service_data:
                     entity_id: scene.hbhl5ycgabb51veq
               #- entity: scene.8klkjaqtg9lytydq
-              - entity: binary_sensor.door_window_sensor_158d0003d54725
+              - entity: binary_sensor.0x158d0003d54725_contact
                 name: Power Off
                 icon: mdi:power
                 tap_action: 
@@ -194,7 +194,7 @@ cards:
                   service_data:
                     entity_id: scene.la82ybui20ftyh8s
               #- entity: scene.pra49izcxfgbwmmo
-              - entity: binary_sensor.door_window_sensor_158d0004073b67
+              - entity: binary_sensor.0x158d0004073b67_contact
                 name: Power Off
                 icon: mdi:power
                 tap_action:

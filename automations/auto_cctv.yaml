@@ -59,7 +59,7 @@
   initial_state: true
   trigger:
     platform: state
-    entity_id: binary_sensor.door_window_sensor_158d00031c790f
+    entity_id: binary_sensor.0x158d00031c790f_contact
     from: 'off'
     to: 'on'
   condition:

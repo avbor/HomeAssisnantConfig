@@ -9,7 +9,7 @@
 - sensor.average_humidity_in_flat
 - sensor.0x158d0003230618_pressure
 - sensor.local_pressure_mmhg
-- binary_sensor.door_window_sensor_158d00031c790f
+- binary_sensor.0x158d00031c790f_contact
 - device_tracker.mi8_miphone
 - device_tracker.oneplus3t
 - device_tracker.kb2003

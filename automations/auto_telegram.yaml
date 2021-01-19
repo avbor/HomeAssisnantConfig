@@ -116,9 +116,9 @@
         Aqara кладовая: *{{ states('binary_sensor.0x158d000400e77d_moisture') }}*
         Aqara под ванной (слева): *{{ states('binary_sensor.0x158d0004030d84_moisture') }}*
         `-= Кондиционеры =-`
-        Детская: *{{ states('binary_sensor.door_window_sensor_158d00039cf974') }}*
-        Гостинная: *{{ states('binary_sensor.door_window_sensor_158d0003d54725') }}*
-        Спальня: *{{ states('binary_sensor.door_window_sensor_158d0004073b67') }}*
+        Детская: *{{ states('binary_sensor.0x158d00039cf974_contact') }}*
+        Гостинная: *{{ states('binary_sensor.0x158d0003d54725_contact') }}*
+        Спальня: *{{ states('binary_sensor.0x158d0004073b67_contact') }}*
         `-= Свет =-`
         Лампа в спальне: *{{ states('light.spalnia_stol') }}*
         Люстра в детской: *{{ states('light.detskaia') }}*
