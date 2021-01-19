@@ -51,12 +51,18 @@ cards:
         hours_to_show: 24
         refresh_interval: 600
         entities:
-          - sensor.0x158d0003230618_temperature
-          - sensor.0x158d0003931aec_temperature
-          - sensor.0x158d0003931b0e_temperature
-          - sensor.0x158d0003931a55_temperature
-          - sensor.a4c138414e9a_temperature
-          - sensor.0x158d00039e2ecb_temperature
+          - entity: sensor.0x158d0003230618_temperature
+            name: Гостиная
+          - entity: sensor.0x158d0003931aec_temperature
+            name: Детская
+          - entity: sensor.0x158d0003931b0e_temperature
+            name: Спальня
+          - entity: sensor.0x158d0003931a55_temperature
+            name: Ванная
+          - entity: sensor.a4c138414e9a_temperature
+            name: Туалет
+          - entity: sensor.0x158d00039e2ecb_temperature
+            name: Кладовая
       - type: history-graph
         hours_to_show: 24
         refresh_interval: 600
@@ -80,12 +86,18 @@ cards:
         hours_to_show: 24
         refresh_interval: 600
         entities:
-          - sensor.0x158d0003230618_humidity
-          - sensor.0x158d0003931aec_humidity
-          - sensor.0x158d0003931b0e_humidity
-          - sensor.0x158d0003931a55_humidity
-          - sensor.a4c138414e9a_humidity
-          - sensor.0x158d00039e2ecb_humidity
+          - entity: sensor.0x158d0003230618_humidity
+            name: Гостиная
+          - entity: sensor.0x158d0003931aec_humidity
+            name: Детская
+          - entity: sensor.0x158d0003931b0e_humidity
+            name: Спальня
+          - entity: sensor.0x158d0003931a55_humidity
+            name: Ванная
+          - entity: sensor.a4c138414e9a_humidity
+            name: Туалет
+          - entity: sensor.0x158d00039e2ecb_humidity
+            name: Кладовая
       - type: history-graph
         hours_to_show: 24
         refresh_interval: 600
