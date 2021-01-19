@@ -5,10 +5,6 @@
 radio_play:
   alias: Play Radio on Chromecast
   sequence:
-#    -  service: media_player.volume_set
-#       data:
-#         entity_id: media_player.gostinaia
-#         volume_level: '0.30'
     - service: shell_command.chromecast_tv_on
       data_template:
         ip_addr: >
@@ -34,7 +30,6 @@ radio_play:
           {% elif is_state("input_select.radio_station", "Детское Радио") %} http://ic7.101.ru:8000/a199
           {% elif is_state("input_select.radio_station", "Детское Радио (Старое радио)") %} http://195.91.237.50:8000/detskoe128
           {% endif %}
-        #media_content_type: 'audio/mp4'
         media_content_type: music
 
 radio_stop:

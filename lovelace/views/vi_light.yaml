@@ -20,6 +20,7 @@ cards:
               cards:
               - type: light
                 entity: light.detskaia
+                name: Люстра
                 icon: mdi:ceiling-light
               - type: light
                 entity: light.detskaia_podsvetka_na_okne

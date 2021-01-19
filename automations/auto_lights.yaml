@@ -26,11 +26,6 @@
 - alias: 'Свет в детсокй Вкл-Выкл'
   initial_state: true
   trigger: 
-#    platform: event
-#    event_type: xiaomi_aqara.click
-#    event_data:
-#      entity_id: binary_sensor.switch_158d00033efd9e
-#      click_type: single
     platform: state
     entity_id: sensor.0x158d00033efd9e_action
     to: 'single'
@@ -42,11 +37,6 @@
 - alias: 'Подсветка окна в детской Вкл-Выкл'
   initial_state: true
   trigger: 
-#    platform: event
-#    event_type: xiaomi_aqara.click
-#    event_data:
-#      entity_id: binary_sensor.switch_158d00033efd9e
-#      click_type: long_click_press
     platform: state
     entity_id: sensor.0x158d00033efd9e_action
     to: 'hold'
@@ -58,11 +48,6 @@
 - alias: 'Яркость света в детской'
   initial_state: true
   trigger:
-#    platform: event
-#    event_type: xiaomi_aqara.click
-#    event_data:
-#      entity_id: binary_sensor.switch_158d00033efd9e
-#      click_type: double
     platform: state
     entity_id: sensor.0x158d00033efd9e_action
     to: 'double'
@@ -100,9 +85,6 @@
     - condition: sun
       before: sunrise
       before_offset: "00:30:00"
-#    - condition: state
-#      entity_id: sun.sun
-#      state: 'below_horizon'
   action:
   - service: light.turn_on
     entity_id: light.detskaia
@@ -166,21 +148,6 @@
     service: homeassistant.turn_off
     entity_id: light.kukhnia_lenta
 
-#- alias: 'Вкл-Выкл включения подсветки от сенсора движения'
-#  initial_state: true
-#  trigger:
-#    platform: event
-#    event_type: xiaomi_aqara.click
-#    event_data:
-#      entity_id: sensor.0x158d00035ff631_action
-#      click_type: double
-#  action:
-#    service: homeassistant.toggle
-#    data:
-#      entity_id:
-#        - automation.podsvetka_na_kukhne_sensor_dvizheniia_vkl
-##        - automation.podsvetka_na_kukhne_sensor_dvizheniia_vykl
-
 ### Кладовая
 
 - alias: 'Свет в кладовой (сенсор движения - вкл)'
@@ -203,8 +170,8 @@
     platform: state
     entity_id: binary_sensor.0x158d0003045123_motion
     to: 'off'
-#    for:
-#      minutes: 3
+    for:
+      minutes: 3
   condition:
     condition: state
     entity_id: light.sonoff_1000b6831b
@@ -239,18 +206,6 @@
       effect: SunriseBW
 
 # Гостиная
-
-#- alias: 'Лампа на столе в гостинной (Кнопка Xiaomi)'
-#  trigger:
-#    platform: event
-#    event_type: xiaomi_aqara.click
-#    event_data:
-#      entity_id: sensor.0x158d00035a9bc5_action
-#      click_type: single
-#  action:
-#    service: light.toggle
-#    data:
-#      entity_id: light.0x86bd7fffe616b72_light
 
   # Споты
 - alias: 'Кнопка Xiaomi в Гостиной single'

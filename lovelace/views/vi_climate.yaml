@@ -237,8 +237,6 @@ cards:
             y_axis: secondary
         show:
           fill: false
-#          labels: true
-#          labels_secondary: true
   # Ванная
   - type: vertical-stack
     cards:

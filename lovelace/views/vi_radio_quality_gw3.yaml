@@ -7,10 +7,8 @@ cards:
     cards:
       # Gateways
       - type: markdown
-        #content: '<center> <ha-icon icon="mdi:router-wireless"></ha-icon> </center>'
         content: '### <center> Gateways </center>'
       - type: 'custom:flex-table-card'
-        #title: Gateways
         clickable: false
         entities:
           include: 
@@ -60,16 +58,13 @@ cards:
           th.left: 'padding: 0px 0px 10px 10px'
       # ZigBee
       - type: markdown
-        #content: '<center> <ha-icon icon="mdi:zigbee"></ha-icon> </center>'
         content: '### <center> ZigBee </center>'
       - type: 'custom:flex-table-card'
-        #title: ZigBee
         clickable: false
         entities:
           include: 
             - sensor.*_zigbee
         sort_by: ieee
-        #max_rows: 20
         columns:
           - data: friendly_name
             name: Friendly Name
@@ -113,29 +108,25 @@ cards:
               var dt = new Date(0,0,0,0,0,0,(Date.now()-Date.parse(x)));
               isFinite(dt) ? dt.toTimeString().split(" ")[0] : ""
         css:
-    #      thead th: 'align-content: center;'
           table+: 'padding-top: 15px;'
           'tbody tr:nth-child(even)': 'background-color: #a2542f6;'
           td.left: 'padding: 10px 10px 10px 10px'
           th.left: 'padding: 0px 0px 10px 10px'
-      ### iframe with the graph of the "last missed" from Grafana ###
-      ### Query example: SELECT "last_missed" FROM "autogen"."state" WHERE ("domain" = 'sensor') AND $timeFilter GROUP BY "friendly_name"
+      ###### iframe with the graph of the "last missed" from Grafana ######
+      ###### Query example: SELECT "last_missed" FROM "autogen"."state" WHERE ("domain" = 'sensor') AND $timeFilter GROUP BY "friendly_name" ######
       - type: iframe
         url: !secret graf_url_zigbee_last_missed
         aspect_ratio: 10%
-      ###----------------------------------------
+      ######---------------------------------------------------------######
       # Bluetooth
       - type: markdown
-        #content: '<center> <ha-icon icon="mdi:bluetooth"></ha-icon> </center>'
         content: '### <center> Bluetooth </center>'
       - type: 'custom:flex-table-card'
-        #title: Bluetooth
         clickable: false
         entities:
           include: 
             - sensor.*_ble
         sort_by: mac
-        #max_rows: 20
         columns:
           - data: friendly_name
             name: Friendly Name
@@ -152,7 +143,6 @@ cards:
               var dt = new Date(0,0,0,0,0,0,(Date.now()-Date.parse(x)));
               isFinite(dt) ? dt.toTimeString().split(" ")[0] : ""
         css:
-    #      thead th: 'align-content: center;'
           table+: 'padding-top: 15px;'
           'tbody tr:nth-child(even)': 'background-color: #a2542f6;'
           td.left: 'padding: 10px 10px 10px 10px'

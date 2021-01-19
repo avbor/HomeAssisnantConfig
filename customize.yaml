@@ -30,50 +30,8 @@ light.sonoff_1000f3035d:
   friendly_name: Гостиная - Люстра
 light.sonoff_1000f30a9e:
   friendly_name: Гостиная - Споты
-#sensor.temperature_158d0003230618:
-#  friendly_name: Гостинная
-#sensor.humidity_158d0003230618:
-#  friendly_name: Гостинная
-#sensor.pressure_158d0003230618:
-#  friendly_name: Гостинная
-#sensor.temperature_158d0003931aec:
-#  friendly_name: Детская
-#sensor.humidity_158d0003931aec:
-#  friendly_name: Детская
-#sensor.temperature_158d0003931b0e:
-#  friendly_name: Спальня
-#sensor.humidity_158d0003931b0e:
-#  friendly_name: Спальня
-#sensor.temperature_158d00039e2ecb:
-#  friendly_name: Кладовая
-#sensor.humidity_158d00039e2ecb:
-#  friendly_name: Кладовая
-#sensor.temperature_158d0003931a55:
-#  friendly_name: Ванная
-#sensor.humidity_158d0003931a55:
-#  friendly_name: Ванная
-#sensor.a4c138414e9a_temperature:
-#  friendly_name: Туалет
-#sensor.a4c138414e9a_humidity:
-#  friendly_name: Туалет
-#binary_sensor.switch_158d00033efd9e:
-#  friendly_name: Кнопка в Детской (Свет)
-sensor.0x158d0004ab468e_action:
-  friendly_name: Кнопка Aqara 1
-#switch.plug_158d00033b702e:
-#  friendly_name: Розетка Xiaomi ZigBee Plug 01
 switch.sonoff_1000b68886:
   friendly_name: Нептун - Питание
-binary_sensor.0x158d0004030d84_moisture:
-  friendly_name: Датчик протечки - Под ванной слева
-#sensor.illumination_158d000309920a:
-#  friendly_name: Датчик света - Прихожая
-#sensor.illumination_158d00044cea8e:
-#  friendly_name: Датчик света - Детская
-#binary_sensor.motion_sensor_158d000309920a:
-#  friendly_name: Датчик движения в Прихожей (Aqara)
-#binary_sensor.motion_sensor_158d00044cea8e:
-#  friendly_name: Датчик движения в Детской (Aqara)
 binary_sensor.door_window_sensor_158d00031c790f:
   friendly_name: Входная дверь
 binary_sensor.door_window_sensor_158d00039cf974:

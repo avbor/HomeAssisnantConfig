@@ -24,19 +24,3 @@ cards:
     entities:
       - binary_sensor.0x158d000309920a_motion
     camera_image: camera.dafangcam_02_rtsp
-#    camera_view: live
-#  - type: picture-entity
-#    name: Детская
-#    entity: camera.dafangcam_03_rtsp
-#    #camera_view: live
-#    show_state: false
-#  - type: picture-entity
-#    name: Гостиная
-#    entity: camera.dafangcam_01_rtsp
-#    #camera_view: live
-#    show_state: false
-#  - type: picture-entity
-#    name: Прихожая
-#    entity: camera.dafangcam_02_rtsp
-#    #camera_view: live
-#    show_state: false

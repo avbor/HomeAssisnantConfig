@@ -7,7 +7,6 @@
   trigger:
     platform: state
     entity_id: person.alexander, person.irina, person.galina, person.tatiana, person.olga
-#    entity_id: person.alexander, person.irina, person.olga
   condition:
     condition: and
     conditions:

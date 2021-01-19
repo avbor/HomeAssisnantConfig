@@ -86,18 +86,10 @@
       data_template:
         target: '{{ trigger.event.data.user_id }}'
         file: '/config/www/weather_icons/{{ states("weather.gismeteo") }}.webp'
-#        caption: '{{ states("weather.gismeteo") }}'
         caption: |
           Температура {{ state_attr('weather.gismeteo', 'temperature') }}°C
           Влажность {{ state_attr('weather.gismeteo', 'humidity') }}%
           Давление {{ state_attr('weather.gismeteo', 'pressure') }} hPa ({{ states('sensor.gismeteo_pressure_mmhg') }} mmHg)          
-#    - service: telegram_bot.send_message
-#      data_template:
-#        target: '{{ trigger.event.data.user_id }}'
-#        message: |
-#          Температура {{ state_attr('weather.gismeteo', 'temperature') }}°C
-#          Влажность {{ state_attr('weather.gismeteo', 'humidity') }}%
-#          Давление {{ state_attr('weather.gismeteo', 'pressure') }} hPa ({{ states('sensor.gismeteo_pressure_mmhg') }} mmHg)
 # ---- /status
 - alias: 'Telegram Bot - Status'
   trigger:

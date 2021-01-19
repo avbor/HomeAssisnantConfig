@@ -12,14 +12,6 @@
   name: time_between_7_10
   after: '7:00'
   before: '10:00'
-#- platform: sauresha
-#  email: !secret saures_user
-#  password: !secret saures_pass
-#  flat_id: !secret saures_flat_id
-#  scan_interval:
-#    minutes: 90
-#  counters_sn:
-#    - 000-111
 - platform: template
   sensors:
     updater_supervisor:

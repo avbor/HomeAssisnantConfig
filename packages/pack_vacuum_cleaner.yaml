@@ -22,7 +22,6 @@ vacuum_cleaner:
         color_robo: [0 , 0, 255]
       map_transformation:
         scale: 2
-    #    rotate: 180
         trim:
           top: 10
           bottom: 20
@@ -62,31 +61,12 @@ vacuum_cleaner:
       sensors:
         mirobot_current_fan_speed:
           value_template: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'fan_speed') }}"
-#       mirobot_current_fan_speed:
-#         value_template: >
-#           {% if state_attr('vacuum.xiaomi_vacuum_cleaner', "fan_speed") == 101 %}Quiet
-#           {% elif state_attr('vacuum.xiaomi_vacuum_cleaner', "fan_speed") == 102 %}Balanced
-#           {% elif state_attr('vacuum.xiaomi_vacuum_cleaner', "fan_speed") == 103 %}Turbo
-#           {% elif state_attr('vacuum.xiaomi_vacuum_cleaner', "fan_speed") == 104 %}Max
-#           {% endif %}
 
 # Scripts
   script:
     start_vacuum_room:
       alias: 'Clean Selected Room [Mi Robot]'
       sequence:
-    #      - service: script.turn_on
-    #        data_template:
-    #          entity_id: >-
-    #            {% if is_state("input_select.vacuum_power", "Quiet") %}
-    #              script.set_vacuum_power_quiet
-    #            {% elif is_state("input_select.vacuum_power", "Balanced") %}
-    #              script.set_vacuum_power_balanced
-    #            {% elif is_state("input_select.vacuum_power", "Turbo") %}
-    #              script.set_vacuum_power_turbo
-    #            {% elif is_state("input_select.vacuum_power", "Max") %}
-    #              script.set_vacuum_power_max
-    #            {% endif %}
           - service: script.turn_on
             data_template:
               entity_id: >-
