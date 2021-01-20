@@ -60,7 +60,7 @@ Some **screenshots** from my HA can be found [here](docs/screenshots.md).
   - Xiaomi Smartmi Zhimi Air Humidifier 2 (CJXJSQ02ZM, zhimi.humidifier.ca1)\
   Integration "Xiaomi Miio"
 
-  - Xiaomi Mi Robot Vacuum Cleaner 1S (SDJQR03RR)\
+  - Xiaomi Mi Robot Vacuum Cleaner 1S (SDJQR03RR, roborock.vacuum.m1s)\
   Integration "Xiaomi Miio"
 
   - Xiaomi Dafang 1080p (ZRM4040RT) flashed to [Xiaomi DaFang Hacks](https://github.com/EliasKotlyar/Xiaomi-Dafang-Hacks)\
@@ -77,7 +77,7 @@ Some **screenshots** from my HA can be found [here](docs/screenshots.md).
   - Aqara Wireless Relay (LLKZMK11LM, lumi.relay.c2acn01)
 
 - Plugs:
-  - MiJia Smart Power Plug 2 (ZNCZ02LM)
+  - MiJia Smart Power Plug 2 (ZNCZ02LM, lumi.plug)
 
 - Light:
   - Ikea TRÅDFRI LED Bulb E14 (LED1649C5, ikea.light.led1649c5)
@@ -90,8 +90,8 @@ Some **screenshots** from my HA can be found [here](docs/screenshots.md).
   - MiJia Door & Window Sensor (MCCGQ01LM, lumi.sensor_magnet)
   - MiJia Occupancy Sensor (RTCGQ01LM, lumi.sensor_motion)
   - Aqara Occupancy Sensor (RTCGQ11LM, lumi.sensor_motion.aq2)
-  - MiJia Humidity & Temperature Sensor (WSDCGQ01LM)
-  - Aqara Humidity & Temperature Sensor (WSDCGQ11LM)
+  - MiJia Humidity & Temperature Sensor (WSDCGQ01LM, lumi.sensor_ht)
+  - Aqara Humidity & Temperature Sensor (WSDCGQ11LM, lumi.weather)
   - Aqara Water Immersing Sensor (SJCGQ11LM, lumi.sensor_wleak.aq1)
   - MiJia Honeywell Gas Leak Detector (JTQJ-BF-01LM/BW, lumi.sensor_natgas.v1)
 
