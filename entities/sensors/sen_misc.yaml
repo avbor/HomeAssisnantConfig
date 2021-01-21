@@ -60,7 +60,7 @@
   sensors:
     date_formatted:
       friendly_name: 'Date (DD.MM.YYYY)'
-      value_template: "{{ as_timestamp(states('sensor.date_time_iso')) | timestamp_custom('%m.%d.%Y') }}"
+      value_template: "{{ as_timestamp(states('sensor.date_time_iso')) | timestamp_custom('%d.%m.%Y') }}"
       icon_template: mdi:calendar
       attribute_templates:
         day_of_week: >-
