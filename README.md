@@ -21,7 +21,7 @@ Some **screenshots** from my HA can be found [here](docs/screenshots.md).
   Also as Device Tracker via "Keenetic NDMS2 Routers"
 
 - Access Point Xiaomi Mi WiFi 3G (v1) flashed to [OpenWRT](http://openwrt.org/)\
-~30-35 wireless clients, generally 2.4Ghz - IoT, 5Ghz - mobile clients
+~35-40 wireless clients, generally 2.4Ghz - IoT, 5Ghz - mobile clients
 
 - Switch TP-Link [TL-SG116E](https://www.tp-link.com/ru/business-networking/easy-smart-switch/tl-sg116e/)
 

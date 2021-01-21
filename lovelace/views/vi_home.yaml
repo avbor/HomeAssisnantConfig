@@ -52,6 +52,7 @@ cards:
             - home
           card:
             type: glance
+            show_state: false
     # --- Карта:
       - type: conditional
         conditions:
