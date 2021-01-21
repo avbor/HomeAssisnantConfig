@@ -39,6 +39,7 @@
   display_options:
     - 'time'
     - 'date'
+    - 'date_time_iso'
 - platform: moon
 - platform: version
   source: local
@@ -57,6 +58,15 @@
 - platform: uptime
 - platform: template
   sensors:
+    date_formatted:
+      friendly_name: 'Date (DD.MM.YYYY)'
+      value_template: "{{ as_timestamp(states('sensor.date_time_iso')) | timestamp_custom('%m.%d.%Y') }}"
+      icon_template: mdi:calendar
+      attribute_templates:
+        day_of_week: >-
+          {% set day_num = ["Понедельник", "Вторник", "Среда", "Четверг", "Пятница", "Суббота", "Воскресенье"] %}
+          {% set day_of_week = day_num[now().weekday()] %}
+          {{ day_of_week }}
     ha_supervisor_current_version:
       friendly_name: HA Supervisor Current Version
       value_template: "{{state_attr('sensor.supervisor_updates','current_version')}}"

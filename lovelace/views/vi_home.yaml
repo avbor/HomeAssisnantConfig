@@ -6,10 +6,24 @@ icon: 'hass:home-assistant'
 cards:
   - type: vertical-stack
     cards:
-      - type: entities
-        entities:
-          - sensor.date
-          - sensor.time
+      - type: entity
+        entity: sensor.time
+        name: Время
+      - type: horizontal-stack
+        cards:
+          - type: entity
+            entity: sensor.date_formatted
+            attribute: day_of_week
+            name: День недели
+            icon: mdi:calendar-cursor
+          - type: entity
+            entity: sensor.date_formatted
+            name: Дата
+            icon: mdi:calendar-today
+#      - type: entities
+#        entities:
+#          - sensor.date
+#          - sensor.time
     # --- Сейчас дома:
       - type: markdown
         content: >

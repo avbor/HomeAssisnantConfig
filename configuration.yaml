@@ -89,6 +89,8 @@ recorder:
     entities:
       - sensor.time
       - sensor.date
+      - sensor.date_time_iso
+      - sensor.date_formatted
       - sensor.uptime
       - sensor.moon
       - sun.sun
