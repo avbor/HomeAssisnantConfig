@@ -37,6 +37,58 @@
     data:
       entity_id: group.all_lamps
 
+- alias: 'ДД Aqara включение света в прихожей'
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: binary_sensor.0x158d000309920a_motion
+    to: 'on'
+  condition:
+    condition: and
+    conditions:
+      - condition: state
+        entity_id: light.sonoff_1000f2f14a
+        state: 'off'
+      - condition: numeric_state
+        entity_id: sensor.0x158d000309920a_illuminance
+        below: 50
+  action:
+    service: light.turn_on
+    data:
+      entity_id: light.sonoff_1000f2f14a
+
+- alias: 'ДД Aqara выключение света в прихожей'
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: binary_sensor.0x158d000309920a_motion
+    to: 'off'
+#    for:
+#      minutes: 3
+  condition:
+    condition: state
+    entity_id: light.sonoff_1000f2f14a
+    state: 'on'
+  action:
+    service: light.turn_off
+    entity_id: light.sonoff_1000f2f14a
+
+- alias: 'Вход в квартиру - включение света'
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: binary_sensor.0x158d00031c790f_contact
+    from: 'off'
+    to: 'on'
+  condition:
+    - condition: state
+      entity_id: binary_sensor.0x158d000309920a_motion
+      state: 'off'
+  action:
+    service: light.turn_on
+    data:
+      entity_id: light.sonoff_1000f2f14a
+
 ### Коридор
 
 - alias: 'Кнопка Xiaomi в Коридоре single'

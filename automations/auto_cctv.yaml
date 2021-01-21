@@ -18,7 +18,6 @@
         message: "Camera Snapshot 1"
         data:
           photo:
-#            - url: !secret cloudcam01_url
             - url: !secret dafangcam_03_snapshot_url
     - delay:
         seconds: 1
@@ -99,3 +98,20 @@
         data:
           photo:
             - url: !secret dafangcam_02_snapshot_url
+
+- alias: 'DafangCam-02 Turn Off Night Mode by Light'
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: light.sonoff_1000f2f14a
+    to: 'on'
+  action:
+    - service: switch.turn_off
+      data:
+        entity_id: switch.dafangcam02_night_mode
+    - service: switch.turn_on
+      data:
+        entity_id: switch.dafangcam02_ir_filter
+    - service: switch.turn_off
+      data:
+        entity_id: switch.dafangcam02_ir_led

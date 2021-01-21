@@ -158,20 +158,25 @@ cards:
           - entity: automation.hass_errors_in_system_log_notify_to_stall
             name: Errors в Telegram 
           - type: section
+            label: Общее
           - entity: automation.poweroff_all_media_when_nobody_at_home
             name: Выключать ТВ когда никого нет дома
-          - entity: automation.podsvetka_na_kukhne_sensor_dvizheniia_vkl
-            name: Автоподсветка кухни [сенсор] (21:00 - 09:00)
 #          - entity: automation.podsvetka_na_kukhne_sensor_dvizheniia_vykl
 #            name: Выкл подсветку кухни [сенсор] (23:30 - 06:30)
           - type: section
+            label: Уборка
           - entity: automation.opoveshchenie_o_zabytom_pylesose_notify_to_stall
             name: Возвращать забытый пылесос на базу
           - entity: automation.ezhednevnaia_uborka_po_budniam_utro
             name: Ежедневная уборка по будням [Утро]
+          - type: section
+            label: Прихожая
           - entity: automation.reguliarnaia_uborka_prikhozhei
             name: Регулярная уборка прихожей [Датчик двери]
+          - entity: automation.dd_aqara_vkliuchenie_sveta_v_prikhozhei
+            name: Включать свет в прихожей [ДД]
           - type: section
+            label: Детская
           - entity: automation.dvizhenie_v_detskoi
             name: Контроль движения в Детской
             icon: mdi:motion-sensor
@@ -180,6 +185,10 @@ cards:
             icon: mdi:lightbulb-off
           - entity: group.nursery_switch_autos
             name: Работа кнопок в детской
+          - type: section
+            label: Кухня
+          - entity: automation.podsvetka_na_kukhne_sensor_dvizheniia_vkl
+            name: Автоподсветка кухни [ДД] (21:00 - 09:00)
 
   - type: vertical-stack
     cards:
