@@ -120,9 +120,11 @@
         Гостинная: *{{ states('binary_sensor.0x158d0003d54725_contact') }}*
         Спальня: *{{ states('binary_sensor.0x158d0004073b67_contact') }}*
         `-= Свет =-`
+        Споты в прихожей: *{{ states('light.sonoff_1000f2f14a') }}*
         Лампа в спальне: *{{ states('light.spalnia_stol') }}*
         Люстра в детской: *{{ states('light.detskaia') }}*
         Подсветка окна в детской: *{{ states('light.detskaia_podsvetka_na_okne') }}*
+        Споты в коридоре: *{{ states('light.sonoff_1000f2a500') }}*
         Споты на кухне: *{{ states('light.sonoff_1000b72483') }}*
         Подсветка кухни: *{{ states('light.kukhnia_lenta') }}*
         Люстра на кухне: *{{ states('light.kukhnia_liustra') }}*

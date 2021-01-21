@@ -254,5 +254,11 @@ cards:
               - entity: light.sonoff_1000f30a9e
                 name: Споты в гостиной
                 icon: mdi:spotlight-beam
+              - entity: light.sonoff_1000f2f14a
+                name: Споты в прихожей
+                icon: mdi:spotlight-beam
+              - entity: light.sonoff_1000f2a500
+                name: Споты в коридоре
+                icon: mdi:spotlight-beam
             state_filter:
               - unavailable

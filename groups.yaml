@@ -44,6 +44,8 @@ all_lamps:
     - light.spalnia_stol
     - light.sonoff_1000f3035d
     - light.sonoff_1000f30a9e
+    - light.sonoff_1000f2f14a
+    - light.sonoff_1000f2a500
 
 nursery_switch_autos:
   name: Автоматизации кнопок в детской

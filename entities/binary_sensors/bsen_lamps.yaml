@@ -39,3 +39,7 @@
     lamp_status_workdesk_gostinaya:
       device_class: power
       value_template: "{{ is_state('light.0x86bd7fffe616b72_light', 'on') }}"
+    lamp_status_prikhozhaya:
+      value_template: "{{ is_state('light.sonoff_1000f2f14a', 'on') }}"
+    lamp_status_koridor:
+      value_template: "{{ is_state('light.sonoff_1000f2a500', 'on') }}"

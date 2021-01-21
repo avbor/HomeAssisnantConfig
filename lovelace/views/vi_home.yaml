@@ -120,12 +120,18 @@ cards:
             icon: mdi:water-boiler
           # Свет
           - type: section
+          - entity: binary_sensor.lamp_status_prikhozhaya
+            name: Споты в прихожей
+            icon: mdi:spotlight-beam
           - entity: binary_sensor.lamp_status_detskaia
             name: Люстра в детской
             icon: mdi:ceiling-light
           - entity: binary_sensor.lamp_status_detskaia_okno
             name: Подсветка окна в детской
             icon: mdi:string-lights
+          - entity: binary_sensor.lamp_status_koridor
+            name: Споты в коридоре
+            icon: mdi:spotlight-beam
           - entity: binary_sensor.lamp_status_spalnia_stol
             name: Лампа в спальне
             icon: mdi:desk-lamp

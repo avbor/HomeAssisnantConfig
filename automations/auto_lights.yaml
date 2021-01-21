@@ -2,6 +2,76 @@
 # Lights Automations
 #################################################
 
+### Прихожая
+
+- alias: 'Кнопка Xiaomi в Прихожей single'
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: sensor.0x158d00045a11b1_action
+    to: 'single'
+  action:
+    service: light.toggle
+    data:
+      entity_id: light.sonoff_1000f2f14a
+
+- alias: 'Кнопка Xiaomi в Прихожей double'
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: sensor.0x158d00045a11b1_action
+    to: 'double'
+  action:
+    service: light.toggle
+    data:
+      entity_id: light.sonoff_1000f2a500
+
+- alias: 'Кнопка Xiaomi в Прихожей hold'
+  initial_state: true
+  trigger: 
+    platform: state
+    entity_id: sensor.0x158d00045a11b1_action
+    to: 'hold'
+  action:
+    service: light.turn_off
+    data:
+      entity_id: group.all_lamps
+
+### Коридор
+
+- alias: 'Кнопка Xiaomi в Коридоре single'
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: sensor.0x158d00045a1153_action
+    to: 'single'
+  action:
+    service: light.toggle
+    data:
+      entity_id: light.sonoff_1000f2a500
+
+- alias: 'Кнопка Xiaomi в Коридоре double'
+  initial_state: true
+  trigger:
+    platform: state
+    entity_id: sensor.0x158d00045a1153_action
+    to: 'double'
+  action:
+    service: light.toggle
+    data:
+      entity_id: light.sonoff_1000f2f14a
+
+- alias: 'Кнопка Xiaomi в Коридоре hold'
+  initial_state: true
+  trigger: 
+    platform: state
+    entity_id: sensor.0x158d00045a1153_action
+    to: 'hold'
+  action:
+    service: light.turn_off
+    data:
+      entity_id: group.all_lamps
+
 ### Детская
 
 - alias: 'Kids must sleep at night'

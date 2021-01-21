@@ -3,6 +3,33 @@ path: light
 icon: mdi:lightbulb-on-outline
 cards:
 
+  # Прихожая и коридор
+  - type: vertical-stack
+    cards:
+      - type: markdown
+        content: >
+          ### Прихожая и коридор:
+      - type: horizontal-stack
+        cards:
+          - type: conditional
+            conditions:
+              - entity: light.sonoff_1000f2f14a
+                state_not: "unavailable"
+            card:
+              type: light
+              entity: light.sonoff_1000f2f14a
+              name: Прихожая
+              icon: mdi:spotlight-beam
+          - type: conditional
+            conditions:
+              - entity: light.sonoff_1000f2a500
+                state_not: "unavailable"
+            card:
+              type: light
+              entity: light.sonoff_1000f2a500
+              name: Коридор
+              icon: mdi:spotlight-beam
+
   # Детская
   - type: vertical-stack
     cards:
