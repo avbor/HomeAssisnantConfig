@@ -17,10 +17,11 @@ cards:
             icon: mdi:motion-sensor
   - type: picture-glance
     title: Гостиная
-    entities: []
+    entities:
+      - light.sonoff_1000f30a9e
     camera_image: camera.dafangcam_01_rtsp
   - type: picture-glance
     title: Прихожая
     entities:
-      - binary_sensor.0x158d000309920a_motion
+      - light.sonoff_1000f2f14a
     camera_image: camera.dafangcam_02_rtsp

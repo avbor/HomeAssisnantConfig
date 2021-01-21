@@ -101,6 +101,80 @@ cards:
                 - sensor.do_doma_sasha
                 - sensor.do_doma_ira_luxoft
 
+# --- Статус ламп
+  - type: vertical-stack
+    cards:
+      - type: markdown
+        content: >
+          ### Освещение:
+      - type: entities
+        state_color: true
+        entities:
+          - type: buttons
+            entities:
+              - entity: group.all_lamps
+                name: Выключить весь свет
+                icon: mdi:lightbulb-group
+                tap_action:
+                  action: call-service
+                  service: light.turn_off
+                  service_data:
+                    entity_id: group.all_lamps
+          - type: section
+            label: Прихожая и коридор
+          - entity: binary_sensor.lamp_status_prikhozhaya
+            name: Споты в прихожей
+            icon: mdi:spotlight-beam
+          - entity: binary_sensor.lamp_status_koridor
+            name: Споты в коридоре
+            icon: mdi:spotlight-beam
+          - type: section
+            label: Детская
+          - entity: binary_sensor.lamp_status_detskaia
+            name: Люстра
+            icon: mdi:ceiling-light
+          - entity: binary_sensor.lamp_status_detskaia_okno
+            name: Подсветка окна
+            icon: mdi:string-lights
+          - type: section
+            label: Гостиная
+          - entity: binary_sensor.lamp_status_gostinaya_bra
+            name: Бра
+            icon: mdi:wall-sconce-flat
+          - entity: binary_sensor.lamp_status_gostinaia_okno
+            name: Подсветка окна
+            icon: mdi:string-lights
+          - entity: binary_sensor.lamp_status_workdesk_gostinaya
+            name: Лампа на столе
+            icon: mdi:desk-lamp
+          - entity: binary_sensor.lamp_status_gostinaya_liustra
+            name: Люстра
+            icon: mdi:ceiling-light
+          - entity: binary_sensor.lamp_status_gostinaya_spots
+            name: Споты
+            icon: mdi:spotlight-beam
+          - type: section
+            label: Спальня
+          - entity: binary_sensor.lamp_status_spalnia_stol
+            name: Лампа на столе
+            icon: mdi:desk-lamp
+          - type: section
+            label: Кухня
+          - entity: binary_sensor.lamp_status_kukhnia_spots
+            name: Споты
+            icon: mdi:spotlight-beam
+          - entity: binary_sensor.lamp_status_kukhnia_lenta
+            name: Подсветка кухни
+            icon: mdi:led-strip-variant
+          - entity: binary_sensor.lamp_status_kukhnia_liustra
+            name: Люстра
+            icon: mdi:ceiling-light
+          - type: section
+            label: Кладовая
+          - entity: binary_sensor.lamp_status_kladovaya
+            name: Люстра
+            icon: mdi:vanity-light
+
 # --- Статус всякого
   - type: vertical-stack
     cards:
@@ -118,63 +192,21 @@ cards:
           - entity: sensor.boiler_status
             name: "Бойлер"
             icon: mdi:water-boiler
-          # Свет
-          - type: section
-          - entity: binary_sensor.lamp_status_prikhozhaya
-            name: Споты в прихожей
-            icon: mdi:spotlight-beam
-          - entity: binary_sensor.lamp_status_detskaia
-            name: Люстра в детской
-            icon: mdi:ceiling-light
-          - entity: binary_sensor.lamp_status_detskaia_okno
-            name: Подсветка окна в детской
-            icon: mdi:string-lights
-          - entity: binary_sensor.lamp_status_koridor
-            name: Споты в коридоре
-            icon: mdi:spotlight-beam
-          - entity: binary_sensor.lamp_status_spalnia_stol
-            name: Лампа в спальне
-            icon: mdi:desk-lamp
-          - entity: binary_sensor.lamp_status_kukhnia_spots
-            name: Споты на кухне
-            icon: mdi:spotlight-beam
-          - entity: binary_sensor.lamp_status_kukhnia_lenta
-            name: Подсветка кухни
-            icon: mdi:led-strip-variant
-          - entity: binary_sensor.lamp_status_kukhnia_liustra
-            name: Люстра на  кухне
-            icon: mdi:ceiling-light
-          - entity: binary_sensor.lamp_status_kladovaya
-            name: Свет в кладовой
-            icon: mdi:vanity-light
-          - entity: binary_sensor.lamp_status_gostinaya_bra
-            name: Бра в гостиной
-            icon: mdi:wall-sconce-flat
-          - entity: binary_sensor.lamp_status_gostinaia_okno
-            name: Подсветка окна в гостиной
-            icon: mdi:string-lights
-          - entity: binary_sensor.lamp_status_workdesk_gostinaya
-            name: Лампа на столе в гостиной
-            icon: mdi:desk-lamp
-          - entity: binary_sensor.lamp_status_gostinaya_liustra
-            name: Люстра в гостиной
-            icon: mdi:ceiling-light
-          - entity: binary_sensor.lamp_status_gostinaya_spots
-            name: Споты в гостиной
-            icon: mdi:spotlight-beam
           # Кондиционеры
           - type: section
+            label: Кондиционеры
           - entity: binary_sensor.ac_nursery_status
-            name: A/C Детская
+            name: Детская
             icon: mdi:air-conditioner
           - entity: binary_sensor.ac_living_room_status
-            name: A/C Гостиная
+            name: Гостиная
             icon: mdi:air-conditioner
           - entity: binary_sensor.ac_bedroom_status
-            name: A/C Спальня
+            name: Спальня
             icon: mdi:air-conditioner
           # Температура
           - type: section
+            label: Температура
           - entity: sensor.0x158d0003230618_temperature
             name: Гостинная
           - entity: sensor.0x158d0003931aec_temperature
@@ -189,6 +221,7 @@ cards:
             name: Кладовая
           # Разное
           - type: section
+            label: Разное
           - entity: sensor.transmission_status
             icon: mdi:download
           - entity: sensor.plex_plexonubuntu

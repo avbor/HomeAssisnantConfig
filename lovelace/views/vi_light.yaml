@@ -214,14 +214,19 @@ cards:
           name: Люстра
           icon: mdi:vanity-light
 
-  - type: button
-    entity: group.all_lamps
-    name: Выключить весь свет
-    icon: mdi:lightbulb-group-off
-    icon_height: 64px
-    show_state: false
-    tap_action: 
-      action: call-service
-      service: homeassistant.turn_off
-      service_data:
-        entity_id: group.all_lamps
+  - type: vertical-stack
+    cards:
+      - type: markdown
+        content: >
+          ### Разное:
+      - type: button
+        entity: group.all_lamps
+        name: Выключить весь свет
+        icon: mdi:lightbulb-group-off
+        icon_height: 64px
+        show_state: false
+        tap_action: 
+          action: call-service
+          service: homeassistant.turn_off
+          service_data:
+            entity_id: group.all_lamps
