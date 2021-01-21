@@ -36,35 +36,40 @@ cards:
       - type: markdown
         content: >
           ### Детская:
-      - type: conditional
-        conditions:
-          - entity: light.detskaia
-            state_not: "unavailable"
-        card:
-          type: vertical-stack
-          cards:
-            - type: horizontal-stack
-              cards:
-              - type: light
-                entity: light.detskaia
-                name: Люстра
-                icon: mdi:ceiling-light
-              - type: light
-                entity: light.detskaia_podsvetka_na_okne
-                name: Подсветка на окне
-                icon: mdi:string-lights
-            - type: entities
-              entities:
-                - entity: automation.sunrise_lighting_nursery
-                  name: "Включать свет (рабочие дни):"
-                  icon: mdi:weather-sunset-up
-                - entity: input_datetime.sunrise_in_nursery
-                  name: "Время включения:"
-                - entity: automation.wakeup_radio_childrens
-                  name: "Включать радио (рабочие дни):"
-                  icon: mdi:radio
-                - entity: input_datetime.wakeup_radio_in_nursery
-                  name: "Время включения радио:"
+      - type: vertical-stack
+        cards:
+          - type: horizontal-stack
+            cards:
+              - type: conditional
+                conditions:
+                  - entity: light.detskaia
+                    state_not: "unavailable"
+                card:
+                  type: light
+                  entity: light.detskaia
+                  name: Люстра
+                  icon: mdi:ceiling-light
+              - type: conditional
+                conditions:
+                  - entity: light.detskaia
+                    state_not: "unavailable"
+                card:
+                  type: light
+                  entity: light.detskaia_podsvetka_na_okne
+                  name: Подсветка на окне
+                  icon: mdi:string-lights
+          - type: entities
+            entities:
+              - entity: automation.sunrise_lighting_nursery
+                name: "Включать свет (рабочие дни):"
+                icon: mdi:weather-sunset-up
+              - entity: input_datetime.sunrise_in_nursery
+                name: "Время включения:"
+              - entity: automation.wakeup_radio_childrens
+                name: "Включать радио (рабочие дни):"
+                icon: mdi:radio
+              - entity: input_datetime.wakeup_radio_in_nursery
+                name: "Время включения радио:"
 
   # Гостиная
   - type: vertical-stack
