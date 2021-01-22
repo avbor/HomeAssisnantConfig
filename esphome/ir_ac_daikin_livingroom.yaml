@@ -2,6 +2,10 @@ esphome:
   name: ir_ac_daikin_livingroom
   platform: ESP8266
   board: esp01_1m
+  includes: 
+    - include/daikin_ir.h
+  libraries:
+    - IRremoteESP8266
 
 wifi:
   ssid: !secret wifi_ssid
@@ -34,12 +38,12 @@ status_led:
 
 # Configure the IR receiver. Handy to pickup confirmation messages
 # from your AC (or capture commands from the actual remote)
-remote_receiver:
-  id: rcvr
-  pin: 
-    number: GPIO5
-    inverted: True
-  dump: all
+#remote_receiver:
+#  id: rcvr
+#  pin: 
+#    number: GPIO5
+#    inverted: True
+#  dump: all
 
 # Configure the IR LED: this one sends commands to other devices
 remote_transmitter:
@@ -60,11 +64,17 @@ sensor:
 # https://esphome.io/components/climate/ir_climate.html?highlight=climate
 
 climate:
-  - platform: daikin
-    name: "Daikin AC - Living Room"
-#    receiver_id: rcvr
-    # Add a reference to the temperature sensor here
-    sensor: temp
+  - platform: custom
+    lambda: |-
+      auto daikinac = new DaikinAC();
+      daikinac->set_sensor(id(temp));
+      App.register_component(daikinac);
+      return {daikinac};
+    climates:
+      - name: "Daikin AC - Living Room"
+      #receiver_id: rcvr
+      # Add a reference to the temperature sensor here
+      #sensor: temp
 
 
 

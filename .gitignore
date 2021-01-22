@@ -21,6 +21,8 @@
 !entities/**
 !esphome/
 !esphome/*.yaml
+!esphome/include/
+!esphome/include/*
 !influxdb_conf/
 !lovelace/
 !lovelace/*
