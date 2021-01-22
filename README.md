@@ -69,8 +69,8 @@ Some **screenshots** from my HA can be found [here](docs/screenshots.md).
   - Xiaomi Xiao AI Smart Alarm Clock (AI01ZM, zimi.clock.myk01)\
   Not used in HA
 
-  - Tuya Smart IR Remote\
-  Integration "Tuya"
+  - Tuya Smart IR Remote (UFO-R1 and similar)\
+  Integration "Tuya" & ESPHome
 
 #### ZigBee Devices:
 - Relays:
@@ -133,7 +133,8 @@ Some **screenshots** from my HA can be found [here](docs/screenshots.md).
 Integration "Integration Saures controllers with HA" by [volshebniks](https://github.com/volshebniks/sauresha)
 
 - AC Daikin [FTXB-C](https://www.daikin.eu/en_us/products/ftxb-c.html) Series\
-  Via Tuya SmartIR, Xiaomi Magnet Sensors and Scenes from Tuya Cloud
+  Via Tuya SmartIR, Xiaomi Magnet Sensors and Scenes from Tuya Cloud\
+  Slow migrating to ESPHome in progress
 
 ### Software
 
