@@ -62,7 +62,7 @@ vacuum_cleaner:
         mirobot_1s_current_fan_speed:
           value_template: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'fan_speed') }}"
         mirobot_1s_battery:
-          friendly_name: Battery status
+          friendly_name: "Xiaomi Vacuum Cleaner 1S"
           device_class: battery
           unit_of_measurement: '%'
           icon_template: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'battery_icon') }}"
