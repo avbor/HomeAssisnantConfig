@@ -25,7 +25,7 @@ logger:
 #  port: 80
 
 api:
-  pa+rd
+  password: !secret esphome_api_password
 
 ota:
   password: !secret esphome_api_password
