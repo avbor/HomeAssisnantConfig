@@ -219,17 +219,6 @@
     data:
       effect: Sunrise
 
-- alias: Childrens Window - OnOff Switch
-  initial_state: false
-  trigger:
-    platform: state
-    entity_id: sensor.0x158d00054859d5_action
-    to: 'double'
-  action:
-    - service: light.toggle
-      data:
-        entity_id: light.detskaia_podsvetka_na_okne
-
 ### Кухня
 
 - alias: 'Подсветка на кухне (кнопка Xiaomi)'
