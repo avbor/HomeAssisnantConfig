@@ -67,7 +67,7 @@
       state: 'off'
   action:
     - delay:
-        seconds: 2
+        seconds: 3
     - service: notify.telegram_stall
       data_template:
         message: "Camera Snapshot 1"

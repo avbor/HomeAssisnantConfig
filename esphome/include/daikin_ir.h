@@ -29,25 +29,29 @@ class DaikinAC : public Component, public Climate {
         restore->apply(this);
       } else {
         this->mode = climate::CLIMATE_MODE_OFF;
-        this->target_temperature = roundf(clamp(this->current_temperature, 16, 30));
+        this->target_temperature = roundf(clamp(this->current_temperature, 18, 30));
         this->fan_mode = climate::CLIMATE_FAN_AUTO;
         this->swing_mode = climate::CLIMATE_SWING_OFF;
       }
 
       if (isnan(this->target_temperature)) {
-        this->target_temperature = 25;
+        this->target_temperature = 23;
       }
 
       ac.begin();
       ac.on();
       if (this->mode == CLIMATE_MODE_OFF) {
         ac.off();
+      } else if (this->mode == CLIMATE_MODE_AUTO) {
+        ac.setMode(kDaikinAuto);
       } else if (this->mode == CLIMATE_MODE_COOL) {
         ac.setMode(kDaikinCool);
-      } else if (this->mode == CLIMATE_MODE_DRY) {
-        ac.setMode(kDaikinDry);
+      } else if (this->mode == CLIMATE_MODE_HEAT) {
+        ac.setMode(kDaikinHeat);
       } else if (this->mode == CLIMATE_MODE_FAN_ONLY) {
         ac.setMode(kDaikinFan);
+      } else if (this->mode == CLIMATE_MODE_DRY) {
+        ac.setMode(kDaikinDry);
       }
       ac.setTemp(this->target_temperature);
       if (this->fan_mode == CLIMATE_FAN_AUTO) {
@@ -58,6 +62,12 @@ class DaikinAC : public Component, public Climate {
         ac.setFan(kDaikinFanMed);
       } else if (this->fan_mode == CLIMATE_FAN_HIGH) {
         ac.setFan(kDaikinFanMax);
+      //} else if (this->fan_mode == CLIMATE_FAN_MIDDLE) {
+      //  ac.setFan(kDaikinFanMiddle);
+      } else if (this->fan_mode == CLIMATE_FAN_FOCUS) {
+        ac.setFan(kDaikinFanPowerful);
+      } else if (this->fan_mode == CLIMATE_FAN_DIFFUSE) {
+        ac.setFan(kDaikinFanQuiet);
       }
       if (this->swing_mode == CLIMATE_SWING_OFF) {
         ac.setSwingVertical(false);
@@ -72,19 +82,26 @@ class DaikinAC : public Component, public Climate {
 
     climate::ClimateTraits traits() {
       auto traits = climate::ClimateTraits();
+      traits.set_supports_auto_mode(true);
       traits.set_supports_cool_mode(true);
-      traits.set_supports_current_temperature(this->sensor_ != nullptr);
+      traits.set_supports_heat_mode(true);
+      traits.set_supports_fan_only_mode(true);
       traits.set_supports_dry_mode(true);
+      traits.set_supports_current_temperature(this->sensor_ != nullptr);
       traits.set_supports_fan_mode_auto(true);
       traits.set_supports_fan_mode_high(true);
       traits.set_supports_fan_mode_low(true);
       traits.set_supports_fan_mode_medium(true);
-      traits.set_supports_fan_only_mode(true);
+
+      //traits.set_supports_fan_mode_middle(true);
+      traits.set_supports_fan_mode_focus(true);
+      traits.set_supports_fan_mode_diffuse(true);
+
       traits.set_supports_swing_mode_off(true);
       traits.set_supports_swing_mode_vertical(true);
       traits.set_supports_two_point_target_temperature(false);
       traits.set_visual_max_temperature(30);
-      traits.set_visual_min_temperature(16);
+      traits.set_visual_min_temperature(18);
       traits.set_visual_temperature_step(1);
 
       return traits;
@@ -95,15 +112,21 @@ class DaikinAC : public Component, public Climate {
       ClimateMode mode = *call.get_mode();
       if (mode == CLIMATE_MODE_OFF) {
         ac.off();
+      } else if (mode == CLIMATE_MODE_AUTO) {
+        ac.on();
+        ac.setMode(kDaikinAuto);
       } else if (mode == CLIMATE_MODE_COOL) {
         ac.on();
         ac.setMode(kDaikinCool);
-      } else if (mode == CLIMATE_MODE_DRY) {
+      } else if (mode == CLIMATE_MODE_HEAT) {
         ac.on();
-        ac.setMode(kDaikinDry);
+        ac.setMode(kDaikinHeat);
       } else if (mode == CLIMATE_MODE_FAN_ONLY) {
         ac.on();
         ac.setMode(kDaikinFan);
+      } else if (mode == CLIMATE_MODE_DRY) {
+        ac.on();
+        ac.setMode(kDaikinDry);
       }
       this->mode = mode;
     }
@@ -124,6 +147,12 @@ class DaikinAC : public Component, public Climate {
         ac.setFan(kDaikinFanMed);
       } else if (fan_mode == CLIMATE_FAN_HIGH) {
         ac.setFan(kDaikinFanMax);
+      //} else if (fan_mode == CLIMATE_FAN_MIDDLE) {
+      //  ac.setFan(kDaikinFanMiddle);
+      } else if (fan_mode == CLIMATE_FAN_FOCUS) {
+        ac.setFan(kDaikinFanPowerful);
+      } else if (fan_mode == CLIMATE_FAN_DIFFUSE) {
+        ac.setFan(kDaikinFanQuiet);
       }
       this->fan_mode = fan_mode;
     }

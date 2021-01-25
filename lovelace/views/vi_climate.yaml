@@ -145,6 +145,8 @@ cards:
                   service: scene.turn_on
                   service_data:
                     entity_id: scene.8klkjaqtg9lytydq
+          - type: thermostat
+            entity: climate.daikin_ac_living_room
   # Спальня
   - type: vertical-stack
     cards:
