@@ -12,6 +12,8 @@ cards:
           - entity: vacuum.xiaomi_vacuum_cleaner
             name: 'Статус:'
             secondary_info: last-changed
+          - entity: sensor.mi_vacuum_cleaner_1s_battery
+            name: "Заряд батареи:"
           - entity: sensor.mirobot_current_fan_speed
             name: 'Текущий режим:'
             icon: mdi:speedometer
