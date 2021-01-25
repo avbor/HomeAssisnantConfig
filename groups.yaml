@@ -50,8 +50,6 @@ all_lamps:
 nursery_switch_autos:
   name: Автоматизации кнопок в детской
   entities:
-    - automation.childrens_window_onoff_switch
-    - automation.childrens_yolka_onoff_switch
     - automation.iarkost_sveta_v_detskoi
     - automation.svet_v_detsoki_vkl_vykl
     - automation.podsvetka_okna_v_detskoi_vkl_vykl
