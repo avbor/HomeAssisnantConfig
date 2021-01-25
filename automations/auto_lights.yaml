@@ -148,9 +148,12 @@
 - alias: 'Свет в детсокй Вкл-Выкл'
   initial_state: true
   trigger: 
-    platform: state
-    entity_id: sensor.0x158d00033efd9e_action
-    to: 'single'
+    - platform: state
+      entity_id: sensor.0x158d00033efd9e_action
+      to: 'single'
+    - platform: state
+      entity_id: sensor.0x158d00054859d5_action
+      to: 'single'
   action:
     service: light.toggle
     data:
@@ -159,9 +162,12 @@
 - alias: 'Подсветка окна в детской Вкл-Выкл'
   initial_state: true
   trigger: 
-    platform: state
-    entity_id: sensor.0x158d00033efd9e_action
-    to: 'hold'
+    - platform: state
+      entity_id: sensor.0x158d00033efd9e_action
+      to: 'hold'
+    - platform: state
+      entity_id: sensor.0x158d00054859d5_action
+      to: 'double'
   action:
     service: switch.toggle
     data:
@@ -212,6 +218,17 @@
     entity_id: light.detskaia
     data:
       effect: Sunrise
+
+- alias: Childrens Window - OnOff Switch
+  initial_state: false
+  trigger:
+    platform: state
+    entity_id: sensor.0x158d00054859d5_action
+    to: 'double'
+  action:
+    - service: light.toggle
+      data:
+        entity_id: light.detskaia_podsvetka_na_okne
 
 ### Кухня
 

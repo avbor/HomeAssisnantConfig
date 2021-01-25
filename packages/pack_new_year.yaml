@@ -62,30 +62,6 @@ new_year_holidays_pack:
           data:
             message: Включаем новогоднюю подсветку (с добрым утром).
 
-    #---------------Кнопка Aqara в детской---------------#
-    - alias: Childrens Yolka - OnOff Switch 
-      initial_state: false
-      trigger:
-        platform: state
-        entity_id: sensor.0x158d00054859d5_action
-        to: 'single'
-      action:
-        - service: switch.toggle
-          data:
-            entity_id: switch.mi_smartplugwifi_01
-
-    - alias: Childrens Window - OnOff Switch 
-      initial_state: false
-      trigger:
-        platform: state
-        entity_id: sensor.0x158d00054859d5_action
-        to: 'double'
-      action:
-        - service: light.toggle
-          data:
-            entity_id: light.detskaia_podsvetka_na_okne
-    #----------------------------------------------------#
-
 #  - alias: 'New Year Light - Off [Home Presence]'
 #    initial_state: false
 #    trigger:

@@ -109,44 +109,50 @@ cards:
           - type: markdown
             content: >
               **Кондиционер:**
-          - type: glance
-            show_state: false
+#          - type: glance
+#            show_state: false
+#            entities:
+#              - entity: scene.sbsa0xplsebwu3yv
+#                name: Auto 23°С
+#                icon: mdi:thermometer
+#                tap_action: 
+#                  action: call-service
+#                  service: scene.turn_on
+#                  service_data:
+#                    entity_id: scene.sbsa0xplsebwu3yv
+#              - entity: scene.tazfl9mackoqxeza
+#                name: Cool 23°С
+#                icon: mdi:thermometer-minus
+#                tap_action: 
+#                  action: call-service
+#                  service: scene.turn_on
+#                  service_data:
+#                    entity_id: scene.tazfl9mackoqxeza
+#              - entity: scene.hbhl5ycgabb51veq
+#                name: Heat 24°С
+#                icon: mdi:thermometer-plus
+#                tap_action: 
+#                  action: call-service
+#                  service: scene.turn_on
+#                  service_data:
+#                    entity_id: scene.hbhl5ycgabb51veq
+#              #- entity: scene.8klkjaqtg9lytydq
+#              - entity: binary_sensor.0x158d0003d54725_contact
+#                name: Power Off
+#                icon: mdi:power
+#                tap_action: 
+#                  action: call-service
+#                  service: scene.turn_on
+#                  service_data:
+#                    entity_id: scene.8klkjaqtg9lytydq
+############
+          - type: entities
             entities:
-              - entity: scene.sbsa0xplsebwu3yv
-                name: Auto 23°С
-                icon: mdi:thermometer
-                tap_action: 
-                  action: call-service
-                  service: scene.turn_on
-                  service_data:
-                    entity_id: scene.sbsa0xplsebwu3yv
-              - entity: scene.tazfl9mackoqxeza
-                name: Cool 23°С
-                icon: mdi:thermometer-minus
-                tap_action: 
-                  action: call-service
-                  service: scene.turn_on
-                  service_data:
-                    entity_id: scene.tazfl9mackoqxeza
-              - entity: scene.hbhl5ycgabb51veq
-                name: Heat 24°С
-                icon: mdi:thermometer-plus
-                tap_action: 
-                  action: call-service
-                  service: scene.turn_on
-                  service_data:
-                    entity_id: scene.hbhl5ycgabb51veq
-              #- entity: scene.8klkjaqtg9lytydq
-              - entity: binary_sensor.0x158d0003d54725_contact
-                name: Power Off
-                icon: mdi:power
-                tap_action: 
-                  action: call-service
-                  service: scene.turn_on
-                  service_data:
-                    entity_id: scene.8klkjaqtg9lytydq
+              - entity: binary_sensor.ac_living_room_status
+                name: Статус
           - type: thermostat
             entity: climate.daikin_livingroom
+            name: Daikin
   # Спальня
   - type: vertical-stack
     cards:

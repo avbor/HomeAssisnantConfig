@@ -6,18 +6,22 @@ cards:
     cards:
       - type: markdown
         content: >
-          ### Уборка:
+          ### Статус:
       - type: entities
         entities:
           - entity: vacuum.xiaomi_vacuum_cleaner
             name: 'Статус:'
             secondary_info: last-changed
-          - entity: sensor.mi_vacuum_cleaner_1s_battery
-            name: "Заряд батареи:"
-          - entity: sensor.mirobot_current_fan_speed
+          - entity: sensor.mirobot_1s_current_fan_speed
             name: 'Текущий режим:'
             icon: mdi:speedometer
-          - type: section
+          - entity: sensor.mirobot_1s_battery
+            name: "Заряд батареи:"
+      - type: markdown
+        content: >
+          ### Уборка:
+      - type: entities
+        entities:
           - input_select.room_to_vacuum
           - input_select.vacuum_power
       - type: horizontal-stack
@@ -66,16 +70,99 @@ cards:
               service_data:
                 entity_id: vacuum.xiaomi_vacuum_cleaner
             entity: vacuum.xiaomi_vacuum_cleaner
-  - type: picture-glance
-#    title: Карта
-    show_state: false
-    camera_image: camera.mi_vacuum_cleaner_1s_cam
-    entities:
-      - entity: camera.mi_vacuum_cleaner_1s_cam
-        icon: mdi:reload
-        show_state: false
-        tap_action:
-          action: call-service
-          service: homeassistant.update_entity
-          service_data:
-            entity_id: camera.mi_vacuum_cleaner_1s_cam
+
+  - type: vertical-stack
+    cards:
+    - type: markdown
+      content: >
+        ### Расходные материалы:
+    - type: entities
+      entities:
+        - entity: sensor.mirobot_1s_main_brush_left
+          name: "Основная щетка:"
+          icon: mdi:robot-vacuum
+        - entity: sensor.mirobot_1s_side_brush_left
+          name: "Боковая щетка:"
+          icon: mdi:robot-vacuum
+        - entity: sensor.mirobot_1s_filter_left
+          name: "Фильтр:"
+          icon: mdi:air-filter
+        - entity: sensor.mirobot_1s_sensor_dirty_left
+          name: "Сенсоры:"
+          icon: mdi:leak
+    - type: markdown
+      content: >
+        #### Сброс счетчиков:
+    - type: horizontal-stack
+      cards:
+        - type: button
+          entity: script.reset_sensor_dirty_time
+          name: Сенсоры
+          icon: mdi:leak
+          icon_height: 32px
+          show_state: false
+          tap_action: 
+            action: call-service
+            confirmation:
+              text: Вы уверены?
+            service: script.turn_on
+            service_data:
+              entity_id: script.reset_sensor_dirty_time
+        - type: button
+          entity: script.reset_filter_work_time
+          name: Фильтр
+          icon: mdi:air-filter
+          icon_height: 32px
+          show_state: false
+          tap_action: 
+            action: call-service
+            confirmation:
+              text: Вы уверены?
+            service: script.turn_on
+            service_data:
+              entity_id: script.reset_filter_work_time
+        - type: button
+          entity: script.reset_side_brush_work_time
+          name: Бок. щетка
+          icon: mdi:robot-vacuum
+          icon_height: 32px
+          show_state: false
+          tap_action: 
+            action: call-service
+            confirmation:
+              text: Вы уверены?
+            service: script.turn_on
+            service_data:
+              entity_id: script.reset_side_brush_work_time
+        - type: button
+          entity: script.reset_main_brush_left
+          name: Осн. щетка
+          icon: mdi:robot-vacuum
+          icon_height: 32px
+          show_state: false
+          tap_action: 
+            action: call-service
+            confirmation:
+              text: Вы уверены?
+            service: script.turn_on
+            service_data:
+              entity_id: script.reset_main_brush_left
+
+  - type: vertical-stack
+    cards:
+    - type: markdown
+      content: >
+        ### Карта:
+    - type: picture-glance
+  #    title: Карта
+      show_state: false
+      camera_image: camera.mi_vacuum_cleaner_1s_cam
+      entities:
+        - entity: camera.mi_vacuum_cleaner_1s_cam
+          icon: mdi:reload
+          show_state: false
+          tap_action:
+            action: call-service
+            service: homeassistant.update_entity
+            service_data:
+              entity_id: camera.mi_vacuum_cleaner_1s_cam

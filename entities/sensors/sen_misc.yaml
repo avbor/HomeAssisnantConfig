@@ -98,12 +98,6 @@
       icon_template: mdi:clock
       value_template: "{{ ((as_timestamp(now()) | int - as_timestamp(states('sensor.uptime')) | int) / 60) | int }}"
       unit_of_measurement: minutes
-    mi_vacuum_cleaner_1s_battery:
-      friendly_name: Battery status
-      device_class: battery
-      unit_of_measurement: '%'
-      icon_template: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'battery_icon') }}"
-      value_template: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'battery_level') }}"
     # Temperature sensors for use in ESPHome firmwares
     for_esphome_temp_in_livingroom:
       friendly_name: Температура в гостиной

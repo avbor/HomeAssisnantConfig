@@ -59,8 +59,30 @@ vacuum_cleaner:
   sensor:
     - platform: template
       sensors:
-        mirobot_current_fan_speed:
+        mirobot_1s_current_fan_speed:
           value_template: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'fan_speed') }}"
+        mirobot_1s_battery:
+          friendly_name: Battery status
+          device_class: battery
+          unit_of_measurement: '%'
+          icon_template: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'battery_icon') }}"
+          value_template: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'battery_level') }}"
+        mirobot_1s_main_brush_left:
+          friendly_name: "Main brush hours remaining"
+          unit_of_measurement: "h"
+          value_template: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'main_brush_left') }}"
+        mirobot_1s_side_brush_left:
+          friendly_name: "Side brush hours remaining"
+          unit_of_measurement: "h"
+          value_template: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'side_brush_left') }}"
+        mirobot_1s_filter_left:
+          friendly_name: "Filter hours remaining"
+          unit_of_measurement: "h"
+          value_template: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'filter_left') }}"
+        mirobot_1s_sensor_dirty_left:
+          friendly_name: "Sensors hours remaining"
+          unit_of_measurement: "h"
+          value_template: "{{ state_attr('vacuum.xiaomi_vacuum_cleaner', 'sensor_dirty_left') }}"
 
 # Scripts
   script:
@@ -174,6 +196,38 @@ vacuum_cleaner:
         data:
           entity_id: vacuum.xiaomi_vacuum_cleaner
           fan_speed: Gentle
+
+    reset_main_brush_left:
+      sequence:
+        - service: vacuum.send_command
+          data:
+            entity_id: vacuum.xiaomi_vacuum_cleaner
+            command: reset_consumable
+            params: ['main_brush_work_time']
+
+    reset_side_brush_work_time:
+      sequence:
+        - service: vacuum.send_command
+          data:
+            entity_id: vacuum.xiaomi_vacuum_cleaner
+            command: reset_consumable
+            params: ['side_brush_work_time']
+
+    reset_filter_work_time:
+      sequence:
+        - service: vacuum.send_command
+          data:
+            entity_id: vacuum.xiaomi_vacuum_cleaner
+            command: reset_consumable
+            params: ['filter_work_time']
+
+    reset_sensor_dirty_time:
+      sequence:
+        - service: vacuum.send_command
+          data:
+            entity_id: vacuum.xiaomi_vacuum_cleaner
+            command: reset_consumable
+            params: ['sensor_dirty_time']
 
 # Automations
   automation:
