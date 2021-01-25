@@ -100,7 +100,7 @@
       value_template: "{{ ((as_timestamp(now()) | int - as_timestamp(states('sensor.uptime')) | int) / 60) | int }}"
       unit_of_measurement: minutes
     # Temperature sensors for use in ESPHome firmwares
-    esphome_for_ir_ac_daikin_livingroom:
+    for_esphome_temp_in_livingroom:
       friendly_name: Температура в гостиной
       unit_of_measurement: °C
       device_class: temperature

@@ -64,8 +64,8 @@ class DaikinAC : public Component, public Climate {
         ac.setFan(kDaikinFanMax);
       //} else if (this->fan_mode == CLIMATE_FAN_MIDDLE) {
       //  ac.setFan(kDaikinFanMiddle);
-      } else if (this->fan_mode == CLIMATE_FAN_FOCUS) {
-        ac.setFan(kDaikinFanPowerful);
+      //} else if (this->fan_mode == CLIMATE_FAN_FOCUS) {
+      //  ac.setFan(kDaikinFanPowerful);
       } else if (this->fan_mode == CLIMATE_FAN_DIFFUSE) {
         ac.setFan(kDaikinFanQuiet);
       }
@@ -92,11 +92,9 @@ class DaikinAC : public Component, public Climate {
       traits.set_supports_fan_mode_high(true);
       traits.set_supports_fan_mode_low(true);
       traits.set_supports_fan_mode_medium(true);
-
       //traits.set_supports_fan_mode_middle(true);
-      traits.set_supports_fan_mode_focus(true);
+      //traits.set_supports_fan_mode_focus(true);
       traits.set_supports_fan_mode_diffuse(true);
-
       traits.set_supports_swing_mode_off(true);
       traits.set_supports_swing_mode_vertical(true);
       traits.set_supports_two_point_target_temperature(false);
@@ -149,8 +147,8 @@ class DaikinAC : public Component, public Climate {
         ac.setFan(kDaikinFanMax);
       //} else if (fan_mode == CLIMATE_FAN_MIDDLE) {
       //  ac.setFan(kDaikinFanMiddle);
-      } else if (fan_mode == CLIMATE_FAN_FOCUS) {
-        ac.setFan(kDaikinFanPowerful);
+      //} else if (fan_mode == CLIMATE_FAN_FOCUS) {
+      //  ac.setFan(kDaikinFanPowerful);
       } else if (fan_mode == CLIMATE_FAN_DIFFUSE) {
         ac.setFan(kDaikinFanQuiet);
       }
