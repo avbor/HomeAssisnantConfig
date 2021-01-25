@@ -134,7 +134,7 @@ Integration "Integration Saures controllers with HA" by [volshebniks](https://gi
 
 - AC Daikin [FTXB-C](https://www.daikin.eu/en_us/products/ftxb-c.html) Series\
   Via Tuya SmartIR, Xiaomi Magnet Sensors and Scenes from Tuya Cloud\
-  Slow migrating to ESPHome in progress
+  Slow migrating to ESPHome IR transmitters in progress
 
 ### Software
 
