@@ -66,7 +66,7 @@ Some **screenshots** from my HA can be found [here](docs/screenshots.md).
   - Xiaomi Dafang 1080p (ZRM4040RT) flashed to [Xiaomi DaFang Hacks](https://github.com/EliasKotlyar/Xiaomi-Dafang-Hacks)\
   Integrations "Generic Camera" & "MJPEG IP Camera"
 
-  - Tuya Smart IR Remote (UFO-R1 and similar) flashed to [ESPHome](https://esphome.io/)\
+  - Tuya SmartIR Remote (UFO-R1 and similar) flashed to [ESPHome](https://esphome.io/)\
   Integration "ESPHome"
 
   - Xiaomi Xiao AI Smart Alarm Clock (AI01ZM, zimi.clock.myk01)\
