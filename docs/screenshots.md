@@ -15,6 +15,11 @@ Big cards are very useful in both - mobile and desktop.
 **Media players**\
 ![Media](screenshots/Media.png)
 
+**IR TV Remote control**
+|Hidden|Visible|
+|---|---|
+|![TV_Remote_Hidden](screenshots/TV_Remote_Hidden.png)|![TV_Remote_Visible](screenshots/TV_Remote_Visible.png)|
+
 **Cameras**\
 ![Cam](screenshots/Cam.png)
 
