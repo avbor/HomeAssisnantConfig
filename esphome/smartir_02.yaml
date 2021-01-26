@@ -1,21 +1,21 @@
 substitutions:
-  board_name: smartir_04
-  room_name: livingroom
+  board_name: smartir_02
+  room_name: bedroom
 
 esphome:
   name: ${board_name}
   platform: ESP8266
   board: esp01_1m
-#  includes: 
-#    - include/daikin_ir.h
-#  libraries:
-#    - IRremoteESP8266
+  includes: 
+    - include/daikin_ir.h
+  libraries:
+    - IRremoteESP8266
 
 wifi:
   ssid: !secret wifi_ssid
   password: !secret wifi_password
   ap:
-    ssid: "SmartIR_04"
+    ssid: "SmartIR_02"
     password: !secret wifi_fallback_ap_pass
 #  use_address: old_name.local
 
@@ -38,12 +38,12 @@ status_led:
   pin: 
     number: GPIO4
 
-remote_receiver:
-  id: rcvr
-  pin: 
-    number: GPIO5
-    inverted: True
-  dump: all
+#remote_receiver:
+#  id: rcvr
+#  pin: 
+#    number: GPIO5
+#    inverted: True
+#  dump: all
 
 remote_transmitter:
   pin:
@@ -52,13 +52,13 @@ remote_transmitter:
   carrier_duty_percent: 50%
 
 sensor:
-#  - platform: homeassistant
-#    name: "Current temperature"
-#    entity_id: sensor.for_esphome_temp_in_${room_name}
-#    id: ha_temp_${room_name}
-#    internal: true
-#    unit_of_measurement: °C
-#    accuracy_decimals: 1
+  - platform: homeassistant
+    name: "Current temperature"
+    entity_id: sensor.for_esphome_temp_in_${room_name}
+    id: ha_temp_${room_name}
+    internal: true
+    unit_of_measurement: °C
+    accuracy_decimals: 1
   - platform: wifi_signal
     name: ${board_name}_wifi_rssi
     update_interval: 60s
@@ -77,16 +77,16 @@ binary_sensor:
     name: ${board_name}_button
     id: button
 
-#climate:
-#  - platform: custom
-#    lambda: |-
-#      auto daikinac = new DaikinAC();
-#      daikinac->set_sensor(id(ha_temp_${room_name}));
-#      App.register_component(daikinac);
-#      return {daikinac};
-#    climates:
-#      - name: "Daikin Livingroom"
-#      #receiver_id: rcvr
+climate:
+  - platform: custom
+    lambda: |-
+      auto daikinac = new DaikinAC();
+      daikinac->set_sensor(id(ha_temp_${room_name}));
+      App.register_component(daikinac);
+      return {daikinac};
+    climates:
+      - name: "Daikin Bedroom"
+      #receiver_id: rcvr
 
 time:
   - platform: homeassistant

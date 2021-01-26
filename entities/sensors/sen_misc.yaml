@@ -104,6 +104,16 @@
       unit_of_measurement: °C
       device_class: temperature
       value_template: "{{ states('sensor.0x158d0003230618_temperature') }}"
+    for_esphome_temp_in_bedroom:
+      friendly_name: Температура в спальне
+      unit_of_measurement: °C
+      device_class: temperature
+      value_template: "{{ states('sensor.0x158d0003931b0e_temperature') }}"
+    for_esphome_temp_in_nursery:
+      friendly_name: Температура в детской
+      unit_of_measurement: °C
+      device_class: temperature
+      value_template: "{{ states('sensor.0x158d0003931aec_temperature') }}"
 - platform: min_max
   name: Average Temperature In Flat
   type: median
