@@ -23,3 +23,9 @@
       friendly_name: 'Updater - Addons'
       device_class: problem
       value_template: "{{ states('sensor.supervisor_updates') | int > 0 }}"
+    humidifier_nursery_status:
+      device_class: power
+      value_template: "{{ is_state('fan.xiaomi_miio_device', 'on') }}"
+    boiler_status:
+      device_class: power
+      value_template: "{{ is_state('switch.tplink_smartplug_01', 'on') }}"

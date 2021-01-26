@@ -20,59 +20,24 @@ cards:
             graph: line
       - type: vertical-stack
         cards:
-          - type: markdown
-            content: >
-              **Кондиционер:**
-#          - type: glance
-#            show_state: false
-#            entities:
-#              - entity: scene.4hht0rtnl208kmt6
-#                name: Auto 23°С
-#                icon: mdi:thermometer
-#                tap_action:
-#                  action: call-service
-#                  service: scene.turn_on
-#                  service_data:
-#                    entity_id: scene.4hht0rtnl208kmt6
-#              - entity: scene.hcng1g77ydgvyvbn
-#                name: Cool 23°С
-#                icon: mdi:thermometer-minus
-#                tap_action:
-#                  action: call-service
-#                  service: scene.turn_on
-#                  service_data:
-#                    entity_id: scene.hcng1g77ydgvyvbn
-#              - entity: scene.lzqqvmpmdxuf5a83
-#                name: Heat 24°С
-#                icon: mdi:thermometer-plus
-#                tap_action:
-#                  action: call-service
-#                  service: scene.turn_on
-#                  service_data:
-#                    entity_id: scene.lzqqvmpmdxuf5a83
-#              #- entity: scene.doqgqwxyz36nmn1i
-#              - entity: binary_sensor.0x158d00039cf974_contact
-#                name: Power Off
-#                icon: mdi:power
-#                tap_action:
-#                  action: call-service
-#                  service: scene.turn_on
-#                  service_data:
-#                    entity_id: scene.doqgqwxyz36nmn1i
           - type: entities
             entities:
               - entity: binary_sensor.ac_nursery_status
-                name: Статус
+                state_color: true
+                name: "Кондиционер:"
           - type: thermostat
             entity: climate.daikin_nursery
             name: Daikin
       - type: vertical-stack
         cards:
-          - type: markdown
-            content: >
-              **Увлажнитель:**
+          - type: entities
+            entities:
+              - entity: binary_sensor.humidifier_nursery_status
+                state_color: true
+                name: "Увлажнитель:"
           - type: glance
             #show_name: false
+            state_color: false
             entities:
               - entity: fan.xiaomi_miio_device
                 name: "Статус"
@@ -113,50 +78,11 @@ cards:
             graph: line
       - type: vertical-stack
         cards:
-          - type: markdown
-            content: >
-              **Кондиционер:**
-#          - type: glance
-#            show_state: false
-#            entities:
-#              - entity: scene.sbsa0xplsebwu3yv
-#                name: Auto 23°С
-#                icon: mdi:thermometer
-#                tap_action: 
-#                  action: call-service
-#                  service: scene.turn_on
-#                  service_data:
-#                    entity_id: scene.sbsa0xplsebwu3yv
-#              - entity: scene.tazfl9mackoqxeza
-#                name: Cool 23°С
-#                icon: mdi:thermometer-minus
-#                tap_action: 
-#                  action: call-service
-#                  service: scene.turn_on
-#                  service_data:
-#                    entity_id: scene.tazfl9mackoqxeza
-#              - entity: scene.hbhl5ycgabb51veq
-#                name: Heat 24°С
-#                icon: mdi:thermometer-plus
-#                tap_action: 
-#                  action: call-service
-#                  service: scene.turn_on
-#                  service_data:
-#                    entity_id: scene.hbhl5ycgabb51veq
-#              #- entity: scene.8klkjaqtg9lytydq
-#              - entity: binary_sensor.0x158d0003d54725_contact
-#                name: Power Off
-#                icon: mdi:power
-#                tap_action: 
-#                  action: call-service
-#                  service: scene.turn_on
-#                  service_data:
-#                    entity_id: scene.8klkjaqtg9lytydq
-############
           - type: entities
             entities:
               - entity: binary_sensor.ac_living_room_status
-                name: Статус
+                state_color: true
+                name: "Кондиционер:"
           - type: thermostat
             entity: climate.daikin_livingroom
             name: Daikin
@@ -178,49 +104,11 @@ cards:
             graph: line
       - type: vertical-stack
         cards:
-          - type: markdown
-            content: >
-              **Кондиционер:**
-#          - type: glance
-#            show_state: false
-#            entities:
-#              - entity: scene.rxq3uae7kucl7ipr
-#                name: Auto 23°С
-#                icon: mdi:thermometer
-#                tap_action:
-#                  action: call-service
-#                  service: scene.turn_on
-#                  service_data:
-#                    entity_id: scene.rxq3uae7kucl7ipr
-#              - entity: scene.awstfvkaqtsb1kua
-#                name: Cool 23°С
-#                icon: mdi:thermometer-minus
-#                tap_action:
-#                  action: call-service
-#                  service: scene.turn_on
-#                  service_data:
-#                    entity_id: scene.awstfvkaqtsb1kua
-#              - entity: scene.la82ybui20ftyh8s
-#                name: Heat 24°С
-#                icon: mdi:thermometer-plus
-#                tap_action:
-#                  action: call-service
-#                  service: scene.turn_on
-#                  service_data:
-#                    entity_id: scene.la82ybui20ftyh8s
-#              #- entity: scene.pra49izcxfgbwmmo
-#              - entity: binary_sensor.0x158d0004073b67_contact
-#                name: Power Off
-#                icon: mdi:power
-#                tap_action:
-#                  action: call-service
-#                  service: scene.turn_on
-#                  service_data:
-#                    entity_id: scene.pra49izcxfgbwmmo
           - type: entities
             entities:
               - entity: binary_sensor.ac_bedroom_status
-                name: Статус
+                state_color: true
+                name: "Кондиционер:"
           - type: thermostat
             entity: climate.daikin_bedroom
             name: Daikin
@@ -293,11 +181,12 @@ cards:
             graph: line
       - type: vertical-stack
         cards:
-          - type: markdown
-            content: >
-              **Бойлер:**
           - type: entities
-            state_color: true
+            entities:
+              - entity: binary_sensor.boiler_status
+                state_color: true
+                name: "Бойлер:"
+          - type: entities
             entities:
               - entity: switch.tplink_smartplug_01
                 name: Electrolux Centurio IQ
