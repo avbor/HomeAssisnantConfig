@@ -1,0 +1,84 @@
+- entity: switch.smartir_01_tv_samsung_mute
+  icon: mdi:volume-off
+  tap_action:
+    action: toggle
+- entity: switch.smartir_01_tv_samsung_power
+  icon: mdi:power
+  tap_action:
+    action: toggle
+- entity: switch.smartir_01_tv_samsung_source
+  icon: mdi:import
+  tap_action:
+    action: toggle
+- entity: switch.smartir_01_tv_samsung_volume_up
+  icon: mdi:volume-plus
+  tap_action: 
+    action: toggle
+- entity: switch.smartir_01_tv_samsung_menu
+  icon: mdi:menu
+  tap_action:
+    action: toggle
+- entity: switch.smartir_01_tv_samsung_channel_up
+  icon: mdi:chevron-up-circle
+  tap_action:
+    action: toggle
+- entity: switch.smartir_01_tv_samsung_volume_down
+  icon: mdi:volume-minus
+  tap_action:
+    action: toggle
+- entity: switch.smartir_01_tv_samsung_up
+  icon: mdi:chevron-up-box-outline
+  tap_action:
+    action: toggle
+- entity: switch.smartir_01_tv_samsung_channel_down
+  icon: mdi:chevron-down-circle
+  tap_action:
+    action: toggle
+- entity: switch.smartir_01_tv_samsung_left
+  icon: mdi:chevron-left-box-outline
+  tap_action:
+    action: toggle
+- entity: switch.smartir_01_tv_samsung_enter
+  icon: mdi:checkbox-blank-circle-outline
+  tap_action:
+    action: toggle
+- entity: switch.smartir_01_tv_samsung_right
+  icon: mdi:chevron-right-box-outline
+  tap_action:
+    action: toggle
+- entity: switch.smartir_01_tv_samsung_return
+  icon: mdi:undo
+  tap_action:
+    action: toggle
+- entity: switch.smartir_01_tv_samsung_down
+  icon: mdi:chevron-down-box-outline
+  tap_action:
+    action: toggle
+- entity: switch.smartir_01_tv_samsung_exit
+  icon: mdi:location-exit
+  tap_action:
+    action: toggle
+- entity: switch.smartir_01_tv_samsung_rewind
+  icon: mdi:rewind
+  tap_action:
+    action: toggle
+- entity: switch.smartir_01_tv_samsung_play
+  icon: mdi:play
+  tap_action:
+    action: toggle
+- entity: switch.smartir_01_tv_samsung_fastforward
+  icon: mdi:fast-forward
+  tap_action:
+    action: toggle
+- entity: switch.smartir_01_tv_samsung_media_p
+  icon: mdi:play-network
+  tap_action:
+    action: toggle
+- entity: switch.smartir_01_tv_samsung_pause
+  icon: mdi:pause
+  tap_action:
+    action: toggle
+- entity: switch.smartir_01_tv_samsung_stop
+  icon: mdi:stop
+  tap_action:
+    action: toggle

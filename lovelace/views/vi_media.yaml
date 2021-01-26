@@ -168,13 +168,30 @@ cards:
 #        - entity: media_player.samsungtv_ue40c5100
 #          state_not: "unknown"
 #      card:
-#        type: vertical-stack
-#        cards:
-#          - type: markdown
-#            content: >
-#              *Детская:*
-#          - type: media-control
-#            entity: media_player.samsungtv_ue40c5100
+    #- type: vertical-stack
+    #  cards:
+    - type: markdown
+      content: >
+        *Детская:*
+    - type: custom:vertical-stack-in-card
+      cards:
+        - type: button
+          entity: input_boolean.tv_remote_show_nursery
+          name: "\U000021E7 TV Remote Control \U000021E9"
+          show_state: false
+          show_icon: false
+          tap_action:
+            action: toggle
+        - type: conditional
+          conditions:
+            - entity: input_boolean.tv_remote_show_nursery
+              state: "on"
+          card:
+            type: glance
+            columns: 3
+            show_name: false
+            show_state: false
+            entities: !include samsung_tv_remote_c.yaml
 
 # --- Plex
   - type: vertical-stack

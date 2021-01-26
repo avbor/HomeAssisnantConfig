@@ -93,6 +93,16 @@ switch:
       - remote_transmitter.transmit_samsung:
           data: 0xE0E0D02F
   - platform: template
+    name: ${board_name}_tv_samsung_channel_up
+    turn_on_action:
+      - remote_transmitter.transmit_samsung:
+          data: 0xE0E048B7
+  - platform: template
+    name: ${board_name}_tv_samsung_channel_down
+    turn_on_action:
+      - remote_transmitter.transmit_samsung:
+          data: 0xE0E008F7
+  - platform: template
     name: ${board_name}_tv_samsung_mute
     turn_on_action:
       - remote_transmitter.transmit_samsung:
@@ -107,6 +117,76 @@ switch:
     turn_on_action:
       - remote_transmitter.transmit_samsung:
           data: 0xE0E052AD
+  - platform: template
+    name: ${board_name}_tv_samsung_stop
+    turn_on_action:
+      - remote_transmitter.transmit_samsung:
+          data: 0xE0E0629D
+  - platform: template
+    name: ${board_name}_tv_samsung_rewind
+    turn_on_action:
+      - remote_transmitter.transmit_samsung:
+          data: 0xE0E0A25D
+  - platform: template
+    name: ${board_name}_tv_samsung_fastforward
+    turn_on_action:
+      - remote_transmitter.transmit_samsung:
+          data: 0xE0E012ED
+  - platform: template
+    name: ${board_name}_tv_samsung_up
+    turn_on_action:
+      - remote_transmitter.transmit_samsung:
+          data: 0xE0E006F9
+  - platform: template
+    name: ${board_name}_tv_samsung_down
+    turn_on_action:
+      - remote_transmitter.transmit_samsung:
+          data: 0xE0E08679
+  - platform: template
+    name: ${board_name}_tv_samsung_left
+    turn_on_action:
+      - remote_transmitter.transmit_samsung:
+          data: 0xE0E0A659
+  - platform: template
+    name: ${board_name}_tv_samsung_right
+    turn_on_action:
+      - remote_transmitter.transmit_samsung:
+          data: 0xE0E046B9
+  - platform: template
+    name: ${board_name}_tv_samsung_enter
+    turn_on_action:
+      - remote_transmitter.transmit_samsung:
+          data: 0xE0E016E9
+  - platform: template
+    name: ${board_name}_tv_samsung_return
+    turn_on_action:
+      - remote_transmitter.transmit_samsung:
+          data: 0xE0E01AE5
+  - platform: template
+    name: ${board_name}_tv_samsung_exit
+    turn_on_action:
+      - remote_transmitter.transmit_samsung:
+          data: 0xE0E0B44B
+  - platform: template
+    name: ${board_name}_tv_samsung_source
+    turn_on_action:
+      - remote_transmitter.transmit_samsung:
+          data: 0xE0E0807F
+  - platform: template
+    name: ${board_name}_tv_samsung_media_p
+    turn_on_action:
+      - remote_transmitter.transmit_samsung:
+          data: 0xE0E031CE
+  - platform: template
+    name: ${board_name}_tv_samsung_smarthub
+    turn_on_action:
+      - remote_transmitter.transmit_samsung:
+          data: 0xE0E09E61
+  - platform: template
+    name: ${board_name}_tv_samsung_menu
+    turn_on_action:
+      - remote_transmitter.transmit_samsung:
+          data: 0xE0E058A7
 
 climate:
   - platform: custom
