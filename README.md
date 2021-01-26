@@ -66,11 +66,11 @@ Some **screenshots** from my HA can be found [here](docs/screenshots.md).
   - Xiaomi Dafang 1080p (ZRM4040RT) flashed to [Xiaomi DaFang Hacks](https://github.com/EliasKotlyar/Xiaomi-Dafang-Hacks)\
   Integrations "Generic Camera" & "MJPEG IP Camera"
 
+  - Tuya Smart IR Remote (UFO-R1 and similar) flashed to [ESPHome](https://esphome.io/)\
+  Integration "ESPHome"
+
   - Xiaomi Xiao AI Smart Alarm Clock (AI01ZM, zimi.clock.myk01)\
   Not used in HA
-
-  - Tuya Smart IR Remote (UFO-R1 and similar)\
-  Integration "Tuya" & ESPHome
 
 #### ZigBee Devices:
 - Relays:
@@ -133,8 +133,7 @@ Some **screenshots** from my HA can be found [here](docs/screenshots.md).
 Integration "Integration Saures controllers with HA" by [volshebniks](https://github.com/volshebniks/sauresha)
 
 - AC Daikin [FTXB-C](https://www.daikin.eu/en_us/products/ftxb-c.html) Series\
-  Via Tuya SmartIR, Xiaomi Magnet Sensors and Scenes from Tuya Cloud\
-  Slow migrating to ESPHome IR transmitters in progress
+  Via Tuya SmartIR flashed to ESPHome, IRremoteESP8266 lib and Xiaomi Magnet Sensors
 
 ### Software
 
