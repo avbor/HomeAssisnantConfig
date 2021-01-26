@@ -43,7 +43,7 @@ cards:
     cards:
     - type: markdown
       content: > 
-        ### Chromecasts:
+        ### Chromecast:
     - type: conditional
       conditions:
         - entity: group.all_chromecasts
@@ -87,7 +87,7 @@ cards:
     # --- Спальня
     - type: markdown
       content: >
-        ### TVs:
+        ### TV:
     - type: markdown
       content: >
         *Спальня:*
