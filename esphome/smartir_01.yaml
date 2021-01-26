@@ -68,7 +68,6 @@ binary_sensor:
   - platform: status
     name: ${board_name}_status
     internal: false
-
   - platform: gpio
     pin:
       number: GPIO13
@@ -76,6 +75,38 @@ binary_sensor:
     internal: true
     name: ${board_name}_button
     id: button
+
+switch:
+  - platform: template
+    name: ${board_name}_tv_samsung_power
+    turn_on_action:
+      - remote_transmitter.transmit_samsung:
+          data: 0xE0E040BF
+  - platform: template
+    name: ${board_name}_tv_samsung_volume_up
+    turn_on_action:
+      - remote_transmitter.transmit_samsung:
+          data: 0xE0E0E01F
+  - platform: template
+    name: ${board_name}_tv_samsung_volume_down
+    turn_on_action:
+      - remote_transmitter.transmit_samsung:
+          data: 0xE0E0D02F
+  - platform: template
+    name: ${board_name}_tv_samsung_mute
+    turn_on_action:
+      - remote_transmitter.transmit_samsung:
+          data: 0xE0E0F00F
+  - platform: template
+    name: ${board_name}_tv_samsung_play
+    turn_on_action:
+      - remote_transmitter.transmit_samsung:
+          data: 0xE0E0E21D
+  - platform: template
+    name: ${board_name}_tv_samsung_pause
+    turn_on_action:
+      - remote_transmitter.transmit_samsung:
+          data: 0xE0E052AD
 
 climate:
   - platform: custom
