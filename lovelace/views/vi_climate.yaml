@@ -20,14 +20,35 @@ cards:
             graph: line
       - type: vertical-stack
         cards:
-          - type: entities
-            entities:
-              - entity: binary_sensor.ac_nursery_status
-                state_color: true
-                name: "Кондиционер:"
-          - type: thermostat
+#          - type: entities
+#            entities:
+#              - entity: binary_sensor.ac_nursery_status
+#                state_color: true
+#                name: "Кондиционер:"
+          - type: 'custom:simple-thermostat'
             entity: climate.daikin_nursery
-            name: Daikin
+            show_header: false
+            decimals: 0
+            step_layout: row
+            step_size: 1
+            hide:
+              temperature: true
+            sensors:
+              - entity: binary_sensor.ac_nursery_status
+                icon: mdi:air-filter
+            control:
+              _names: false
+              hvac:
+                _name: "Режим:"
+                dry: false
+                fan_only: false
+              swing:
+                _name: "Движение шторки:"
+                "off":
+                  icon: mdi:shuffle-disabled
+                vertical:
+                  icon: mdi:shuffle
+
       - type: vertical-stack
         cards:
           - type: entities
@@ -78,14 +99,34 @@ cards:
             graph: line
       - type: vertical-stack
         cards:
-          - type: entities
-            entities:
-              - entity: binary_sensor.ac_living_room_status
-                state_color: true
-                name: "Кондиционер:"
-          - type: thermostat
+#          - type: entities
+#            entities:
+#              - entity: binary_sensor.ac_living_room_status
+#                state_color: true
+#                name: "Кондиционер:"
+          - type: 'custom:simple-thermostat'
             entity: climate.daikin_livingroom
-            name: Daikin
+            show_header: false
+            decimals: 0
+            step_layout: row
+            step_size: 1
+            hide:
+              temperature: true
+            sensors:
+              - entity: binary_sensor.ac_living_room_status
+                icon: mdi:air-filter
+            control:
+              _names: false
+              hvac:
+                _name: "Режим:"
+                dry: false
+                fan_only: false
+              swing:
+                _name: "Движение шторки:"
+                "off":
+                  icon: mdi:shuffle-disabled
+                vertical:
+                  icon: mdi:shuffle
   # Спальня
   - type: vertical-stack
     cards:
@@ -104,14 +145,34 @@ cards:
             graph: line
       - type: vertical-stack
         cards:
-          - type: entities
-            entities:
-              - entity: binary_sensor.ac_bedroom_status
-                state_color: true
-                name: "Кондиционер:"
-          - type: thermostat
+#          - type: entities
+#            entities:
+#              - entity: binary_sensor.ac_bedroom_status
+#                state_color: true
+#                name: "Кондиционер:"
+          - type: 'custom:simple-thermostat'
             entity: climate.daikin_bedroom
-            name: Daikin
+            show_header: false
+            decimals: 0
+            step_layout: row
+            step_size: 1
+            hide:
+              temperature: true
+            sensors:
+              - entity: binary_sensor.ac_bedroom_status
+                icon: mdi:air-filter
+            control:
+              _names: false
+              hvac:
+                _name: "Режим:"
+                dry: false
+                fan_only: false
+              swing:
+                _name: "Движение шторки:"
+                "off":
+                  icon: mdi:shuffle-disabled
+                vertical:
+                  icon: mdi:shuffle
   # Кладовая
   - type: vertical-stack
     cards:
