@@ -41,16 +41,19 @@ cards:
               icon: mdi:shuffle-disabled
             vertical:
               icon: mdi:shuffle
-      - type: vertical-stack
+#      - type: vertical-stack
+      - type: custom:vertical-stack-in-card
         cards:
-          - type: entities
-            entities:
-              - entity: binary_sensor.humidifier_nursery_status
-                state_color: true
-                name: "Увлажнитель:"
+#          - type: entities
+#            entities:
+#              - entity: binary_sensor.humidifier_nursery_status
+#                state_color: true
+#                name: "Увлажнитель:"
+          - type: markdown
+            content: >
+              #### Увлажнитель
           - type: glance
             #show_name: false
-            state_color: false
             entities:
               - entity: fan.xiaomi_miio_device
                 name: "Статус"
@@ -218,14 +221,18 @@ cards:
             entity: sensor.a4c138414e9a_humidity
             name: Влажность
             graph: line
-      - type: vertical-stack
+      - type: custom:vertical-stack-in-card
         cards:
+#          - type: entities
+#            entities:
+#              - entity: binary_sensor.boiler_status
+#                state_color: true
+#                name: "Бойлер:"
+          - type: markdown
+            content: >
+              #### Бойлер
           - type: entities
-            entities:
-              - entity: binary_sensor.boiler_status
-                state_color: true
-                name: "Бойлер:"
-          - type: entities
+            state_color: true
             entities:
               - entity: switch.tplink_smartplug_01
                 name: Electrolux Centurio IQ
