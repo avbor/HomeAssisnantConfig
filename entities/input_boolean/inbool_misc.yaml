@@ -3,3 +3,5 @@
 #################################################
 tv_remote_show_nursery:
   icon: mdi:remote-tv
+tv_remote_show_bedroom:
+  icon: mdi:remote-tv

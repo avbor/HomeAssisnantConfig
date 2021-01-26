@@ -187,6 +187,31 @@ switch:
     turn_on_action:
       - remote_transmitter.transmit_samsung:
           data: 0xE0E058A7
+  - platform: template
+    name: ${board_name}_tv_samsung_tools
+    turn_on_action:
+      - remote_transmitter.transmit_samsung:
+          data: 0xE0E0D22D
+  - platform: template
+    name: ${board_name}_tv_samsung_red_a
+    turn_on_action:
+      - remote_transmitter.transmit_samsung:
+          data: 0xE0E036C9
+  - platform: template
+    name: ${board_name}_tv_samsung_green_b
+    turn_on_action:
+      - remote_transmitter.transmit_samsung:
+          data: 0xE0E028D7
+  - platform: template
+    name: ${board_name}_tv_samsung_yellow_c
+    turn_on_action:
+      - remote_transmitter.transmit_samsung:
+          data: 0xE0E0A857
+  - platform: template
+    name: ${board_name}_tv_samsung_blue_d
+    turn_on_action:
+      - remote_transmitter.transmit_samsung:
+          data: 0xE0E06897
 
 climate:
   - platform: custom

@@ -8,33 +8,35 @@ cards:
       - type: markdown
         content: > 
           ### Радио:
-      - type: entities
-        entities:
-          - input_select.radio_station
-          - input_select.output_device
-      - type: entities
-        entities:
-          - input_number.volume_radio
-      - type: horizontal-stack
+      - type: custom:vertical-stack-in-card
         cards:
-          - type: button
-            show_name: false
-            icon_height: 32px
-            tap_action:
-              action: call-service
-              service: script.turn_on
-              service_data:
-                entity_id: script.radio_play
-            entity: script.radio_play
-          - type: button
-            show_name: false
-            icon_height: 32px
-            tap_action:
-              action: call-service
-              service: script.turn_on
-              service_data:
-                entity_id: script.radio_stop
-            entity: script.radio_stop
+          - type: entities
+            entities:
+              - input_select.radio_station
+              - input_select.output_device
+          - type: entities
+            entities:
+              - input_number.volume_radio
+          - type: horizontal-stack
+            cards:
+              - type: button
+                show_name: false
+                icon_height: 32px
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data:
+                    entity_id: script.radio_play
+                entity: script.radio_play
+              - type: button
+                show_name: false
+                icon_height: 32px
+                tap_action:
+                  action: call-service
+                  service: script.turn_on
+                  service_data:
+                    entity_id: script.radio_stop
+                entity: script.radio_stop
 
 # --- Chromecast
   - type: vertical-stack
@@ -82,35 +84,27 @@ cards:
 # --- Television
   - type: vertical-stack
     cards:
+    # --- Спальня
     - type: markdown
       content: >
         ### TVs:
     - type: markdown
       content: >
         *Спальня:*
-    - type: horizontal-stack
+    - type: custom:vertical-stack-in-card
       cards:
         - type: button
-          show_name: false
-          icon_height: 32px
-          icon: mdi:television
-          entity: switch.samsungtv_ue43ru7470_wol
+          entity: input_boolean.tv_remote_show_bedroom
+          name: "\U000021E7 TV Remote Control \U000021E9"
+          show_state: false
+          show_icon: false
           tap_action:
-            action: call-service
-            service: switch.turn_on
-            service_data:
-              entity_id: switch.samsungtv_ue43ru7470_wol
-        - type: button
-          show_name: false
-          icon_height: 32px
-          icon: mdi:television-off
-          entity: switch.samsung_7_series_43
-          state_color: false
-          tap_action:
-            action: call-service
-            service: switch.turn_off
-            service_data:
-              entity_id: switch.samsung_7_series_43
+            action: toggle
+        - type: conditional
+          conditions:
+            - entity: input_boolean.tv_remote_show_bedroom
+              state: "on"
+          card: !include samsung_tv_remote_ue.yaml
     - type: conditional
       conditions:
         - entity: media_player.samsungtv_ue43ru7470
@@ -120,19 +114,7 @@ cards:
       card:
         type: media-control
         entity: media_player.samsungtv_ue43ru7470
-#        type: vertical-stack
-#        cards:
-#          - type: entities
-#            show_header_toggle: false
-#            entities:
-#              - entity: sensor.samsung_7_series_43_media_input_source
-#                name: "Источник сигнала:"
-#              - entity: sensor.samsung_7_series_43_tv_channel
-#                name: "Канал:"
-#              - entity: sensor.samsung_7_series_43_volume
-#                name: "Громкость:"
-#          - type: media-control
-#            entity: media_player.samsungtv_ue43ru7470
+    # --- Гостиная
     - type: conditional
       conditions:
         - entity: media_player.samsung_ue46es5507
@@ -147,6 +129,7 @@ cards:
               *Гостинная:*
           - type: media-control
             entity: media_player.samsung_ue46es5507
+    # --- Кухня
     - type: conditional
       conditions:
         - entity: media_player.samsung_ue32es5500
@@ -161,15 +144,7 @@ cards:
               *Кухня:*
           - type: media-control
             entity: media_player.samsung_ue32es5500
-#    - type: conditional
-#      conditions:
-#        - entity: media_player.samsungtv_ue40c5100
-#          state_not: "off"
-#        - entity: media_player.samsungtv_ue40c5100
-#          state_not: "unknown"
-#      card:
-    #- type: vertical-stack
-    #  cards:
+    # --- Детская
     - type: markdown
       content: >
         *Детская:*
@@ -186,12 +161,7 @@ cards:
           conditions:
             - entity: input_boolean.tv_remote_show_nursery
               state: "on"
-          card:
-            type: glance
-            columns: 3
-            show_name: false
-            show_state: false
-            entities: !include samsung_tv_remote_c.yaml
+          card: !include samsung_tv_remote_c.yaml
 
 # --- Plex
   - type: vertical-stack
