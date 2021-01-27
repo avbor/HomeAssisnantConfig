@@ -88,16 +88,14 @@ class Gateway3MotionSensor(Gateway3BinarySensor):
             return
 
         # https://github.com/AlexxIT/XiaomiGateway3/issues/135
-        if 'illumination' in data and len(data) == 1:
+        if 'illuminance' in data and len(data) == 1:
             data[self._attr] = 1
 
-        if self._attr not in data:
+        # check only motion=1
+        if data.get(self._attr) != 1:
             # handle available change
             self.async_write_ha_state()
             return
-
-        # check only motion=1
-        assert data[self._attr] == 1, data
 
         # don't trigger motion right after illumination
         t = time.time()
