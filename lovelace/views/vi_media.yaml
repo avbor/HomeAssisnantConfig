@@ -95,7 +95,7 @@ cards:
       cards:
         - type: button
           entity: input_boolean.tv_remote_show_bedroom
-          name: "\U000021E7 TV Remote Control \U000021E9"
+          name: "\U000021E7 Пульт управления \U000021E9"
           show_state: false
           show_icon: false
           tap_action:
@@ -148,11 +148,23 @@ cards:
     - type: markdown
       content: >
         *Детская:*
+    - type: conditional
+      conditions:
+        - entity: switch.samsungtv_40c5100
+          state_not: "off"
+        - entity: switch.samsungtv_40c5100
+          state_not: "unknown"
+      card:
+        type: vertical-stack
+        cards:
+        - type: entity
+          entity: switch.samsungtv_40c5100
+          name: SamsungTV 40C5100
     - type: custom:vertical-stack-in-card
       cards:
         - type: button
           entity: input_boolean.tv_remote_show_nursery
-          name: "\U000021E7 TV Remote Control \U000021E9"
+          name: "\U000021E7 Пульт управления \U000021E9"
           show_state: false
           show_icon: false
           tap_action:
@@ -177,7 +189,15 @@ cards:
           state: "unavailable"
         - entity: media_player.plex_guest_plex_for_samsung_tv_ue32es5500
           state: "unavailable"
-        - entity: media_player.plex_guest_plex_for_android_mobile_oneplus_a3003
+        - entity: media_player.plex_guest_plex_for_samsung_tv_ue46es5507
+          state: "unavailable"
+        - entity: media_player.plex_guest_plex_cast_chromecast
+          state: "unavailable"
+        - entity: media_player.plex_guest_plex_for_samsung_tv_2019
+          state: "unavailable"
+        - entity: media_player.plex_guest_plex_for_android_mobile_sm_t295
+          state: "unavailable"
+        - entity: media_player.plex_guest_plex_for_android_mobile_sm_t295_2
           state: "unavailable"
       card:
         type: markdown
@@ -212,19 +232,46 @@ cards:
         entity: media_player.plex_guest_plex_for_samsung_tv_ue32es5500
     - type: conditional
       conditions:
-        - entity: media_player.plex_tv_ue43ru7470uxru
+        - entity: media_player.plex_guest_plex_for_samsung_tv_ue46es5507
           state_not: "off"
-        - entity: media_player.plex_tv_ue43ru7470uxru
+        - entity: media_player.plex_guest_plex_for_samsung_tv_ue46es5507
           state_not: "unavailable"
       card:
         type: media-control
-        entity: media_player.plex_tv_ue43ru7470uxru
+        entity: media_player.plex_guest_plex_for_samsung_tv_ue46es5507
     - type: conditional
       conditions:
-        - entity: media_player.plex_guest_plex_for_android_mobile_oneplus_a3003
+        - entity: media_player.plex_guest_plex_cast_chromecast
           state_not: "off"
-        - entity: media_player.plex_guest_plex_for_android_mobile_oneplus_a3003
+        - entity: media_player.plex_guest_plex_cast_chromecast
           state_not: "unavailable"
       card:
         type: media-control
-        entity: media_player.plex_guest_plex_for_android_mobile_oneplus_a3003
+        entity: media_player.plex_guest_plex_cast_chromecast
+    - type: conditional
+      conditions:
+        - entity: media_player.plex_guest_plex_for_samsung_tv_2019
+          state_not: "off"
+        - entity: media_player.plex_guest_plex_for_samsung_tv_2019
+          state_not: "unavailable"
+      card:
+        type: media-control
+        entity: media_player.plex_guest_plex_for_samsung_tv_2019
+    - type: conditional
+      conditions:
+        - entity: media_player.plex_guest_plex_for_android_mobile_sm_t295
+          state_not: "off"
+        - entity: media_player.plex_guest_plex_for_android_mobile_sm_t295
+          state_not: "unavailable"
+      card:
+        type: media-control
+        entity: media_player.plex_guest_plex_for_android_mobile_sm_t295
+    - type: conditional
+      conditions:
+        - entity: media_player.plex_guest_plex_for_android_mobile_sm_t295_2
+          state_not: "off"
+        - entity: media_player.plex_guest_plex_for_android_mobile_sm_t295_2
+          state_not: "unavailable"
+      card:
+        type: media-control
+        entity: media_player.plex_guest_plex_for_android_mobile_sm_t295_2

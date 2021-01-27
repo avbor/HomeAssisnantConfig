@@ -6,8 +6,8 @@
   name: SamsungTV-UE43RU7470-WOL
   mac: 8c:79:f5:51:2f:d1
   turn_off:
-    service: switch.turn_off
-    entity_id: switch.samsung_7_series_43
+    service: switch.turn_on
+    entity_id: switch.smartir_02_tv_samsung_power
 - platform: xiaomi_miio
   host: 172.16.16.235
   token: !secret xiaomi_smartplug_wifi_01_token
@@ -18,3 +18,22 @@
   token: !secret xiaomi_smartplug_wifi_02_token
   model: chuangmi.plug.hmi206
   name: Mi-SmartPlugWiFi-02
+- platform: template
+  switches:
+    samsungtv_40c5100:
+      value_template: "{{ is_state('binary_sensor.samsungtv_40c5100', 'on') }}"
+      availability_template: "{{ is_state('binary_sensor.smartir_01_status', 'on') }}"
+      turn_on:
+        service: switch.turn_on
+        data:
+          entity_id: switch.smartir_01_tv_samsung_power
+      turn_off:
+        service: switch.turn_on
+        data:
+          entity_id: switch.smartir_01_tv_samsung_power
+      icon_template: >-
+        {% if is_state('binary_sensor.samsungtv_40c5100', 'on') %}
+          mdi:television
+        {% else %}
+          mdi:television-off
+        {% endif %}

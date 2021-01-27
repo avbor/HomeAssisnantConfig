@@ -16,10 +16,10 @@ devices_to_map:
 all_tv:
   name: Все телевизоры
   entities:
-    - media_player.samsungtv_ue32es5500
-    - media_player.samsungtv_ue40c5100
-    - media_player.samsungtv_ue46es5507
     - media_player.samsungtv_ue43ru7470
+    - media_player.samsung_ue32es5500
+    - media_player.samsung_ue46es5507
+    - switch.samsungtv_40c5100
 
 all_chromecasts:
   name: Все хромкасты

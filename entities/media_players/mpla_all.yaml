@@ -2,11 +2,9 @@
 # Media Players, TV...
 #################################################
 
-#- platform: plex
 - platform: samsungtv_tizen
   name: SamsungTV-UE43RU7470
   host: 172.16.16.205
-  port: 8002
   mac: 8c:79:f5:51:2f:d1
   #app_list: '{"Plex": "3201512006963","YouTube": "111299001912", "ivi": "FD7JrMU4L1.ivi"}'
   api_key: !secret smartthings_token

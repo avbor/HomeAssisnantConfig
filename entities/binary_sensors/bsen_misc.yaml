@@ -12,6 +12,11 @@
   name: time_between_7_10
   after: '7:00'
   before: '10:00'
+- platform: ping
+  host: 172.16.16.206
+  name: "SamsungTV-40C5100"
+  count: 3
+  scan_interval: 10
 - platform: template
   sensors:
     updater_supervisor:

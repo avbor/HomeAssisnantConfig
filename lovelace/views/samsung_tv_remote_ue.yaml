@@ -60,7 +60,6 @@ cards:
         icon: mdi:pause
         tap_action:
           action: toggle
-
   - type: glance
     columns: 2
     show_name: false
