@@ -37,3 +37,19 @@
         {% else %}
           mdi:television-off
         {% endif %}
+    samsungtv_46es5507:
+      value_template: "{{ is_state('media_player.samsung_ue46es5507', 'on') }}"
+      turn_on:
+        service: shell_command.chromecast_tv_on
+        data:
+          ip_addr: "172.16.16.211"
+      turn_off:
+        service: media_player.turn_off
+        data:
+          entity_id: media_player.samsung_ue46es5507
+      icon_template: >-
+        {% if is_state('media_player.samsung_ue46es5507', 'on') %}
+          mdi:television
+        {% else %}
+          mdi:television-off
+        {% endif %}

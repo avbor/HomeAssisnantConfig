@@ -396,3 +396,20 @@
     - service: light.toggle
       data:
           entity_id: light.gostinaia_podsvetka_na_okne
+
+# Разное
+
+- alias: Aqara Cube Rotate
+  mode: queued
+  max: 5
+  max_exceeded: silent
+  trigger:
+    platform: state
+    entity_id: sensor.0x158d0005292ad9_action
+    to: 'rotate'
+  action:
+    service: light.turn_on
+    data_template:
+      entity_id: light.0x86bd7fffe616b72_light
+      brightness: >-
+        {{ (state_attr('light.0x86bd7fffe616b72_light', 'brightness') | int) + (state_attr('sensor.0x158d0005292ad9_action', 'angle') | int) }}

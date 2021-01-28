@@ -38,5 +38,5 @@ switch.sonoff_1000b68886:
   friendly_name: Нептун - Питание
 binary_sensor.0x158d00044ee524_contact:
   friendly_name: Датчик протечки - Нептун
-#light.0x86bd7fffe616b72_light:
-#  ignore_offline: 1
+binary_sensor.0x158d000309920a_motion:
+  occupancy_timeout: [120, 180, 240]
