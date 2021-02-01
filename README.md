@@ -6,6 +6,10 @@ Feel free to contact me by [Telegram](https://t.me/avbor) if you have any furthe
 
 Some **screenshots** from my HA can be found [here](docs/screenshots.md).
 
+Ряд тем более подробно описаны на русском языке [здесь](https://simple-ha.ru)
+
+---
+
 ### Hardware
 
 **Server:**
@@ -27,7 +31,7 @@ Some **screenshots** from my HA can be found [here](docs/screenshots.md).
 
 **ZigBee/BT Gateways:**
 - Xiaomi Gateway 2 (DGNWG02LM, lumi.gateway.v3)\
-  Integration "Xiaomi Gateway (Aqara)"
+  Integration "Xiaomi Gateway (Aqara)" & "Zigbee Home Automation (ZHA)"
 
 - Xiaomi Gateway 3 (ZNDMWG03LM, lumi.gateway.mgl03)\
   Integration "Xiaomi Gateway 3" by [AlexxIT](https://github.com/AlexxIT/XiaomiGateway3)
@@ -75,6 +79,7 @@ Some **screenshots** from my HA can be found [here](docs/screenshots.md).
 #### ZigBee Devices:
 - Relays:
   - Aqara Wireless Relay (LLKZMK11LM, lumi.relay.c2acn01)
+  - Sonoff ZBMINI
 
 - Plugs:
   - MiJia Smart Power Plug 2 (ZNCZ02LM, lumi.plug)
@@ -94,6 +99,7 @@ Some **screenshots** from my HA can be found [here](docs/screenshots.md).
   - Aqara Humidity & Temperature Sensor (WSDCGQ11LM, lumi.weather)
   - Aqara Water Immersing Sensor (SJCGQ11LM, lumi.sensor_wleak.aq1)
   - MiJia Honeywell Gas Leak Detector (JTQJ-BF-01LM/BW, lumi.sensor_natgas.v1)
+  - MiJia Light Sensor (GZCGQ01LM, lumi.sen_ill.mgl01)
 
 - Other:
   - Aqara Cube (MFKZQ01LM, lumi.sensor_cube.aqgl01)

@@ -439,11 +439,13 @@
 #      data_template:
 #        entity_id: light.0x86bd7fffe616b72_light
 #        brightness: >-
-#          {{ (state_attr('light.0x86bd7fffe616b72_light', 'brightness') | int) + (state_attr('sensor.0x158d0005292ad9_action', 'angle') | int) }}
+#          {{ (state_attr('light.0x86bd7fffe616b72_light', 'brightness') | int) +
+#          (state_attr('sensor.0x158d0005292ad9_action', 'angle') | int) }}
 #
 # --- --- --- Device or Event based (ZHA)
     - service: light.turn_on
       entity_id: light.0x86bd7fffe616b72_light
       data:
         brightness: >-
-          {{ (state_attr('light.0x86bd7fffe616b72_light', 'brightness') | int) + (trigger.event.data.args.relative_degrees | int) }}
+          {{ (state_attr('light.0x86bd7fffe616b72_light', 'brightness') | int) +
+          (trigger.event.data.args.relative_degrees | int) }}
