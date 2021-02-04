@@ -88,6 +88,12 @@ binary_sensor:
 #      - name: "Daikin Livingroom"
 #      #receiver_id: rcvr
 
+#climate:
+#  - platform: daikin
+#    name: "Test AC"
+#    receiver_id: rcvr
+#    sensor: ha_temp_${room_name}
+
 time:
   - platform: homeassistant
     id: homeassistant_time
