@@ -6,7 +6,9 @@ Feel free to contact me by [Telegram](https://t.me/avbor) if you have any furthe
 
 Some **screenshots** from my HA can be found [here](docs/screenshots.md).
 
-Ряд тем более подробно описаны на русском языке [здесь](https://simple-ha.ru)
+---
+
+На русском языке ряд тем более подробно описаны [здесь](https://simple-ha.ru).
 
 ---
 
