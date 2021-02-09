@@ -50,8 +50,8 @@
         entity_id: light.sonoff_1000f2f14a
         state: 'off'
       - condition: numeric_state
-        entity_id: sensor.0x158d000309920a_illuminance
-        below: 50
+        entity_id: sensor.0x4cf8cdf3c7d110d_illuminance
+        below: 30
   action:
     service: light.turn_on
     data:
