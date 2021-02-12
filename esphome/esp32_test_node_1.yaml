@@ -1,0 +1,60 @@
+substitutions:
+  board_name: esp32_test_node_1
+
+esphome:
+  name: ${board_name}
+  platform: ESP32
+  board: mhetesp32devkit
+
+wifi:
+  ssid: !secret wifi_ssid
+  password: !secret wifi_password
+  ap:
+    ssid: "Esp32 Test Node 1"
+    password: !secret wifi_fallback_ap_pass
+
+captive_portal:
+
+logger:
+
+esp32_ble_tracker:
+
+web_server:
+  port: 80
+
+api:
+  password: !secret esphome_api_password
+
+ota:
+  password: !secret esphome_api_password
+
+time:
+  - platform: homeassistant
+    id: homeassistant_time  
+
+sensor:
+  - platform: wifi_signal
+    name: ${board_name}_wifi_rssi
+    update_interval: 60s
+    internal: false
+
+binary_sensor:
+  - platform: status
+    name: ${board_name}_status
+    internal: false
+#  - platform: ble_presence
+#    mac_address: F1:C1:9B:8F:4A:EE
+#    name: "Alexander's MiBand"
+
+#text_sensor:
+#  - platform: ble_scanner
+#    name: "BLE Devices Scanner"
+
+switch:
+  - platform: gpio
+    pin:
+      number: 32
+      inverted: true
+      mode: INPUT_PULLUP
+    id: relay
+    name: TestSwitch
