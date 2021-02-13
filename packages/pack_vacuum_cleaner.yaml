@@ -248,6 +248,12 @@ vacuum_cleaner:
         platform: state
         entity_id: vacuum.xiaomi_vacuum_cleaner
         to: "docked"
+      condition:
+        condition: not
+        conditions:
+          - condition: state
+            entity_id: vacuum.xiaomi_vacuum_cleaner
+            state: "unavailable"
       action:
         - service: notify.telegram_stall
           data:
