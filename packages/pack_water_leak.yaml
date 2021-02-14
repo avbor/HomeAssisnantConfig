@@ -116,6 +116,31 @@ water_leak_protection:
           data:
             entity_id: input_boolean.neptun_activated
 
+    # Перезагрузка контроллера Нептун раз в 2 недели (обход проворота кранов раз в месяц)
+    - alias: Restart Neptun [twice a month]
+      trigger:
+        - platform: time
+          at: "11:00:00"
+      condition:
+        condition: and
+        conditions:
+          - condition: time
+            weekday: mon
+          - condition: template
+            value_template: "{{(as_timestamp(now())|timestamp_custom ('%W') | int % 2) == 1 }}"
+      action:
+        - service: switch.turn_off
+          data:
+            entity_id: switch.sonoff_1000b68886
+        - delay: 5
+        - service: switch.turn_on
+          data:
+            entity_id: switch.sonoff_1000b68886
+        - service: notify.telegram_stall
+          data:
+            message: |
+              _INFO:_ Нептун был перезапущен.
+
     # Автоматическое отключение напряжения на кранах (работа >60 сек)
     - alias: PowerOff Valves After 60 Seconds
       trigger:
