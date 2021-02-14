@@ -28,9 +28,9 @@
         data:
           entity_id: switch.smartir_01_tv_samsung_power
       turn_off:
-        service: switch.turn_on
+        service: script.turn_on
         data:
-          entity_id: switch.smartir_01_tv_samsung_power
+          entity_id: script.power_off_samsungtv_40c5100
       icon_template: >-
         {% if is_state('binary_sensor.samsungtv_40c5100', 'on') %}
           mdi:television

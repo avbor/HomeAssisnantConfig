@@ -55,3 +55,13 @@ googlehome3792_increase_volume:
           {% if level < 1 %} {{ level }}
           {% else %} 1
           {% endif %}
+
+power_off_samsungtv_40c5100:
+  alias: PowerOff Samsung TV 40c5100 by IR
+  sequence:
+    - condition: state
+      entity_id: binary_sensor.samsungtv_40c5100
+      state: "on"
+    - service: switch.turn_on
+      data:
+        entity_id: switch.smartir_01_tv_samsung_power

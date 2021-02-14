@@ -10,6 +10,15 @@
     to: "not_home"
     for:
       minutes: 5
+  condition:
+    condition: or
+    conditions:
+      - condition: state
+        entity_id: group.all_tv
+        state: "on"
+      - condition: state
+        entity_id: group.all_chromecasts
+        state: "on"
   action:
     - service: homeassistant.turn_off
       data:
