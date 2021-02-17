@@ -3,3 +3,4 @@ views:
   - !include views/vi_system.yaml
   - !include views/vi_battery.yaml
   - !include views/vi_radio_quality_gw3.yaml
+  - !include views/vi_radio_quality_zha.yaml

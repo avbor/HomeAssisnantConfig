@@ -1,0 +1,37 @@
+title: Radio Quality [ZHA]
+path: zha-net
+icon: mdi:zigbee
+panel: true
+cards:
+  - type: vertical-stack
+    cards:
+      # ZHA
+      - type: markdown
+        content: '### <center> ZigBee Home Automation </center>'
+      - type: 'custom:zha-network-card'
+        sort_by: available
+        clickable: false
+        columns:
+          - name: Friendly Name
+            prop: name
+          - attr: available
+            id: available
+            modify: x || "false"
+            name: Online
+          - attr: manufacturer
+            name: Manufacturer
+          - attr: model
+            name: Model
+          - attr: ieee
+            name: IEEE
+          - name: NWK
+            prop: nwk
+          - attr: lqi
+            name: LQI
+          - attr: rssi
+            name: RSSI
+          - attr: last_seen
+            name: Last Seen
+            modify: >
+              var dt = new Date(0,0,0,0,0,0,(Date.now()-Date.parse(x)));
+              isFinite(dt) ? dt.toTimeString().split(" ")[0] : ""
