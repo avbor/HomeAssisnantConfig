@@ -1,35 +1,18 @@
 substitutions:
   board_name: smartir_03
+  esp_platform: ESP8266
+  esp_board: esp01_1m
   room_name: livingroom
 
+packages:
+  wifi: !include common/wifi.yaml
+  device_base: !include common/device_base.yaml
+
 esphome:
-  name: ${board_name}
-  platform: ESP8266
-  board: esp01_1m
   includes: 
     - include/daikin_ir.h
   libraries:
     - IRremoteESP8266
-
-wifi:
-  ssid: !secret wifi_ssid
-  password: !secret wifi_password
-  ap:
-    ssid: "SmartIR_04"
-    password: !secret wifi_fallback_ap_pass
-#  use_address: old_name.local
-
-captive_portal:
-logger:
-
-#web_server:
-#  port: 80
-
-api:
-  password: !secret esphome_api_password
-
-ota:
-  password: !secret esphome_api_password
 
 # Use the blue LED as a status light.
 #   Blink slowly = Temporary issue (WiFi/MQTT disconnected, sensor unavailable, ...)
@@ -59,16 +42,8 @@ sensor:
     internal: true
     unit_of_measurement: °C
     accuracy_decimals: 1
-  - platform: wifi_signal
-    name: ${board_name}_wifi_rssi
-    update_interval: 60s
-    internal: false
 
 binary_sensor:
-  - platform: status
-    name: ${board_name}_status
-    internal: false
-
   - platform: gpio
     pin:
       number: GPIO13
@@ -87,7 +62,3 @@ climate:
     climates:
       - name: "Daikin Livingroom"
       #receiver_id: rcvr
-
-time:
-  - platform: homeassistant
-    id: homeassistant_time
