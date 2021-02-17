@@ -114,7 +114,7 @@ Some **screenshots** from my HA can be found [here](docs/screenshots.md).
   - Xiaomi TH Digital Clock (LYWSD02MMC, miaomiaoche.sensor_ht.t1)\
   Via Xiaomi Gateway 3
 
-**Media Players:**
+#### Media Players:
   - Google Chromecast (Gen 1)\
   Integration "Google Cast"
 
@@ -133,7 +133,7 @@ Some **screenshots** from my HA can be found [here](docs/screenshots.md).
   - Plex Media Server\
   Integration "Plex Media Server"
 
-**Other:**
+#### Other:
 - [Neptun Bugatti Base](https://neptun-mcs.ru/catalog/complects/neptun_base/sistema_kontrolya_protechki_vody_neptun_bugatti_base/)\
   Via modified Xiaomi Magnet Sensors, Aqara 2ch Relay and Sonoff Mini for power control
 
