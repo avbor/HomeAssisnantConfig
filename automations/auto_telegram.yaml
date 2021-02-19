@@ -89,7 +89,7 @@
         caption: |
           Температура {{ state_attr('weather.gismeteo', 'temperature') }}°C
           Влажность {{ state_attr('weather.gismeteo', 'humidity') }}%
-          Давление {{ state_attr('weather.gismeteo', 'pressure') }} hPa ({{ states('sensor.gismeteo_pressure_mmhg') }} mmHg)          
+          Давление {{ state_attr('weather.gismeteo', 'pressure') }} hPa ({{ states('sensor.gismeteo_pressure_mmhg') }} mmHg)
 # ---- /status
 - alias: 'Telegram Bot - Status'
   trigger:
