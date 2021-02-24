@@ -277,40 +277,40 @@ cards:
           - sensor.moon
 
 # --- COVID-19
-  - type: vertical-stack
-    cards:
-      - type: markdown
-        content: >
-          ### COVID-19:
-      - type: horizontal-stack
-        cards:
-        - type: sensor
-          entity: sensor.worldwide_coronavirus_confirmed
-          name: Всего в мире
-          icon: mdi:earth
-          unit: чел.
-          graph: line
-          hours_to_show: 72
-        - type: sensor
-          entity: sensor.russia_coronavirus_confirmed
-          name: Всего в России
-          icon: mdi:flag
-          unit: чел.
-          graph: line
-          hours_to_show: 72
-      - type: horizontal-stack
-        cards:
-        - type: sensor
-          entity: sensor.worldwide_coronavirus_current
-          name: Сейчас в мире
-          icon: mdi:earth
-          unit: чел.
-          graph: line
-          hours_to_show: 72
-        - type: sensor
-          entity: sensor.russia_coronavirus_current
-          name: Сейчас в России
-          icon: mdi:flag
-          unit: чел.
-          graph: line
-          hours_to_show: 72
+#  - type: vertical-stack
+#    cards:
+#      - type: markdown
+#        content: >
+#          ### COVID-19:
+#      - type: horizontal-stack
+#        cards:
+#        - type: sensor
+#          entity: sensor.worldwide_coronavirus_confirmed
+#          name: Всего в мире
+#          icon: mdi:earth
+#          unit: чел.
+#          graph: line
+#          hours_to_show: 72
+#        - type: sensor
+#          entity: sensor.russia_coronavirus_confirmed
+#          name: Всего в России
+#          icon: mdi:flag
+#          unit: чел.
+#          graph: line
+#          hours_to_show: 72
+#      - type: horizontal-stack
+#        cards:
+#        - type: sensor
+#          entity: sensor.worldwide_coronavirus_current
+#          name: Сейчас в мире
+#          icon: mdi:earth
+#          unit: чел.
+#          graph: line
+#          hours_to_show: 72
+#        - type: sensor
+#          entity: sensor.russia_coronavirus_current
+#          name: Сейчас в России
+#          icon: mdi:flag
+#          unit: чел.
+#          graph: line
+#          hours_to_show: 72
