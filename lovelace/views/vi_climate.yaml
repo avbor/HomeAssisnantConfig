@@ -154,6 +154,34 @@ cards:
               icon: mdi:shuffle-disabled
             vertical:
               icon: mdi:shuffle
+      - type: custom:vertical-stack-in-card
+        cards:
+          - type: markdown
+            content: >
+              #### Увлажнитель
+          - type: glance
+            entities:
+              - entity: fan.smartmi_humidifier_02
+                name: "Статус"
+                tap_action:
+                  action: call-service
+                  service: fan.toggle
+                  service_data:
+                    entity_id: fan.smartmi_humidifier_02
+              - entity: sensor.smartmi_humidifier_02_water_level
+                name: "Ост. воды"
+                icon: mdi:cup-water
+              - entity: sensor.smartmi_humidifier_02_humidity
+                name: "Влажность"
+                icon: mdi:water-percent
+              - entity: sensor.smartmi_humidifier_02_temperature
+                name: "Температура"
+          - type: entities
+            entities:
+              - entity: sensor.smartmi_humidifier_02_speed
+                name: 'Текущая скорость:'
+                icon: mdi:speedometer
+              - input_select.smartmi_humidifier_02_speed
   # Кладовая
   - type: vertical-stack
     cards:
