@@ -8,11 +8,11 @@ humidifiers_pack:
   fan:
     - platform: xiaomi_miio
       host: 172.16.16.224
-      name: Smartmi Humidifier 01
+      name: Smartmi Humidifier 01 (Детская)
       token: !secret xiaomi_air_humidifier_01_token
     - platform: xiaomi_miio
       host: 172.16.16.243
-      name: Smartmi Humidifier 02
+      name: Smartmi Humidifier 02 (Спальня)
       token: !secret xiaomi_air_humidifier_02_token
 
   # Input Select
@@ -120,12 +120,15 @@ humidifiers_pack:
         entity_id:
           - sensor.smartmi_humidifier_01_water_level
         below: 15
+      condition:
+        condition: template
+        value_template: "{{ trigger.to_state.state != 0 }}"
       action:
         - service: notify.telegram_stall
           data_template:
             message: >
-              *Smartmi Humidifier 01*: заканчивается вода (осталось *{{ trigger.to_state.state }}*%)!
-          
+              *Smartmi Humidifier 01* (Детская): заканчивается вода (осталось *{{ trigger.to_state.state }}*%)!
+
     - alias: 'Smartmi Humidifier 01 - Выбор скорости'
       trigger:
         platform: state
@@ -174,11 +177,14 @@ humidifiers_pack:
         entity_id:
           - sensor.smartmi_humidifier_02_water_level
         below: 15
+      condition:
+        condition: template
+        value_template: "{{ trigger.to_state.state != 0 }}"
       action:
         - service: notify.telegram_stall
           data_template:
             message: >
-              *Smartmi Humidifier 02*: заканчивается вода (осталось *{{ trigger.to_state.state }}*%)!
+              *Smartmi Humidifier 02* (Спальня): заканчивается вода (осталось *{{ trigger.to_state.state }}*%)!
           
     - alias: 'Smartmi Humidifier 02 - Выбор скорости'
       trigger:

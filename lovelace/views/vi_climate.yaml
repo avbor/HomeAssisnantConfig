@@ -28,7 +28,7 @@ cards:
           temperature: true
         sensors:
           - entity: binary_sensor.ac_nursery_status
-            icon: mdi:air-filter
+            icon: mdi:air-conditioner
         control:
           _names: false
           hvac:
@@ -102,7 +102,7 @@ cards:
           temperature: true
         sensors:
           - entity: binary_sensor.ac_living_room_status
-            icon: mdi:air-filter
+            icon: mdi:air-conditioner
         control:
           _names: false
           hvac:
@@ -141,7 +141,7 @@ cards:
           temperature: true
         sensors:
           - entity: binary_sensor.ac_bedroom_status
-            icon: mdi:air-filter
+            icon: mdi:air-conditioner
         control:
           _names: false
           hvac:
