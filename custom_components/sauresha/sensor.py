@@ -2,7 +2,6 @@
 import datetime
 import logging
 import re
-import time
 from datetime import timedelta
 from typing import List, Any, Callable
 
@@ -10,19 +9,21 @@ import voluptuous as vol
 from homeassistant.components.sensor import PLATFORM_SCHEMA
 from homeassistant.const import (
     CONF_EMAIL,
-    CONF_PASSWORD
+    CONF_PASSWORD,
 )
 from homeassistant.helpers import config_validation as cv
 from homeassistant.helpers.entity import Entity
 from homeassistant.helpers.event import track_time_interval
-from .sauresha import SauresHA
 
 from . import (
     CONF_FLAT_ID,
     CONF_COUNTERS_SN,
     CONF_CONTROLLERS_SN,
     CONF_SCAN_INTERVAL,
-    CONF_DEBUG
+    CONF_DEBUG,
+    CONF_NAME,
+    CONF_COUNTERS,
+    CONF_CONTROLLERS,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -38,6 +39,16 @@ PLATFORM_SCHEMA = PLATFORM_SCHEMA.extend({
     vol.Optional(CONF_SCAN_INTERVAL, default=SCAN_INTERVAL):
         vol.All(cv.time_period, cv.positive_timedelta),
     vol.Optional(CONF_DEBUG, default=False): cv.boolean,
+    vol.Optional(CONF_COUNTERS): {
+        cv.string: vol.Schema({
+            vol.Optional(CONF_NAME, default=''): cv.string,
+        }, extra=vol.ALLOW_EXTRA),
+    },
+    vol.Optional(CONF_CONTROLLERS): {
+        cv.string: vol.Schema({
+            vol.Optional(CONF_NAME, default=''): cv.string,
+        }, extra=vol.ALLOW_EXTRA),
+    },
 })
 
 
@@ -71,38 +82,58 @@ def setup_platform(hass, config, add_entities, discovery_info=None, scan_interva
             for val in flats:
                 _LOGGER.warning("ID flat:" + str(val.get('house')) + " : " + str(val.get('id')))
 
+    conf_counters = config.get(CONF_COUNTERS)
+    if not conf_counters:
+        conf_counters = serial_numbers
+
     if int(flat_id) > 0:
-        create_sensor: Callable[[Any], SauresSensor] = lambda serial_number: SauresSensor(hass, controller, flat_id,
-                                                                                          serial_number,
-                                                                                          is_debug,
-                                                                                          scan_interval)
-        sensors: List[SauresSensor] = list(map(create_sensor, serial_numbers))
+        sensors: List[SauresSensor] = []
+        for key, value in conf_counters.items():
+            sensor = SauresSensor(hass, controller, flat_id, key, value[CONF_NAME], is_debug, scan_interval)
+            sensors.append(sensor)
 
-        if sensors:
-            add_entities(sensors, True)
+    # create_sensor: Callable[[Any], SauresSensor] = lambda serial_number: SauresSensor(hass, controller,
+    #                                                                                   flat_id,
+    #                                                                                   serial_number,
+    #                                                                                   is_debug,
+    #                                                                                   scan_interval)
+    # sensors: List[SauresSensor] = list(map(create_sensor, confcounters))
 
-        create_my_controller: Callable[[Any], SauresControllerSensor] = lambda sn: SauresControllerSensor(hass,
-                                                                                                          controller,
-                                                                                                          flat_id, sn,
-                                                                                                          is_debug,
-                                                                                                          scan_interval)
+    if sensors:
+        add_entities(sensors, True)
 
-        my_controllers: List[SauresControllerSensor] = list(map(create_my_controller, sns))
+    conf_controllers = config.get(CONF_CONTROLLERS)
+    if not conf_controllers:
+        conf_controllers = sns
 
-        if my_controllers:
-            add_entities(my_controllers, True)
+    my_controllers: List[SauresControllerSensor] = []
+    for key, value in conf_controllers.items():
+        my_controller = SauresControllerSensor(hass, controller, flat_id, key, value[CONF_NAME], is_debug, scan_interval)
+        my_controllers.append(my_controller)
+
+    # create_my_controller: Callable[[Any], SauresControllerSensor] = lambda sn: SauresControllerSensor(hass,
+    #                                                                                                   controller,
+    #                                                                                                   flat_id, sn,
+    #                                                                                                   is_debug,
+    #                                                                                                   scan_interval)
+    #
+    # my_controllers: List[SauresControllerSensor] = list(map(create_my_controller, sns))
+
+    if my_controllers:
+        add_entities(my_controllers, True)
 
 
 class SauresSensor(Entity):
     """Representation of a Sensor."""
     _state: str
 
-    def __init__(self, hass, controller, flat_id, serial_number, is_debug, scan_interval):
+    def __init__(self, hass, controller, flat_id, sn, counter_name, is_debug, scan_interval):
         """Initialize the sensor."""
 
         self.controller = controller
         self.flat_id = flat_id
-        self.serial_number = str(serial_number)
+        self.serial_number = str(sn)
+        self.counter_name = counter_name
         self.isStart = True
         self.isDebug = is_debug
         self._attributes = dict()
@@ -132,10 +163,14 @@ class SauresSensor(Entity):
     @property
     def entity_id(self):
         """Return the entity_id of the sensor."""
-        sn = self.serial_number.replace('-', '_')
-        reg = re.compile('[^a-zA-Z0-9]')
+        if len(self.counter_name) > 0:
+            final_name = f'{self.counter_name}'
+        else:
+            final_name = f'{self.flat_id}_{self.serial_number}'
+        sn = final_name.replace('-', '_')
+        reg = re.compile('[^a-zA-Z0-9_]')
         sn = reg.sub('', sn).lower()
-        return f'sensor.sauresha_{self.flat_id}_{sn}'
+        return f'sensor.sauresha_{sn}'
 
     @property
     def state(self):
@@ -213,11 +248,12 @@ class SauresControllerSensor(Entity):
     """Representation of a Sensor."""
     _state: str
 
-    def __init__(self, hass, controller, flat_id, serial_number, is_debug, scan_interval=SCAN_INTERVAL):
+    def __init__(self, hass, controller, flat_id, sn, counter_name, is_debug, scan_interval=SCAN_INTERVAL):
         """Initialize the sensor."""
         self.controller = controller
         self.flat_id = flat_id
-        self.serial_number = str(serial_number)
+        self.serial_number = str(sn)
+        self.counter_name = str(counter_name)
         self._state = ""
         self.isDebug = is_debug
         self._attributes = dict()
@@ -232,8 +268,12 @@ class SauresControllerSensor(Entity):
     @property
     def entity_id(self):
         """Return the entity_id of the sensor."""
-        sn = self.serial_number.replace('-', '_')
-        reg = re.compile('[^a-zA-Z0-9]')
+        if len(self.counter_name) > 0:
+            final_name = f'{self.counter_name}'
+        else:
+            final_name = f'{self.serial_number}'
+        sn = final_name.replace('-', '_')
+        reg = re.compile('[^a-zA-Z0-9_]')
         sn = reg.sub('', sn).lower()
         return f'sensor.sauresha_contr_{sn}'
 

@@ -112,22 +112,30 @@ humidifiers_pack:
   # Automations
   automation:
 
-    ### Smartmi Humidifier 01 - Детская #############
-    - alias: 'Smartmi Humidifier 01 - Заданчивается вода'
+  ### Common
+
+    - alias: 'Smartmi Humidifier - Заданчивается вода'
       initial_state: true
       trigger:
         platform: numeric_state
         entity_id:
           - sensor.smartmi_humidifier_01_water_level
+          - sensor.smartmi_humidifier_02_water_level
         below: 15
       condition:
         condition: template
-        value_template: "{{ trigger.to_state.state != 0 }}"
+        value_template: "{{ (trigger.to_state.state | int) != 0 }}"
       action:
         - service: notify.telegram_stall
           data_template:
-            message: >
+            message: >-
+              {% if '_01_' in trigger.entity_id -%}
               *Smartmi Humidifier 01* (Детская): заканчивается вода (осталось *{{ trigger.to_state.state }}*%)!
+              {% elif '_02_' in trigger.entity_id -%}
+              *Smartmi Humidifier 02* (Спальня): заканчивается вода (осталось *{{ trigger.to_state.state }}*%)!
+              {% endif -%}
+
+    ### Smartmi Humidifier 01 - Детская #############
 
     - alias: 'Smartmi Humidifier 01 - Выбор скорости'
       trigger:
@@ -170,22 +178,7 @@ humidifiers_pack:
         entity_id: fan.xiaomi_miio_device
 
     ### Smartmi Humidifier 02 - Спальня #############
-    - alias: 'Smartmi Humidifier 02 - Заданчивается вода'
-      initial_state: true
-      trigger:
-        platform: numeric_state
-        entity_id:
-          - sensor.smartmi_humidifier_02_water_level
-        below: 15
-      condition:
-        condition: template
-        value_template: "{{ trigger.to_state.state != 0 }}"
-      action:
-        - service: notify.telegram_stall
-          data_template:
-            message: >
-              *Smartmi Humidifier 02* (Спальня): заканчивается вода (осталось *{{ trigger.to_state.state }}*%)!
-          
+
     - alias: 'Smartmi Humidifier 02 - Выбор скорости'
       trigger:
         platform: state

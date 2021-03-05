@@ -46,10 +46,10 @@
   trigger:
     platform: numeric_state
     entity_id: sensor.a4c1381b3d13_temperature
-    above: 24
+    above: 25
     for:
       minutes: 30
   action:
     - service: notify.telegram_stall
       data:
-        message: Температура в хьюмидоре выше 24°C (текущая {{ states("sensor.a4c1381b3d13_temperature") }}°C)
+        message: Температура в хьюмидоре выше 25°C (текущая {{ states("sensor.a4c1381b3d13_temperature") }}°C)

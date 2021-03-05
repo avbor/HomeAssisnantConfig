@@ -45,6 +45,9 @@ logbook:
 history:
 tag:
 media_source:
+my:
+dhcp:
+image:
 
 http:
   #base_url: !secret external_url
@@ -134,9 +137,6 @@ discovery:
     - homekit
 #    - yeelight
 #    - igd
-
-auto_backup:
-  auto_purge: true
 
 light:
   - platform: switch

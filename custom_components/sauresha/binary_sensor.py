@@ -20,6 +20,8 @@ from . import (
     CONF_COUNTERS_SN,
     CONF_DEBUG,
     CONF_SCAN_INTERVAL,
+    CONF_NAME,
+    CONF_COUNTERS,
 )
 
 _LOGGER = logging.getLogger(__name__)
@@ -33,6 +35,11 @@ PLATFORM_SCHEMA = homeassistant.components.binary_sensor.PLATFORM_SCHEMA.extend(
     vol.Optional(CONF_SCAN_INTERVAL, default=SCAN_INTERVAL):
         vol.All(cv.time_period, cv.positive_timedelta),
     vol.Optional(CONF_DEBUG, default=False): cv.boolean,
+    vol.Optional(CONF_COUNTERS): {
+        cv.string: vol.Schema({
+            vol.Optional(CONF_NAME, default=''): cv.string,
+        }, extra=vol.ALLOW_EXTRA),
+    },
 })
 
 
@@ -67,14 +74,23 @@ def setup_platform(hass, config, add_entities, discovery_info=None, scan_interva
             for val in flats:
                 _LOGGER.warning("ID flat:" + str(val.get('house')) + " : " + str(val.get('id')))
 
+    conf_counters = config.get(CONF_COUNTERS)
+    if not conf_counters:
+        conf_counters = serial_numbers
+
     if int(flat_id) > 0:
-        create_sensor: Callable[[Any], SauresBinarySensor] = lambda serial_number: SauresBinarySensor(hass,
-                                                                                                      controller,
-                                                                                                      flat_id,
-                                                                                                      serial_number,
-                                                                                                      is_debug,
-                                                                                                      scan_interval)
-        sensors: List[SauresBinarySensor] = list(map(create_sensor, serial_numbers))
+        sensors: List[SauresBinarySensor] = []
+        for key, value in conf_counters.items():
+            sensor = SauresBinarySensor(hass, controller, flat_id, key, value[CONF_NAME], is_debug, scan_interval)
+            sensors.append(sensor)
+
+        # create_sensor: Callable[[Any], SauresBinarySensor] = lambda serial_number: SauresBinarySensor(hass,
+        #                                                                                               controller,
+        #                                                                                               flat_id,
+        #                                                                                               serial_number,
+        #                                                                                               is_debug,
+        #                                                                                               scan_interval)
+        # sensors: List[SauresBinarySensor] = list(map(create_sensor, serial_numbers))
 
         if sensors:
             add_entities(sensors, True)
@@ -83,12 +99,13 @@ def setup_platform(hass, config, add_entities, discovery_info=None, scan_interva
 class SauresBinarySensor(Entity):
     """Representation of a BinarySensor."""
 
-    def __init__(self, hass, controller, flat_id, serial_number, is_debug, scan_interval):
+    def __init__(self, hass, controller, flat_id, sn, counter_name, is_debug, scan_interval):
         """Initialize the sensor."""
 
         self.controller = controller
         self.flat_id = flat_id
-        self.serial_number = str(serial_number)
+        self.serial_number = str(sn)
+        self.counter_name = counter_name
         self._attributes = dict()
         self.isDebug = is_debug
         self.scan_interval = scan_interval
@@ -116,10 +133,14 @@ class SauresBinarySensor(Entity):
     @property
     def entity_id(self):
         """Return the entity_id of the sensor."""
-        sn = self.serial_number.replace('-', '_')
-        reg = re.compile('[^a-zA-Z0-9]')
+        if len(self.counter_name) > 0:
+            final_name = f'{self.counter_name}'
+        else:
+            final_name = f'{self.flat_id}_{self.serial_number}'
+        sn = final_name.replace('-', '_')
+        reg = re.compile('[^a-zA-Z0-9_]')
         sn = reg.sub('', sn).lower()
-        return f'binary_sensor.sauresha_{self.flat_id}_{sn}'
+        return f'binary_sensor.sauresha_{sn}'
 
     @property
     def is_on(self):
@@ -174,3 +195,4 @@ class SauresBinarySensor(Entity):
 
     def update(self):
         self._state = self.fetch_state()
+

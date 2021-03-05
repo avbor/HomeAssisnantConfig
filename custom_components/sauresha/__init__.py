@@ -4,6 +4,6 @@ CONF_CONTROLLERS_SN = 'controllers_sn'
 CONF_SCAN_INTERVAL = 'scan_interval'
 CONF_DEBUG = 'debug'
 CONF_MONTH_REPORT = 'month_report'
-
-
-
+CONF_NAME = 'name'
+CONF_COUNTERS = 'counters'
+CONF_CONTROLLERS = 'controllers'

@@ -2,13 +2,13 @@
 # Devica Trackers
 #################################################
 
-- platform: keenetic_ndms2
-  host: 172.16.16.254
-  username: !secret keen_user
-  password: !secret keen_passwd
-  interval_seconds: 30
-  new_device_defaults:
-    track_new_devices: true
+#- platform: keenetic_ndms2
+#  host: 172.16.16.254
+#  username: !secret keen_user
+#  password: !secret keen_passwd
+#  interval_seconds: 30
+#  new_device_defaults:
+#    track_new_devices: true
 #- platform: nmap_tracker
 #  interval_seconds: 15
 #  new_device_defaults:
