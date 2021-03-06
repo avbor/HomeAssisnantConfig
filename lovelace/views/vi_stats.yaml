@@ -119,5 +119,5 @@ cards:
           ### Счетчики воды:
       - type: entities
         entities:
-          - entity: sensor.sauresha_5555_09104476
+          - entity: sensor.sauresha_5555_09_104476
           - entity: sensor.sauresha_5555_13193152
