@@ -15,10 +15,17 @@ humidifiers_pack:
       name: Smartmi Humidifier 02 (Спальня)
       token: !secret xiaomi_air_humidifier_02_token
 
+# Input Boolean
+  input_boolean:
+    smartmi_humidifier_01_autocontrol:
+      icon: mdi:home-floor-a
+    smartmi_humidifier_02_autocontrol:
+      icon: mdi:home-floor-a
+
   # Input Select
   input_select:
     smartmi_humidifier_01_speed:
-      name: 'Выбор скорости:'
+      name: 'Выбор режима:'
       options:
         - Silent
         - Medium
@@ -27,7 +34,7 @@ humidifiers_pack:
       initial: Auto
       icon: mdi:speedometer
     smartmi_humidifier_02_speed:
-      name: 'Выбор скорости:'
+      name: 'Выбор режима:'
       options:
         - Silent
         - Medium
@@ -35,6 +42,23 @@ humidifiers_pack:
         - Auto
       initial: Auto
       icon: mdi:speedometer
+
+  # Input Number
+  input_number:
+    target_humidity_01:
+      name: Целевая влажность
+      unit_of_measurement: '%'
+      icon: mdi:adjust
+      min: 20
+      max: 80
+      step: 5
+    target_humidity_02:
+      name: Целевая влажность
+      unit_of_measurement: '%'
+      icon: mdi:adjust
+      min: 20
+      max: 80
+      step: 5
 
   # Sensors
   sensor:
@@ -148,6 +172,7 @@ humidifiers_pack:
           fan_speed: "{{ trigger.to_state.state }}"
         
     - alias: 'Увлажнение детской - Старт [время]'
+      initial_state: false
       trigger:
         platform: time
         at: "20:00:00"
@@ -166,6 +191,7 @@ humidifiers_pack:
         entity_id: fan.xiaomi_miio_device
       
     - alias: 'Увлажнение детской - Стоп [время]'
+      initial_state: false
       trigger:
         platform: time
         at: "07:00:00"
@@ -176,6 +202,59 @@ humidifiers_pack:
       action:
         service: fan.turn_off
         entity_id: fan.xiaomi_miio_device
+
+    - alias: 'Увлажнение детской - Старт [Влажность]'
+      trigger: 
+        platform: state
+        entity_id:
+          - sensor.0x158d0003931aec_humidity
+          - input_number.target_humidity_01
+          - input_boolean.smartmi_humidifier_01_autocontrol
+      condition:
+        - condition: state
+          entity_id: input_boolean.smartmi_humidifier_01_autocontrol
+          state: 'on'
+        - condition: template
+          value_template: >
+            {{ (states('sensor.0x158d0003931aec_humidity') | round(0)) < (states('input_number.target_humidity_01') | int) }}
+        - condition: state
+          entity_id: fan.xiaomi_miio_device
+          state: 'off'
+        - condition: numeric_state
+          entity_id: sensor.smartmi_humidifier_01_water_level
+          above: 15
+      action:
+        - service: fan.turn_on
+          entity_id: fan.xiaomi_miio_device
+        - service: notify.telegram_stall
+          data:
+            message: |
+              В *Детской* включен увлажнитель, текущая влажность {{ states('sensor.0x158d0003931aec_humidity') }}%
+
+    - alias: 'Увлажнение спальни - Стоп [Влажность]'
+      trigger: 
+        platform: state
+        entity_id:
+          - sensor.0x158d0003931aec_humidity
+          - input_number.target_humidity_01
+          - input_boolean.smartmi_humidifier_01_autocontrol
+      condition:
+        - condition: state
+          entity_id: input_boolean.smartmi_humidifier_01_autocontrol
+          state: 'on'
+        - condition: template
+          value_template: >
+            {{ (states('sensor.0x158d0003931aec_humidity') | round(0)) >= (states('input_number.target_humidity_01') | int) }}
+        - condition: state
+          entity_id: fan.xiaomi_miio_device
+          state: 'on'
+      action:
+        - service: fan.turn_off
+          entity_id: fan.xiaomi_miio_device
+        - service: notify.telegram_stall
+          data:
+            message: |
+              В *Детской* выключен увлажнитель, текущая влажность {{ states('sensor.0x158d0003931aec_humidity') }}%
 
     ### Smartmi Humidifier 02 - Спальня #############
 
@@ -188,3 +267,56 @@ humidifiers_pack:
         data_template:
           fan_entity: fan.smartmi_humidifier_02
           fan_speed: "{{ trigger.to_state.state }}"
+
+    - alias: 'Увлажнение спальни - Старт [Влажность]'
+      trigger: 
+        platform: state
+        entity_id:
+          - sensor.0x158d0003931b0e_humidity
+          - input_number.target_humidity_02
+          - input_boolean.smartmi_humidifier_02_autocontrol
+      condition:
+        - condition: state
+          entity_id: input_boolean.smartmi_humidifier_02_autocontrol
+          state: 'on'
+        - condition: template
+          value_template: >
+            {{ (states('sensor.0x158d0003931b0e_humidity') | round(0)) < (states('input_number.target_humidity_02') | int) }}
+        - condition: state
+          entity_id: fan.smartmi_humidifier_02
+          state: 'off'
+        - condition: numeric_state
+          entity_id: sensor.smartmi_humidifier_02_water_level
+          above: 15
+      action:
+        - service: fan.turn_on
+          entity_id: fan.smartmi_humidifier_02
+        - service: notify.telegram_stall
+          data:
+            message: |
+              В *Спальне* включен увлажнитель, текущая влажность {{ states('sensor.0x158d0003931b0e_humidity') }}%
+
+    - alias: 'Увлажнение спальни - Стоп [Влажность]'
+      trigger: 
+        platform: state
+        entity_id:
+          - sensor.0x158d0003931b0e_humidity
+          - input_number.target_humidity_02
+          - input_boolean.smartmi_humidifier_02_autocontrol
+      condition:
+        - condition: state
+          entity_id: input_boolean.smartmi_humidifier_02_autocontrol
+          state: 'on'
+        - condition: template
+          value_template: >
+            {{ (states('sensor.0x158d0003931b0e_humidity') | round(0)) >= (states('input_number.target_humidity_02') | int) }}
+        - condition: state
+          entity_id: fan.smartmi_humidifier_02
+          state: 'on'
+      action:
+        - service: fan.turn_off
+          entity_id: fan.smartmi_humidifier_02
+        - service: notify.telegram_stall
+          data:
+            message: |
+              В *Спальне* выключен увлажнитель, текущая влажность {{ states('sensor.0x158d0003931b0e_humidity') }}%

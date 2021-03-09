@@ -41,14 +41,8 @@ cards:
               icon: mdi:shuffle-disabled
             vertical:
               icon: mdi:shuffle
-#      - type: vertical-stack
       - type: custom:vertical-stack-in-card
         cards:
-#          - type: entities
-#            entities:
-#              - entity: binary_sensor.humidifier_nursery_status
-#                state_color: true
-#                name: "Увлажнитель:"
           - type: markdown
             content: >
               #### Увлажнитель
@@ -63,19 +57,20 @@ cards:
                   service_data:
                     entity_id: fan.xiaomi_miio_device
               - entity: sensor.smartmi_humidifier_01_water_level
-                name: "Ост. воды"
+                name: "Вода"
                 icon: mdi:cup-water
-              - entity: sensor.smartmi_humidifier_01_humidity
-                name: "Влажность"
-                icon: mdi:water-percent
-              - entity: sensor.smartmi_humidifier_01_temperature
-                name: "Температура"
+              - entity: sensor.smartmi_humidifier_01_speed
+                name: "Режим"
+                icon: mdi:speedometer
           - type: entities
             entities:
-              - entity: sensor.smartmi_humidifier_01_speed
-                name: 'Текущая скорость:'
-                icon: mdi:speedometer
-              - input_select.smartmi_humidifier_01_speed
+              - entity: input_select.smartmi_humidifier_01_speed
+              - type: section
+                label: Контроль влажности
+              - entity: input_boolean.smartmi_humidifier_01_autocontrol
+                name: "Авто:"
+              - entity: input_number.target_humidity_01
+                name: "Цель:"
   # Гостинная
   - type: vertical-stack
     cards:
@@ -169,19 +164,21 @@ cards:
                   service_data:
                     entity_id: fan.smartmi_humidifier_02
               - entity: sensor.smartmi_humidifier_02_water_level
-                name: "Ост. воды"
+                name: "Вода"
                 icon: mdi:cup-water
-              - entity: sensor.smartmi_humidifier_02_humidity
-                name: "Влажность"
-                icon: mdi:water-percent
-              - entity: sensor.smartmi_humidifier_02_temperature
-                name: "Температура"
+              - entity: sensor.smartmi_humidifier_02_speed
+                name: 'Режим'
+                icon: mdi:speedometer
           - type: entities
             entities:
-              - entity: sensor.smartmi_humidifier_02_speed
-                name: 'Текущая скорость:'
-                icon: mdi:speedometer
               - input_select.smartmi_humidifier_02_speed
+              - type: section
+                label: Контроль влажности
+              - entity: input_boolean.smartmi_humidifier_02_autocontrol
+                name: "Авто:"
+              - entity: input_number.target_humidity_02
+                name: "Цель:"
+  
   # Кладовая
   - type: vertical-stack
     cards:
