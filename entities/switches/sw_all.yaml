@@ -4,6 +4,7 @@
 
 - platform: wake_on_lan
   name: SamsungTV-UE43RU7470-WOL
+  host: SamsungTV-43RU7470-Eth.home.intra
   mac: 8c:79:f5:51:2f:d1
   turn_off:
     service: switch.turn_on

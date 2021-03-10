@@ -172,7 +172,6 @@ humidifiers_pack:
           fan_speed: "{{ trigger.to_state.state }}"
         
     - alias: 'Увлажнение детской - Старт [время]'
-      initial_state: false
       trigger:
         platform: time
         at: "20:00:00"
@@ -182,7 +181,7 @@ humidifiers_pack:
           state: 'off'
         - condition: numeric_state
           entity_id: sensor.0x158d0003931aec_humidity
-          below: 45
+          below: input_number.target_humidity_01
         - condition: numeric_state
           entity_id: sensor.smartmi_humidifier_01_water_level
           above: 25
@@ -191,14 +190,16 @@ humidifiers_pack:
         entity_id: fan.xiaomi_miio_device
       
     - alias: 'Увлажнение детской - Стоп [время]'
-      initial_state: false
       trigger:
         platform: time
         at: "07:00:00"
       condition:
-        condition: state
-        entity_id: fan.xiaomi_miio_device
-        state: 'on'
+        - condition: state
+          entity_id: fan.xiaomi_miio_device
+          state: 'on'
+        - condition: state
+          entity_id: input_boolean.smartmi_humidifier_01_autocontrol
+          state: 'off'
       action:
         service: fan.turn_off
         entity_id: fan.xiaomi_miio_device

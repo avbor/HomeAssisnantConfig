@@ -127,7 +127,7 @@ water_leak_protection:
           - condition: time
             weekday: mon
           - condition: template
-            value_template: "{{(as_timestamp(now())|timestamp_custom ('%W') | int % 2) == 1 }}"
+            value_template: "{{ (as_timestamp(now())|timestamp_custom ('%W') | int % 2) == 1 }}"
       action:
         - service: switch.turn_off
           data:
