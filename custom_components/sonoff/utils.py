@@ -76,8 +76,10 @@ def init_device_class(default_class: str = 'switch'):
         83: switch3,
         84: switch4,
         102: 'binary_sensor',  # Sonoff DW2 Door/Window sensor
-        104: 'light',  # RGB+CCT color bulb
+        103: 'light',  # Sonoff B02 CCT bulb
+        104: 'light',  # Sonoff B05 RGB+CCT color bulb
         107: switchx,
+        126: switch2,  # DUALR3
         1000: 'sensor',  # zigbee_ON_OFF_SWITCH_1000
         1256: 'light',  # ZCL_HA_DEVICEID_ON_OFF_LIGHT
         1770: 'sensor',  # ZCL_HA_DEVICEID_TEMPERATURE_SENSOR
@@ -180,7 +182,7 @@ RE_DEVICEID = re.compile(r"^[a-z0-9]{10}\b")
 # remove uiid, MAC, IP
 RE_PRIVATE = re.compile(
     r"\b([a-zA-Z0-9_-]{36,}|[A-F0-9:]{17}|\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3}|"
-    r"EWLK-\d{6}-[A-Z]{5})\b")
+    r"EWLK-\d{6}-[A-Z]{5})\b|(?<=ssid': ')[^']+")
 NOTIFY_TEXT = (
     '<a href="%s" target="_blank">Open Log<a> | '
     '[New Issue on GitHub](https://github.com/AlexxIT/SonoffLAN/issues/new) | '

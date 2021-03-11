@@ -20,7 +20,8 @@ FAST_DELAY = RETRY_DELAYS.index(5 * 60)
 DATA_ERROR = {
     0: 'online',
     503: 'offline',
-    504: 'timeout'
+    504: 'timeout',
+    None: 'unknown'
 }
 
 CLOUD_ERROR = (
@@ -63,8 +64,8 @@ class ResponseWaiter:
     async def _set_response(self, data: dict):
         sequence = data.get('sequence')
         if sequence in self._waiters:
-            assert 'error' in data, data
-            err = data['error']
+            # sometimes the error doesn't exists
+            err = data.get('error')
             result = DATA_ERROR[err] if err in DATA_ERROR else f"E#{err}"
             # set future result
             self._waiters[sequence].set_result(result)
@@ -86,14 +87,8 @@ class ResponseWaiter:
 
 
 class EWeLinkApp:
-    # App v3
     appid = 'oeVkj2lYFGnJu5XUtWisfW4utiN4u9Mq'
     appsecret = '6Nz4n0xA8s8qdxQf2GqurZj2Fs55FUvM'
-
-    def init_app_v4(self):
-        _LOGGER.debug("Init app v4")
-        self.appid = 'Uw83EKZFxdif7XFXEsrpduz5YyjP7nTl'
-        self.appsecret = 'mXLOjea0woSMvK9gw7Fjsy7YlFO4iSu6'
 
 
 class EWeLinkCloud(ResponseWaiter, EWeLinkApp):
@@ -104,6 +99,7 @@ class EWeLinkCloud(ResponseWaiter, EWeLinkApp):
     _baseurl = 'https://eu-api.coolkit.cc:8080/'
     _apikey = None
     _token = None
+    _last_ts = 0
 
     def __init__(self, session: ClientSession):
         self.session = session
@@ -146,7 +142,7 @@ class EWeLinkCloud(ResponseWaiter, EWeLinkApp):
         try:
             r = await coro
             return await r.json()
-        except Exception as e:
+        except (Exception, RuntimeError) as e:
             _LOGGER.exception(f"Coolkit API error: {e}")
             return None
 
@@ -224,22 +220,27 @@ class EWeLinkCloud(ResponseWaiter, EWeLinkApp):
                 await self._ws.send_json(payload)
 
                 msg: WSMessage = await self._ws.receive()
-                _LOGGER.debug(f"Cloud init: {json.loads(msg.data)}")
+                resp = json.loads(msg.data)
+                if resp['error'] == 0:
+                    _LOGGER.debug(f"Cloud init: {resp}")
 
-                fails = 0
+                    fails = 0
 
-                async for msg in self._ws:
-                    if msg.type == WSMsgType.TEXT:
-                        resp = json.loads(msg.data)
-                        await self._process_ws_msg(resp)
+                    async for msg in self._ws:
+                        if msg.type == WSMsgType.TEXT:
+                            resp = json.loads(msg.data)
+                            await self._process_ws_msg(resp)
 
-                    elif msg.type == WSMsgType.CLOSED:
-                        _LOGGER.debug(f"Cloud WS Closed: {msg.data}")
-                        break
+                        elif msg.type == WSMsgType.CLOSED:
+                            _LOGGER.debug(f"Cloud WS Closed: {msg.data}")
+                            break
 
-                    elif msg.type == WSMsgType.ERROR:
-                        _LOGGER.debug(f"Cloud WS Error: {msg.data}")
-                        break
+                        elif msg.type == WSMsgType.ERROR:
+                            _LOGGER.debug(f"Cloud WS Error: {msg.data}")
+                            break
+
+                else:
+                    _LOGGER.debug(f"Cloud error: {resp}")
 
                 # can't run two WS on same account in same time
                 if time.time() - ts < 10 and fails < FAST_DELAY:
@@ -278,10 +279,6 @@ class EWeLinkCloud(ResponseWaiter, EWeLinkApp):
         pname = 'email' if '@' in username else 'phoneNumber'
         payload = {pname: username, 'password': password}
         resp = await self._api('login', 'api/user/login', payload)
-
-        if resp is None or resp.get('error') == 406:
-            self.init_app_v4()
-            resp = await self._api('login', 'api/user/login', payload)
 
         if resp is None or 'region' not in resp:
             _LOGGER.error(f"Login error: {resp}")
@@ -329,10 +326,15 @@ class EWeLinkCloud(ResponseWaiter, EWeLinkApp):
         """
 
         # protect cloud from DDoS (it can break connection)
-        while sequence in self._waiters or sequence is None:
+        while time.time() - self._last_ts < 0.1:
+            _LOGGER.debug("Protect cloud from DDoS")
             await asyncio.sleep(0.1)
-            sequence = str(int(time.time() * 1000))
-        self._waiters[sequence] = None
+            sequence = None
+
+        self._last_ts = time.time()
+
+        if sequence is None:
+            sequence = str(int(self._last_ts * 1000))
 
         payload = {
             'action': 'query',
@@ -354,11 +356,17 @@ class EWeLinkCloud(ResponseWaiter, EWeLinkApp):
             'ts': 0,
             'params': data
         }
-        _LOGGER.debug(f"{deviceid} => Cloud4 | {data} | {sequence}")
-        await self._ws.send_json(payload)
+        log = f"{deviceid} => Cloud4 | {data} | {sequence}"
+        _LOGGER.debug(log)
+        try:
+            await self._ws.send_json(payload)
 
-        # wait for response with same sequence
-        return await self._wait_response(sequence)
+            # wait for response with same sequence
+            return await self._wait_response(sequence)
+
+        except:
+            _LOGGER.exception(log)
+            return 'E#???'
 
 
 class CloudPowHelper:

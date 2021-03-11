@@ -3,13 +3,14 @@ import ipaddress
 import json
 import logging
 import time
+from asyncio import CancelledError
 from base64 import b64encode, b64decode
 from typing import Callable, List
 
 from Crypto.Cipher import AES
 from Crypto.Hash import MD5
 from Crypto.Random import get_random_bytes
-from aiohttp import ClientSession, ClientOSError
+from aiohttp import ClientSession, ClientOSError, ServerDisconnectedError
 
 from zeroconf import ServiceBrowser, Zeroconf, ServiceStateChange
 
@@ -62,7 +63,7 @@ def decrypt(payload: dict, devicekey: str):
         hash_.update(devicekey)
         key = hash_.digest()
 
-        encoded = ''.join([payload[f'data{i}'] for i in range(1, 4, 1)
+        encoded = ''.join([payload[f'data{i}'] for i in range(1, 5, 1)
                            if f'data{i}' in payload])
 
         cipher = AES.new(key, AES.MODE_CBC, iv=b64decode(payload['iv']))
@@ -153,6 +154,11 @@ class EWeLinkLocal:
             return
 
         info = zeroconf.get_service_info(service_type, name)
+        if not info:
+            # https://github.com/AlexxIT/SonoffLAN/issues/399#issuecomment-793914228
+            _LOGGER.warning(f"Wrong zeroconf message: {service_type}, {name}")
+            return
+
         properties = {
             k.decode(): v.decode() if isinstance(v, bytes) else v
             for k, v in info.properties.items()
@@ -175,13 +181,17 @@ class EWeLinkLocal:
 
             data = decrypt(properties, devicekey)
             # Fix Sonoff RF Bridge sintax bug
-            if data.startswith(b'{"rf'):
+            if data and data.startswith(b'{"rf'):
                 data = data.replace(b'"="', b'":"')
         else:
-            data = ''.join([properties[f'data{i}'] for i in range(1, 4, 1)
+            data = ''.join([properties[f'data{i}'] for i in range(1, 5, 1)
                             if f'data{i}' in properties])
 
-        state = json.loads(data)
+        try:
+            state = json.loads(data)
+        except:
+            _LOGGER.debug(f"{log} !! Wrong JSON data: {data}")
+            return
         seq = properties.get('seq')
 
         _LOGGER.debug(f"{log} | {state} | {seq}")
@@ -293,7 +303,7 @@ class EWeLinkLocal:
         except asyncio.TimeoutError:
             _LOGGER.debug(f"{log} !! Timeout {timeout}")
             return 'timeout'
-        except ClientOSError as e:
+        except (ClientOSError, ServerDisconnectedError, CancelledError) as e:
             _LOGGER.debug(f"{log} !! {e.args}")
             return 'E#COS'
         except:
