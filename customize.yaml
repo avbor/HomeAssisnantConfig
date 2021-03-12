@@ -40,3 +40,5 @@ binary_sensor.0x158d00044ee524_contact:
   friendly_name: Датчик протечки - Нептун
 binary_sensor.0x158d000309920a_motion:
   occupancy_timeout: [120, 180, 240]
+sensor.start_time:
+  unit_of_measurement: 's'

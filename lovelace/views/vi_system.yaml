@@ -32,6 +32,12 @@ cards:
         - entity: sensor.influxdb_database_size
           name: "Размер БД InfluxDB:"
           icon: mdi:database
+    - type: history-graph
+      hours_to_show: 24
+      refresh_interval: 600
+      entities:
+        - entity: sensor.start_time
+          name: Время загрузки
     - type: markdown
       content: >
         #### SysLog:

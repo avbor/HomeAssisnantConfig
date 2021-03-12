@@ -2,7 +2,7 @@
 # Notifications
 #################################################
 
-- alias: 'Home Presence Alert'
+- alias: "Home Presence Alert"
   initial_state: true
   trigger:
     platform: state
@@ -10,8 +10,8 @@
   condition:
     condition: and
     conditions:
-#      - condition: template
-#        value_template: "{{ states('sensor.uptime') != '0.0' }}"
+      #      - condition: template
+      #        value_template: "{{ states('sensor.uptime') != '0.0' }}"
       - condition: template
         value_template: "{{ trigger.to_state.state != trigger.from_state.state }}"
   action:
@@ -23,7 +23,40 @@
           {% else %}скорее всего вне дома.
           {% endif %}
 
-- alias: 'HASS: Home Assistant Start'
+- alias: "HASS: Login Failed [notify to stall]"
+  trigger:
+    - platform: state
+      entity_id: persistent_notification.http_login
+  condition:
+    - condition: template
+      value_template: "{{ trigger.to_state.state != off }}"
+  action:
+    - service: notify.telegram_stall
+      data_template:
+        message: |
+          *Внимание!*
+          Неудачная попытка входа, ошибка авторизации!
+          {{ state_attr('persistent_notification.http_login','message') }}
+    - service: persistent_notification.dismiss
+      data:
+        notification_id: http_login
+
+- alias: "HASS: IP Banned [notify to stall]"
+  trigger:
+    - platform: state
+      entity_id: persistent_notification.ip_ban
+  action:
+    - service: notify.telegram_stall
+      data_template:
+        message: |
+          *Внимание!*
+          Заблокирован IP: {{ state_attr('persistent_notification.ip_ban', 'message').split('Too many login attempts from ')[1] }}
+          _http://whatismyipaddress.com/ip/{{ state_attr('persistent_notification.ip_ban', 'message').split('Too many login attempts from ')[1] }}_
+    - service: persistent_notification.dismiss
+      data:
+        notification_id: ip_ban
+
+- alias: "HASS: Home Assistant Start"
   initial_state: true
   trigger:
     - platform: homeassistant
@@ -31,9 +64,9 @@
   action:
     service: notify.telegram_stall
     data:
-      message: "_INFO:_ Home Assistant *запущен*."
+      message: "_INFO:_ Home Assistant *запущен* за {{ states('sensor.start_time') }} сек."
 
-- alias: 'HASS: Home Assistant Shutdown'
+- alias: "HASS: Home Assistant Shutdown"
   initial_state: true
   trigger:
     platform: homeassistant
@@ -43,7 +76,7 @@
       data:
         message: "_INFO:_ Home Assistant *остановлен*."
 
-- alias: 'HASS: ERRORs in System Log [notify to stall]'
+- alias: "HASS: ERRORs in System Log [notify to stall]"
   initial_state: false
   trigger:
     platform: event
@@ -55,7 +88,7 @@
       data_template:
         message: "_{{ trigger.event.data.level }}:_ {{ trigger.event.data.message }}"
 
-- alias: 'HASS: WARNINGs in System Log [notify to stall]'
+- alias: "HASS: WARNINGs in System Log [notify to stall]"
   initial_state: false
   trigger:
     platform: event
@@ -67,7 +100,56 @@
       data_template:
         message: "_{{ trigger.event.data.level }}:_ {{ trigger.event.data.message }}"
 
-- alias: 'HASSIO: New Version Available [notify to stall]'
+- alias: "HASS: System Config Errors [notify to stall]"
+  trigger:
+    - platform: state
+      entity_id: persistent_notification.homeassistant_check_config
+  action:
+    - service: notify.telegram_stall
+      data_template:
+        message: "_INFO:_ Конфигурация HA содержит ошибки, перезапуск отменён."
+    - service: persistent_notification.dismiss
+      data:
+        notification_id: homeassistant_check_config
+
+- alias: "HASS: ERRORs in Automations [notify to stall]"
+  mode: parallel
+  trigger:
+    - platform: event
+      event_type: system_log_event
+      event_data:
+        level: ERROR
+  condition:
+    - condition: template
+      value_template: "{{ 'Error while executing automation' in trigger.event.data.message or 'Error executing script' in trigger.event.data.message }}"
+    - condition: template
+      value_template: "{{ not 'automation.system_automation_error' in trigger.event.data.message }}"
+  action:
+    - service: notify.telegram_stall
+      data_template:
+        message: |
+          _INFO:_ Ошибка выполнения автоматизации: 
+          {{ trigger.event.data.message }}.
+
+- alias: "HASS: Critical Error [notify to stall]"
+  mode: parallel
+  trigger:
+    - platform: event
+      event_type: system_log_event
+      event_data:
+        level: FATAL
+    - platform: event
+      event_type: system_log_event
+      event_data:
+        level: CRITICAL
+  action:
+    - service: notify.telegram_stall
+      data_template:
+        message: |
+          Критическая ошибка системы:
+          {{ trigger.event.data.message }}!
+
+- alias: "HASSIO: New Version Available [notify to stall]"
   initial_state: true
   trigger:
     platform: template
@@ -77,13 +159,13 @@
     data_template:
       message: "_INFO:_ Доступна новая версия Home Assistant ({{ states('sensor.latest_version') }})"
 
-- alias: 'HASSIO: New Addons Update Available [notify to stall]'
+- alias: "HASSIO: New Addons Update Available [notify to stall]"
   initial_state: true
   trigger:
     - platform: state
       entity_id: binary_sensor.updater_addons
-      from: 'off'
-      to: 'on'
+      from: "off"
+      to: "on"
   condition:
     - condition: template
       value_template: "{{ states('sensor.supervisor_updates') | int > 0 }}"
@@ -92,19 +174,19 @@
       data_template:
         message: "_INFO:_ Доступны новые версии Add-ons (Supervisor) (кол-во: {{ states('sensor.supervisor_updates') }})"
 
-- alias: 'HASSIO: New Supervisor Version Available [notify to stall]'
+- alias: "HASSIO: New Supervisor Version Available [notify to stall]"
   initial_state: true
   trigger:
     - platform: state
       entity_id: binary_sensor.updater_supervisor
-      from: 'off'
-      to: 'on'
+      from: "off"
+      to: "on"
   action:
     - service: notify.telegram_stall
       data_template:
         message: "_INFO:_ Доступна новая версия Supervisor ({{ state_attr('sensor.supervisor_updates', 'newest_version') }})"
 
-- alias: 'HACS: New Component Version Available [notify to stall]'
+- alias: "HACS: New Component Version Available [notify to stall]"
   initial_state: true
   trigger:
     platform: state
@@ -117,7 +199,28 @@
     data_template:
       message: "_INFO:_ Доступны новые версии Custom Components (HACS) (кол-во: {{ states('sensor.hacs') }})"
 
-- alias: Torrent Completed [notify to stall]
+- alias: "Low Battery Alert [notify to stall]"
+  trigger:
+    - platform: event
+      event_type: state_changed
+  condition:
+    - condition: template
+      value_template: |
+        {{ trigger.event.data.entity_id in (expand('group.battery_devices') | map(attribute='entity_id')) }}
+    - condition: template
+      value_template: |
+        {{ (states(trigger.event.data.entity_id) | int) < 20 }}
+    - condition: template
+      value_template: |
+        {{ not is_state('trigger.event.data.entity_id', 'unknown') }}
+  action:
+    - service: notify.telegram_stall
+      data_template:
+        message: |
+          *Внимание, низкий заряд батареи!*
+          {{ state_attr(trigger.event.data.entity_id, 'friendly_name')}}: {{ states(trigger.event.data.entity_id) }}%!
+
+- alias: "Torrent Completed [notify to stall]"
   initial_state: true
   trigger:
     platform: event
@@ -127,7 +230,7 @@
     data_template:
       message: "Загрузка torrent-файла завершена"
 
-- alias: Полнолуние [notify to stall]
+- alias: "Полнолуние [notify to stall]"
   initial_state: true
   trigger:
     platform: state
@@ -138,53 +241,13 @@
     data_template:
       message: "Сегодня полнолуние!"
 
-- alias: 'Low Battery Alert'
-  initial_state: true
-  trigger:
-    platform: numeric_state
-    entity_id:
-      - sensor.0x158d0003230618_battery
-      - sensor.0x158d0003931aec_battery
-      - sensor.0x158d0003931b0e_battery
-      - sensor.0x158d00035ff631_battery
-      - sensor.0x158d0003045123_battery
-      - sensor.0x158d0003931a55_battery
-      - sensor.0x158d00039e2ecb_battery
-      - sensor.0x158d000400e77d_battery
-      - sensor.0x158d000309920a_battery
-      - sensor.0x158d00044cea8e_battery
-      - sensor.0x158d00031c790f_battery
-      - sensor.0x158d00039cf974_battery
-      - sensor.0x158d0004073b67_battery
-      - sensor.0x158d0003d54725_battery
-      - sensor.0x158d00033efd9e_battery
-      - sensor.0x158d00035a9bc5_battery
-      - sensor.a4c138414e9a_battery
-      - sensor.0x158d00044ee524_battery
-      - sensor.0x158d0004ab468e_battery
-      - sensor.0x158d0004030d84_battery
-      - sensor.0x158d00054859d5_battery
-      - sensor.e72e0081ac21_battery
-      - sensor.a4c1387179f4_battery
-      - sensor.a4c1381b3d13_battery
-      - sensor.a4c13820bdae_battery
-      - sensor.0x158d00045a11b1_battery
-      - sensor.0x158d00045a1153_battery
-      - sensor.0x4cf8cdf3c7d110d_battery
-    below: 15
-  action:
-    - service: notify.telegram_stall
-      data_template:
-        message: >
-          {{ trigger.to_state.attributes.friendly_name }} {{ trigger.to_state.state }}%!
-
 - alias: Entrance Door - Opened
   initial_state: true
   trigger:
     platform: state
     entity_id: binary_sensor.0x158d00031c790f_contact
-    from: 'off'
-    to: 'on'
+    from: "off"
+    to: "on"
   action:
     service: notify.telegram_stall
     data:
@@ -195,8 +258,8 @@
   trigger:
     platform: state
     entity_id: binary_sensor.0x158d00031c790f_contact
-    from: 'on'
-    to: 'off'
+    from: "on"
+    to: "off"
   action:
     service: notify.telegram_stall
     data:
@@ -207,8 +270,8 @@
   trigger:
     platform: state
     entity_id: binary_sensor.0x158d000413b210_gas
-    from: 'off'
-    to: 'on'
+    from: "off"
+    to: "on"
   action:
     service: notify.telegram_stall
     data:

@@ -7,13 +7,13 @@ cards:
     cards:
       # Gateways
       - type: markdown
-        content: '### <center> Gateways </center>'
-      - type: 'custom:flex-table-card'
+        content: "### <center> Gateways </center>"
+      - type: "custom:flex-table-card"
         clickable: false
         entities:
-          include: 
+          include:
             - sensor.*_gateway
-        sort_by: friendly_name 
+        sort_by: friendly_name
         columns:
           - data: friendly_name
             name: Friendly Name
@@ -52,17 +52,17 @@ cards:
               isFinite(dt) ? dt.toLocaleString(['ru-RU', 'en-US']) +
               " (Up: " + hrs + ":" + min + ":" + sec + ")" : ""
         css:
-          table+: 'padding-top: 15px;'
-          'tbody tr:nth-child(even)': 'background-color: #a2542f6;'
-          td.left: 'padding: 10px 10px 10px 10px'
-          th.left: 'padding: 0px 0px 10px 10px'
+          table+: "padding-top: 15px;"
+          "tbody tr:nth-child(even)": "background-color: #a2542f6;"
+          td.left: "padding: 10px 10px 10px 10px"
+          th.left: "padding: 0px 0px 10px 10px"
       # ZigBee
       - type: markdown
-        content: '### <center> ZigBee </center>'
-      - type: 'custom:flex-table-card'
+        content: "### <center> ZigBee </center>"
+      - type: "custom:flex-table-card"
         clickable: false
         entities:
-          include: 
+          include:
             - sensor.*_zigbee
         sort_by: ieee
         columns:
@@ -83,16 +83,16 @@ cards:
             modify: (x+'').replace(/^-$/, "child device")
           - data: msg_received
             name: Received
-            modify: 'isNaN(parseInt(x, 10)) ? 0 : parseInt(x, 10)'
+            modify: "isNaN(parseInt(x, 10)) ? 0 : parseInt(x, 10)"
           - data: msg_missed
             name: Missed (Total)
-            modify: 'isNaN(parseInt(x, 10)) ? 0 : parseInt(x, 10)'
+            modify: "isNaN(parseInt(x, 10)) ? 0 : parseInt(x, 10)"
           - data: last_missed
             name: Missed (Last)
-            modify: 'isNaN(parseInt(x, 10)) ? 0 : parseInt(x, 10)'
+            modify: "isNaN(parseInt(x, 10)) ? 0 : parseInt(x, 10)"
           - data: unresponsive
             name: Unresponsive
-            modify: 'isNaN(parseInt(x, 10)) ? 0 : parseInt(x, 10)'
+            modify: "isNaN(parseInt(x, 10)) ? 0 : parseInt(x, 10)"
           - data: link_quality
             name: LQI
             modify: 'isNaN(parseInt(x, 10)) ? "" : parseInt(x, 10)'
@@ -108,10 +108,10 @@ cards:
               var dt = new Date(0,0,0,0,0,0,(Date.now()-Date.parse(x)));
               isFinite(dt) ? dt.toTimeString().split(" ")[0] : ""
         css:
-          table+: 'padding-top: 15px;'
-          'tbody tr:nth-child(even)': 'background-color: #a2542f6;'
-          td.left: 'padding: 10px 10px 10px 10px'
-          th.left: 'padding: 0px 0px 10px 10px'
+          table+: "padding-top: 15px;"
+          "tbody tr:nth-child(even)": "background-color: #a2542f6;"
+          td.left: "padding: 10px 10px 10px 10px"
+          th.left: "padding: 0px 0px 10px 10px"
       ###### iframe with the graph of the "last missed" from Grafana ######
       ###### Query example: SELECT "last_missed" FROM "autogen"."state" WHERE ("domain" = 'sensor') AND $timeFilter GROUP BY "friendly_name" ######
       - type: iframe
@@ -120,11 +120,11 @@ cards:
       ######---------------------------------------------------------######
       # Bluetooth
       - type: markdown
-        content: '### <center> Bluetooth </center>'
-      - type: 'custom:flex-table-card'
+        content: "### <center> Bluetooth </center>"
+      - type: "custom:flex-table-card"
         clickable: false
         entities:
-          include: 
+          include:
             - sensor.*_ble
         sort_by: mac
         columns:
@@ -143,7 +143,7 @@ cards:
               var dt = new Date(0,0,0,0,0,0,(Date.now()-Date.parse(x)));
               isFinite(dt) ? dt.toTimeString().split(" ")[0] : ""
         css:
-          table+: 'padding-top: 15px;'
-          'tbody tr:nth-child(even)': 'background-color: #a2542f6;'
-          td.left: 'padding: 10px 10px 10px 10px'
-          th.left: 'padding: 0px 0px 10px 10px'
+          table+: "padding-top: 15px;"
+          "tbody tr:nth-child(even)": "background-color: #a2542f6;"
+          td.left: "padding: 10px 10px 10px 10px"
+          th.left: "padding: 0px 0px 10px 10px"

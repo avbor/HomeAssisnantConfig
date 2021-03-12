@@ -3,7 +3,6 @@
 #################################################
 
 humidifiers_pack:
-
   # Devices
   fan:
     - platform: xiaomi_miio
@@ -15,7 +14,7 @@ humidifiers_pack:
       name: Smartmi Humidifier 02 (Спальня)
       token: !secret xiaomi_air_humidifier_02_token
 
-# Input Boolean
+  # Input Boolean
   input_boolean:
     smartmi_humidifier_01_autocontrol:
       icon: mdi:home-floor-a
@@ -25,7 +24,7 @@ humidifiers_pack:
   # Input Select
   input_select:
     smartmi_humidifier_01_speed:
-      name: 'Выбор режима:'
+      name: "Выбор режима:"
       options:
         - Silent
         - Medium
@@ -34,7 +33,7 @@ humidifiers_pack:
       initial: Auto
       icon: mdi:speedometer
     smartmi_humidifier_02_speed:
-      name: 'Выбор режима:'
+      name: "Выбор режима:"
       options:
         - Silent
         - Medium
@@ -47,14 +46,14 @@ humidifiers_pack:
   input_number:
     target_humidity_01:
       name: Целевая влажность
-      unit_of_measurement: '%'
+      unit_of_measurement: "%"
       icon: mdi:adjust
       min: 20
       max: 80
       step: 5
     target_humidity_02:
       name: Целевая влажность
-      unit_of_measurement: '%'
+      unit_of_measurement: "%"
       icon: mdi:adjust
       min: 20
       max: 80
@@ -75,7 +74,7 @@ humidifiers_pack:
           friendly_name: "Влажность"
           value_template: >
             {{ state_attr('fan.xiaomi_miio_device', 'humidity') | int }}
-          unit_of_measurement: '%'
+          unit_of_measurement: "%"
           device_class: humidity
         smartmi_humidifier_01_water_level:
           friendly_name: "Остаток воды"
@@ -85,7 +84,13 @@ humidifiers_pack:
             {% else %}
               0
             {% endif %}
-          unit_of_measurement: '%'
+          unit_of_measurement: "%"
+          icon_template: >-
+            {% if ((state_attr('fan.xiaomi_miio_device', 'depth') | float ) * 100.0 / 125.0) | round(0) >= 10 %}
+            mdi:cup-water
+            {% else %}
+            mdi:cup-off-outline
+            {% endif %}
         smartmi_humidifier_01_speed:
           friendly_name: "Скорость работы"
           value_template: >
@@ -101,7 +106,7 @@ humidifiers_pack:
           friendly_name: "Влажность"
           value_template: >
             {{ state_attr('fan.smartmi_humidifier_02', 'humidity') | int }}
-          unit_of_measurement: '%'
+          unit_of_measurement: "%"
           device_class: humidity
         smartmi_humidifier_02_water_level:
           friendly_name: "Остаток воды"
@@ -111,7 +116,13 @@ humidifiers_pack:
             {% else %}
               0
             {% endif %}
-          unit_of_measurement: '%'
+          unit_of_measurement: "%"
+          icon_template: >-
+            {% if ((state_attr('fan.smartmi_humidifier_02', 'depth') | float ) * 100.0 / 125.0) | round(0) >= 10 %}
+            mdi:cup-water
+            {% else %}
+            mdi:cup-off-outline
+            {% endif %}
         smartmi_humidifier_02_speed:
           friendly_name: "Скорость работы"
           value_template: >
@@ -135,10 +146,9 @@ humidifiers_pack:
 
   # Automations
   automation:
+    ### Common
 
-  ### Common
-
-    - alias: 'Smartmi Humidifier - Заданчивается вода'
+    - alias: "Smartmi Humidifier - Заданчивается вода"
       initial_state: true
       trigger:
         platform: numeric_state
@@ -161,7 +171,7 @@ humidifiers_pack:
 
     ### Smartmi Humidifier 01 - Детская #############
 
-    - alias: 'Smartmi Humidifier 01 - Выбор скорости'
+    - alias: "Smartmi Humidifier 01 - Выбор скорости"
       trigger:
         platform: state
         entity_id: input_select.smartmi_humidifier_01_speed
@@ -170,15 +180,15 @@ humidifiers_pack:
         data_template:
           fan_entity: fan.xiaomi_miio_device
           fan_speed: "{{ trigger.to_state.state }}"
-        
-    - alias: 'Увлажнение детской - Старт [время]'
+
+    - alias: "Увлажнение детской - Старт [время]"
       trigger:
         platform: time
         at: "20:00:00"
       condition:
         - condition: state
           entity_id: fan.xiaomi_miio_device
-          state: 'off'
+          state: "off"
         - condition: numeric_state
           entity_id: sensor.0x158d0003931aec_humidity
           below: input_number.target_humidity_01
@@ -188,24 +198,24 @@ humidifiers_pack:
       action:
         service: fan.turn_on
         entity_id: fan.xiaomi_miio_device
-      
-    - alias: 'Увлажнение детской - Стоп [время]'
+
+    - alias: "Увлажнение детской - Стоп [время]"
       trigger:
         platform: time
         at: "07:00:00"
       condition:
         - condition: state
           entity_id: fan.xiaomi_miio_device
-          state: 'on'
+          state: "on"
         - condition: state
           entity_id: input_boolean.smartmi_humidifier_01_autocontrol
-          state: 'off'
+          state: "off"
       action:
         service: fan.turn_off
         entity_id: fan.xiaomi_miio_device
 
-    - alias: 'Увлажнение детской - Старт [Влажность]'
-      trigger: 
+    - alias: "Увлажнение детской - Старт [Влажность]"
+      trigger:
         platform: state
         entity_id:
           - sensor.0x158d0003931aec_humidity
@@ -214,13 +224,13 @@ humidifiers_pack:
       condition:
         - condition: state
           entity_id: input_boolean.smartmi_humidifier_01_autocontrol
-          state: 'on'
+          state: "on"
         - condition: template
           value_template: >
             {{ (states('sensor.0x158d0003931aec_humidity') | round(0)) < (states('input_number.target_humidity_01') | int) }}
         - condition: state
           entity_id: fan.xiaomi_miio_device
-          state: 'off'
+          state: "off"
         - condition: numeric_state
           entity_id: sensor.smartmi_humidifier_01_water_level
           above: 15
@@ -232,8 +242,8 @@ humidifiers_pack:
             message: |
               В *Детской* включен увлажнитель, текущая влажность {{ states('sensor.0x158d0003931aec_humidity') }}%
 
-    - alias: 'Увлажнение спальни - Стоп [Влажность]'
-      trigger: 
+    - alias: "Увлажнение спальни - Стоп [Влажность]"
+      trigger:
         platform: state
         entity_id:
           - sensor.0x158d0003931aec_humidity
@@ -242,13 +252,13 @@ humidifiers_pack:
       condition:
         - condition: state
           entity_id: input_boolean.smartmi_humidifier_01_autocontrol
-          state: 'on'
+          state: "on"
         - condition: template
           value_template: >
             {{ (states('sensor.0x158d0003931aec_humidity') | round(0)) >= (states('input_number.target_humidity_01') | int) }}
         - condition: state
           entity_id: fan.xiaomi_miio_device
-          state: 'on'
+          state: "on"
       action:
         - service: fan.turn_off
           entity_id: fan.xiaomi_miio_device
@@ -259,7 +269,7 @@ humidifiers_pack:
 
     ### Smartmi Humidifier 02 - Спальня #############
 
-    - alias: 'Smartmi Humidifier 02 - Выбор скорости'
+    - alias: "Smartmi Humidifier 02 - Выбор скорости"
       trigger:
         platform: state
         entity_id: input_select.smartmi_humidifier_02_speed
@@ -269,8 +279,8 @@ humidifiers_pack:
           fan_entity: fan.smartmi_humidifier_02
           fan_speed: "{{ trigger.to_state.state }}"
 
-    - alias: 'Увлажнение спальни - Старт [Влажность]'
-      trigger: 
+    - alias: "Увлажнение спальни - Старт [Влажность]"
+      trigger:
         platform: state
         entity_id:
           - sensor.0x158d0003931b0e_humidity
@@ -279,13 +289,13 @@ humidifiers_pack:
       condition:
         - condition: state
           entity_id: input_boolean.smartmi_humidifier_02_autocontrol
-          state: 'on'
+          state: "on"
         - condition: template
           value_template: >
             {{ (states('sensor.0x158d0003931b0e_humidity') | round(0)) < (states('input_number.target_humidity_02') | int) }}
         - condition: state
           entity_id: fan.smartmi_humidifier_02
-          state: 'off'
+          state: "off"
         - condition: numeric_state
           entity_id: sensor.smartmi_humidifier_02_water_level
           above: 15
@@ -297,8 +307,8 @@ humidifiers_pack:
             message: |
               В *Спальне* включен увлажнитель, текущая влажность {{ states('sensor.0x158d0003931b0e_humidity') }}%
 
-    - alias: 'Увлажнение спальни - Стоп [Влажность]'
-      trigger: 
+    - alias: "Увлажнение спальни - Стоп [Влажность]"
+      trigger:
         platform: state
         entity_id:
           - sensor.0x158d0003931b0e_humidity
@@ -307,13 +317,13 @@ humidifiers_pack:
       condition:
         - condition: state
           entity_id: input_boolean.smartmi_humidifier_02_autocontrol
-          state: 'on'
+          state: "on"
         - condition: template
           value_template: >
             {{ (states('sensor.0x158d0003931b0e_humidity') | round(0)) >= (states('input_number.target_humidity_02') | int) }}
         - condition: state
           entity_id: fan.smartmi_humidifier_02
-          state: 'on'
+          state: "on"
       action:
         - service: fan.turn_off
           entity_id: fan.smartmi_humidifier_02

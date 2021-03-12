@@ -172,6 +172,8 @@ sonoff:
       devicekey: d32b0517-cca8-4d92-a1ef-ac9fbd4e0f0a
       device_class: light
 
+start_time:
+
 tplink:
   discovery: false
   switch:
