@@ -18,7 +18,7 @@ cards:
             entity: sensor.0x158d0003931aec_humidity
             name: Влажность
             graph: line
-      - type: 'custom:simple-thermostat'
+      - type: "custom:simple-thermostat"
         entity: climate.daikin_nursery
         show_header: false
         decimals: 0
@@ -58,7 +58,6 @@ cards:
                     entity_id: fan.xiaomi_miio_device
               - entity: sensor.smartmi_humidifier_01_water_level
                 name: "Вода"
-                icon: mdi:cup-water
               - entity: sensor.smartmi_humidifier_01_speed
                 name: "Режим"
                 icon: mdi:speedometer
@@ -87,7 +86,7 @@ cards:
             entity: sensor.0x158d0003230618_humidity
             name: Влажность
             graph: line
-      - type: 'custom:simple-thermostat'
+      - type: "custom:simple-thermostat"
         entity: climate.daikin_livingroom
         show_header: false
         decimals: 0
@@ -126,7 +125,7 @@ cards:
             entity: sensor.0x158d0003931b0e_humidity
             name: Влажность
             graph: line
-      - type: 'custom:simple-thermostat'
+      - type: "custom:simple-thermostat"
         entity: climate.daikin_bedroom
         show_header: false
         decimals: 0
@@ -165,9 +164,8 @@ cards:
                     entity_id: fan.smartmi_humidifier_02
               - entity: sensor.smartmi_humidifier_02_water_level
                 name: "Вода"
-                icon: mdi:cup-water
               - entity: sensor.smartmi_humidifier_02_speed
-                name: 'Режим'
+                name: "Режим"
                 icon: mdi:speedometer
           - type: entities
             entities:
@@ -178,7 +176,7 @@ cards:
                 name: "Авто:"
               - entity: input_number.target_humidity_02
                 name: "Цель:"
-  
+
   # Кладовая
   - type: vertical-stack
     cards:
@@ -195,7 +193,7 @@ cards:
             entity: sensor.0x158d00039e2ecb_humidity
             name: Влажность
             graph: line
-      - type: 'custom:mini-graph-card'
+      - type: "custom:mini-graph-card"
         name: Хьюмидор
         icon: mdi:cigar
         points_per_hour: 4
@@ -248,11 +246,11 @@ cards:
             graph: line
       - type: custom:vertical-stack-in-card
         cards:
-#          - type: entities
-#            entities:
-#              - entity: binary_sensor.boiler_status
-#                state_color: true
-#                name: "Бойлер:"
+          #          - type: entities
+          #            entities:
+          #              - entity: binary_sensor.boiler_status
+          #                state_color: true
+          #                name: "Бойлер:"
           - type: markdown
             content: >
               #### Бойлер
