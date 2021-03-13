@@ -169,6 +169,35 @@ humidifiers_pack:
               *Smartmi Humidifier 02* (Спальня): заканчивается вода (осталось *{{ trigger.to_state.state }}*%)!
               {% endif -%}
 
+    - alias: "Smartmi Humidifier - Выключение по остатку воды"
+      initial_state: true
+      trigger:
+        platform: numeric_state
+        entity_id:
+          - sensor.smartmi_humidifier_01_water_level
+          - sensor.smartmi_humidifier_02_water_level
+        below: 10
+      condition:
+        condition: template
+        value_template: "{{ (trigger.to_state.state | int) != 0 }}"
+      action:
+        - service: fan.turn_off
+          data:
+            entity_id: >-
+              {% if '_01_' in trigger.entity_id -%}
+              fan.xiaomi_miio_device
+              {% elif '_02_' in trigger.entity_id -%}
+              fan.smartmi_humidifier_02
+              {% endif -%}
+        - service: notify.telegram_stall
+          data:
+            message: >-
+              {% if '_01_' in trigger.entity_id -%}
+              *Smartmi Humidifier 01* (Детская): выключен (остаток воды *{{ trigger.to_state.state }}*%)!
+              {% elif '_02_' in trigger.entity_id -%}
+              *Smartmi Humidifier 02* (Спальня): выключен (остаток воды *{{ trigger.to_state.state }}*%)!
+              {% endif -%}
+
     ### Smartmi Humidifier 01 - Детская #############
 
     - alias: "Smartmi Humidifier 01 - Выбор скорости"

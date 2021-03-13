@@ -14,6 +14,8 @@ resources:
     type: module
   - url: /hacsfiles/zha-network-card/zha-network-card.js
     type: module
+  - url: /hacsfiles/lovelace-auto-entities/auto-entities.js
+    type: module
 dashboards:
   dash-system:
     mode: yaml

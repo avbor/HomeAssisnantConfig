@@ -102,15 +102,34 @@
 
 - alias: "HASS: System Config Errors [notify to stall]"
   trigger:
-    - platform: state
-      entity_id: persistent_notification.homeassistant_check_config
+    - platform: event
+      event_type: call_service
+      event_data:
+        domain: persistent_notification
+        service: create
+  condition:
+    - condition: or
+      conditions:
+        - condition: template
+          value_template: >-
+            {{ trigger.event.data.service_data.notification_id == 'homeassistant.check_config' }}
+        - condition: template
+          value_template: >-
+            {{ trigger.event.data.service_data.notification_id == 'invalid_config' }}
   action:
     - service: notify.telegram_stall
       data_template:
-        message: "_INFO:_ Конфигурация HA содержит ошибки, перезапуск отменён."
+        message: |
+          *Внимание, конфигурация содержит ошибки!*
+          {% if trigger.event.data.service_data.notification_id == 'homeassistant.check_config' -%}
+          Перезапуск HA отменён, подробности в логах.
+          {% elif trigger.event.data.service_data.notification_id == 'invalid_config' -%}
+          {{ trigger.event.data.service_data.message }}
+          {% endif %}
     - service: persistent_notification.dismiss
       data:
-        notification_id: homeassistant_check_config
+        notification_id: >-
+          {{ trigger.event.data.service_data.notification_id }}
 
 - alias: "HASS: ERRORs in Automations [notify to stall]"
   mode: parallel
@@ -209,16 +228,16 @@
         {{ trigger.event.data.entity_id in (expand('group.battery_devices') | map(attribute='entity_id')) }}
     - condition: template
       value_template: |
-        {{ (states(trigger.event.data.entity_id) | int) < 20 }}
+        {{ trigger.event.data.new_state.state != 'unknown' }}
     - condition: template
       value_template: |
-        {{ not is_state('trigger.event.data.entity_id', 'unknown') }}
+        {{ (trigger.event.data.new_state.state | int) < 20 }}
   action:
     - service: notify.telegram_stall
       data_template:
         message: |
           *Внимание, низкий заряд батареи!*
-          {{ state_attr(trigger.event.data.entity_id, 'friendly_name')}}: {{ states(trigger.event.data.entity_id) }}%!
+          {{ trigger.event.data.new_state.attributes.friendly_name }}: {{ trigger.event.data.new_state.state }}%!
 
 - alias: "Torrent Completed [notify to stall]"
   initial_state: true

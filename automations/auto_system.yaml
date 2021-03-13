@@ -71,6 +71,8 @@
 
 - alias: "HASS: Create Group of Battery Devices"
   trigger:
+    - platform: homeassistant
+      event: start
     - platform: time_pattern
       hours: "/2"
   action:
