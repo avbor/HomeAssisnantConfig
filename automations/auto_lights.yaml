@@ -4,51 +4,51 @@
 
 ### Прихожая
 
-- alias: 'Кнопка Xiaomi в Прихожей single'
+- alias: "Кнопка Xiaomi в Прихожей single"
   initial_state: true
   trigger:
     platform: state
     entity_id: sensor.0x158d00045a11b1_action
-    to: 'single'
+    to: "single"
   action:
     service: light.toggle
     data:
       entity_id: light.sonoff_1000f2f14a
 
-- alias: 'Кнопка Xiaomi в Прихожей double'
+- alias: "Кнопка Xiaomi в Прихожей double"
   initial_state: true
   trigger:
     platform: state
     entity_id: sensor.0x158d00045a11b1_action
-    to: 'double'
+    to: "double"
   action:
     service: light.toggle
     data:
       entity_id: light.sonoff_1000f2a500
 
-- alias: 'Кнопка Xiaomi в Прихожей hold'
+- alias: "Кнопка Xiaomi в Прихожей hold"
   initial_state: true
-  trigger: 
+  trigger:
     platform: state
     entity_id: sensor.0x158d00045a11b1_action
-    to: 'hold'
+    to: "hold"
   action:
     service: light.turn_off
     data:
       entity_id: group.all_lamps
 
-- alias: 'ДД Aqara включение света в прихожей'
+- alias: "ДД Aqara включение света в прихожей"
   initial_state: true
   trigger:
     platform: state
     entity_id: binary_sensor.0x158d000309920a_motion
-    to: 'on'
+    to: "on"
   condition:
     condition: and
     conditions:
       - condition: state
         entity_id: light.sonoff_1000f2f14a
-        state: 'off'
+        state: "off"
       - condition: numeric_state
         entity_id: sensor.0x4cf8cdf3c7d110d_illuminance
         below: 30
@@ -57,33 +57,33 @@
     data:
       entity_id: light.sonoff_1000f2f14a
 
-- alias: 'ДД Aqara выключение света в прихожей'
+- alias: "ДД Aqara выключение света в прихожей"
   initial_state: true
   trigger:
     platform: state
     entity_id: binary_sensor.0x158d000309920a_motion
-    to: 'off'
-#    for:
-#      minutes: 3
+    to: "off"
+  #    for:
+  #      minutes: 3
   condition:
     condition: state
     entity_id: light.sonoff_1000f2f14a
-    state: 'on'
+    state: "on"
   action:
     service: light.turn_off
     entity_id: light.sonoff_1000f2f14a
 
-- alias: 'Вход в квартиру - включение света'
+- alias: "Вход в квартиру - включение света"
   initial_state: true
   trigger:
     platform: state
     entity_id: binary_sensor.0x158d00031c790f_contact
-    from: 'off'
-    to: 'on'
+    from: "off"
+    to: "on"
   condition:
     - condition: state
       entity_id: binary_sensor.0x158d000309920a_motion
-      state: 'off'
+      state: "off"
   action:
     service: light.turn_on
     data:
@@ -91,34 +91,34 @@
 
 ### Коридор
 
-- alias: 'Кнопка Xiaomi в Коридоре single'
+- alias: "Кнопка Xiaomi в Коридоре single"
   initial_state: true
   trigger:
     platform: state
     entity_id: sensor.0x158d00045a1153_action
-    to: 'single'
+    to: "single"
   action:
     service: light.toggle
     data:
       entity_id: light.sonoff_1000f2a500
 
-- alias: 'Кнопка Xiaomi в Коридоре double'
+- alias: "Кнопка Xiaomi в Коридоре double"
   initial_state: true
   trigger:
     platform: state
     entity_id: sensor.0x158d00045a1153_action
-    to: 'double'
+    to: "double"
   action:
     service: light.toggle
     data:
       entity_id: light.sonoff_1000f2f14a
 
-- alias: 'Кнопка Xiaomi в Коридоре hold'
+- alias: "Кнопка Xiaomi в Коридоре hold"
   initial_state: true
-  trigger: 
+  trigger:
     platform: state
     entity_id: sensor.0x158d00045a1153_action
-    to: 'hold'
+    to: "hold"
   action:
     service: light.turn_off
     data:
@@ -126,18 +126,18 @@
 
 ### Детская
 
-- alias: 'Kids must sleep at night'
+- alias: "Kids must sleep at night"
   initial_state: true
   trigger:
     platform: state
     entity_id: light.detskaia
-    to: 'on'
+    to: "on"
     for:
       minutes: 2
   condition:
     condition: time
-    after: '0:00'
-    before: '6:30'
+    after: "0:00"
+    before: "6:30"
   action:
     - service: homeassistant.turn_off
       entity_id: light.detskaia
@@ -145,114 +145,127 @@
       data:
         message: _{{ now().strftime("%d.%m.%Y %H:%M:%S") }}_ автоматически выключен свет в детской.
 
-- alias: 'Свет в детсокй Вкл-Выкл'
+- alias: "Свет в детсокй Вкл-Выкл"
   initial_state: true
-  trigger: 
+  trigger:
     - platform: state
       entity_id: sensor.0x158d00033efd9e_action
-      to: 'single'
+      to: "single"
     - platform: state
       entity_id: sensor.0x158d00054859d5_action
-      to: 'single'
+      to: "single"
   action:
     service: light.toggle
     data:
       entity_id: light.detskaia
 
-- alias: 'Подсветка окна в детской Вкл-Выкл'
+- alias: "Подсветка окна в детской Вкл-Выкл"
   initial_state: true
-  trigger: 
+  trigger:
     - platform: state
       entity_id: sensor.0x158d00033efd9e_action
-      to: 'hold'
+      to: "hold"
     - platform: state
       entity_id: sensor.0x158d00054859d5_action
-      to: 'double'
+      to: "double"
   action:
     service: switch.toggle
     data:
       entity_id: switch.0x158d00033b702e_switch
 
-- alias: 'Яркость света в детской'
+- alias: "Яркость света в детской"
   initial_state: true
   trigger:
-    platform: state
-    entity_id: sensor.0x158d00033efd9e_action
-    to: 'double'
+    - platform: state
+      entity_id: sensor.0x158d00033efd9e_action
+      to: "double"
+    - platform: state
+      entity_id: sensor.0x158d00033efd9e_action
+      to: "triple"
   action:
-    service: light.turn_on
-    data_template:
-      entity_id: light.detskaia
-      transition: '0.5'
-      brightness: >
-        {%- if (state_attr('light.detskaia', 'brightness') | int) <= 3 %}
-          51
-        {% elif (state_attr('light.detskaia', 'brightness') | int) <= 51 %}
-          102
-        {% elif (state_attr('light.detskaia', 'brightness') | int) <= 102 %}
-          153
-        {% elif (state_attr('light.detskaia', 'brightness') | int) <= 153 %}
-          204
-        {% elif (state_attr('light.detskaia', 'brightness') | int) <= 204 %}
-          255
-        {% elif (state_attr('light.detskaia', 'brightness') | int) <= 255 %}
-          3
-        {% endif %}
+    - choose:
+      - conditions: "{{ trigger.to_state.state == 'double' }}"
+        sequence:
+          - service: light.turn_on
+            data_template:
+              entity_id: light.detskaia
+              transition: "0.5"
+              brightness: >
+                {%- if (state_attr('light.detskaia', 'brightness') | int) <= 3 %}
+                  51
+                {% elif (state_attr('light.detskaia', 'brightness') | int) <= 51 %}
+                  102
+                {% elif (state_attr('light.detskaia', 'brightness') | int) <= 102 %}
+                  153
+                {% elif (state_attr('light.detskaia', 'brightness') | int) <= 153 %}
+                  204
+                {% elif (state_attr('light.detskaia', 'brightness') | int) <= 204 %}
+                  255
+                {% elif (state_attr('light.detskaia', 'brightness') | int) <= 255 %}
+                  3
+                {% endif %}
+      - conditions: "{{ trigger.to_state.state == 'triple' }}"
+        sequence:
+          - service: light.turn_on
+            data_template:
+              entity_id: light.detskaia
+              transition: "0.5"
+              brightness: 255
 
 - alias: Sunrise Lighting (Nursery)
   initial_state: true
   trigger:
-  - platform: template
-    value_template: "{{ states('sensor.time') == (states('input_datetime.sunrise_in_nursery')[:5]) }}"
+    - platform: template
+      value_template: "{{ states('sensor.time') == (states('input_datetime.sunrise_in_nursery')[:5]) }}"
   condition:
     condition: and
     conditions:
-    - condition: state
-      entity_id: binary_sensor.workday_sensor
-      state: 'on'
-    - condition: sun
-      before: sunrise
-      before_offset: "00:30:00"
+      - condition: state
+        entity_id: binary_sensor.workday_sensor
+        state: "on"
+      - condition: sun
+        before: sunrise
+        before_offset: "00:30:00"
   action:
-  - service: light.turn_on
-    entity_id: light.detskaia
-    data:
-      effect: Sunrise
+    - service: light.turn_on
+      entity_id: light.detskaia
+      data:
+        effect: Sunrise
 
 ### Кухня
 
-- alias: 'Подсветка на кухне (кнопка Xiaomi)'
+- alias: "Подсветка на кухне (кнопка Xiaomi)"
   trigger:
     platform: state
     entity_id: sensor.0x158d00035ff631_action
-    to: 'single'
+    to: "single"
   action:
     service: light.toggle
     data:
       entity_id: light.kukhnia_lenta
 
-- alias: 'Люстра на кухне (кнопка Xiaomi)'
+- alias: "Люстра на кухне (кнопка Xiaomi)"
   trigger:
     platform: state
     entity_id: sensor.0x158d00035ff631_action
-    to: 'double'
+    to: "double"
   action:
     service: light.toggle
     data:
       entity_id: light.kukhnia_liustra
 
-- alias: 'Подсветка на кухне (сенсор движения - вкл)'
+- alias: "Подсветка на кухне (сенсор движения - вкл)"
   initial_state: true
   trigger:
     platform: state
     entity_id: binary_sensor.0x158d0003fac0ec_motion
-    to: 'on'
+    to: "on"
   condition:
     condition: and
     conditions:
       - condition: time
-        after: '21:00'
-        before: '9:00'
+        after: "21:00"
+        before: "9:00"
       - condition: numeric_state
         entity_id: sensor.0x158d0003fac0ec_illuminance
         below: 15
@@ -260,50 +273,50 @@
     service: homeassistant.turn_on
     entity_id: light.kukhnia_lenta
 
-- alias: 'Подсветка на кухне (сенсор движения - выкл)'
+- alias: "Подсветка на кухне (сенсор движения - выкл)"
   initial_state: true
   trigger:
     platform: state
     entity_id: binary_sensor.0x158d0003fac0ec_motion
-    to: 'off'
+    to: "off"
     for:
       minutes: 3
   condition:
     condition: time
-    after: '21:00'
-    before: '9:00'
+    after: "21:00"
+    before: "9:00"
   action:
     service: homeassistant.turn_off
     entity_id: light.kukhnia_lenta
 
 ### Кладовая
 
-- alias: 'Свет в кладовой (сенсор движения - вкл)'
+- alias: "Свет в кладовой (сенсор движения - вкл)"
   initial_state: true
   trigger:
     platform: state
     entity_id: binary_sensor.0x158d0003045123_motion
-    to: 'on'
+    to: "on"
   condition:
     condition: state
     entity_id: light.sonoff_1000b6831b
-    state: 'off'
+    state: "off"
   action:
     service: light.turn_on
     entity_id: light.sonoff_1000b6831b
 
-- alias: 'Свет в Кладовой (сенсор движения - выкл)'
+- alias: "Свет в Кладовой (сенсор движения - выкл)"
   initial_state: true
   trigger:
     platform: state
     entity_id: binary_sensor.0x158d0003045123_motion
-    to: 'off'
+    to: "off"
     for:
       minutes: 3
   condition:
     condition: state
     entity_id: light.sonoff_1000b6831b
-    state: 'on'
+    state: "on"
   action:
     service: light.turn_off
     entity_id: light.sonoff_1000b6831b
@@ -313,89 +326,89 @@
 - alias: Sunrise Lighting (Bedroom)
   initial_state: true
   trigger:
-  - platform: template
-    value_template: "{{ states('sensor.time') == (states('input_datetime.sunrise_in_bedroom')[:5]) }}"
+    - platform: template
+      value_template: "{{ states('sensor.time') == (states('input_datetime.sunrise_in_bedroom')[:5]) }}"
   condition:
     condition: and
     conditions:
-    - condition: state
-      entity_id: binary_sensor.workday_sensor
-      state: 'on'
-    - condition: sun
-      before: sunrise
-      before_offset: "00:30:00"
-#    - condition: state
-#      entity_id: sun.sun
-#      state: 'below_horizon'
+      - condition: state
+        entity_id: binary_sensor.workday_sensor
+        state: "on"
+      - condition: sun
+        before: sunrise
+        before_offset: "00:30:00"
+  #    - condition: state
+  #      entity_id: sun.sun
+  #      state: 'below_horizon'
   action:
-  - service: light.turn_on
-    entity_id: light.spalnia_stol
-    data:
-      effect: SunriseBW
+    - service: light.turn_on
+      entity_id: light.spalnia_stol
+      data:
+        effect: SunriseBW
 
 # Гостиная
 
-  # Споты
-- alias: 'Кнопка Xiaomi в Гостиной single'
+# Споты
+- alias: "Кнопка Xiaomi в Гостиной single"
   trigger:
     platform: state
     entity_id: sensor.0x158d00035a9bc5_action
-    to: 'single'
+    to: "single"
   action:
     - service: light.toggle
       data:
-          entity_id: light.sonoff_1000ab3c28
+        entity_id: light.sonoff_1000ab3c28
   # Люстра
-- alias: 'Кнопка Xiaomi Гостиная double'
+- alias: "Кнопка Xiaomi Гостиная double"
   trigger:
     platform: state
     entity_id: sensor.0x158d00035a9bc5_action
-    to: 'double'
+    to: "double"
   action:
     - service: light.toggle
       data:
-          entity_id: light.sonoff_1000f3035d
+        entity_id: light.sonoff_1000f3035d
 
-- alias: 'Кнопка Aqara 1 single'
+- alias: "Кнопка Aqara 1 single"
   trigger:
     platform: state
     entity_id: sensor.0x158d0004ab468e_action
-    to: 'single'
+    to: "single"
   action:
     - service: light.toggle
       data:
-          entity_id: light.0x86bd7fffe616b72_light
+        entity_id: light.0x86bd7fffe616b72_light
 
-- alias: 'Кнопка Aqara 1 double'
+- alias: "Кнопка Aqara 1 double"
   trigger:
     platform: state
     entity_id: sensor.0x158d0004ab468e_action
-    to: 'double'
+    to: "double"
   action:
     - service: light.toggle
       data:
-          entity_id: light.sonoff_1000b72483
+        entity_id: light.sonoff_1000b72483
 
-- alias: 'Кнопка Aqara 1 hold'
+- alias: "Кнопка Aqara 1 hold"
   trigger:
     platform: state
     entity_id: sensor.0x158d0004ab468e_action
-    to: 'hold'
+    to: "hold"
   action:
     - service: light.toggle
       data:
-#          entity_id: light.kukhnia_liustra
-          entity_id: light.sonoff_1000ab3c28
+        #          entity_id: light.kukhnia_liustra
+        entity_id: light.sonoff_1000ab3c28
 
-- alias: 'Кнопка Aqara 1 shake'
+- alias: "Кнопка Aqara 1 shake"
   trigger:
     platform: state
     entity_id: sensor.0x158d0004ab468e_action
-    to: 'shake'
+    to: "shake"
   action:
     - service: light.toggle
       data:
-          entity_id: light.gostinaia_podsvetka_na_okne
+        entity_id: light.gostinaia_podsvetka_na_okne
 
 # Разное
 
@@ -404,24 +417,24 @@
   max: 5
   max_exceeded: silent
   trigger:
-# --- --- --- State based (GW3)
-#    platform: state
-#    entity_id: sensor.0x158d0005292ad9_action
-#    to: 'rotate'
-#
-# --- --- --- Device based (ZHA)
-#    - device_id: 1b77e179c20997a9730f634809b9853d
-#      domain: zha
-#      platform: device
-#      type: device_rotated
-#      subtype: right
-#    - device_id: 1b77e179c20997a9730f634809b9853d
-#      domain: zha
-#      platform: device
-#      type: device_rotated
-#      subtype: left
-#
-# --- --- --- Event based (ZHA)
+    # --- --- --- State based (GW3)
+    #    platform: state
+    #    entity_id: sensor.0x158d0005292ad9_action
+    #    to: 'rotate'
+    #
+    # --- --- --- Device based (ZHA)
+    #    - device_id: 1b77e179c20997a9730f634809b9853d
+    #      domain: zha
+    #      platform: device
+    #      type: device_rotated
+    #      subtype: right
+    #    - device_id: 1b77e179c20997a9730f634809b9853d
+    #      domain: zha
+    #      platform: device
+    #      type: device_rotated
+    #      subtype: left
+    #
+    # --- --- --- Event based (ZHA)
     - platform: event
       event_type: zha_event
       event_data:
@@ -432,17 +445,17 @@
       event_data:
         device_ieee: "00:15:8d:00:05:29:2a:d9"
         command: "rotate_right"
-#
+  #
   action:
-# --- --- --- State based (GW3)
-#    - service: light.turn_on
-#      data_template:
-#        entity_id: light.0x86bd7fffe616b72_light
-#        brightness: >-
-#          {{ (state_attr('light.0x86bd7fffe616b72_light', 'brightness') | int) +
-#          (state_attr('sensor.0x158d0005292ad9_action', 'angle') | int) }}
-#
-# --- --- --- Device or Event based (ZHA)
+    # --- --- --- State based (GW3)
+    #    - service: light.turn_on
+    #      data_template:
+    #        entity_id: light.0x86bd7fffe616b72_light
+    #        brightness: >-
+    #          {{ (state_attr('light.0x86bd7fffe616b72_light', 'brightness') | int) +
+    #          (state_attr('sensor.0x158d0005292ad9_action', 'angle') | int) }}
+    #
+    # --- --- --- Device or Event based (ZHA)
     - service: light.turn_on
       entity_id: light.0x86bd7fffe616b72_light
       data:
