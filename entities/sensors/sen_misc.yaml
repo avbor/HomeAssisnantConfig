@@ -57,6 +57,11 @@
     - current_version
     - addons
   unit_of_measurement: pending update(s)
+- platform: command_line
+  name: YAML Code Lines Count
+  command: find . -name '*.yaml' -not -path "./custom_components/*" -type f -print0 | xargs -0 cat | sed '/^\s*#/d;/^\s*$/d' | wc -l
+  scan_interval: 14400
+  unit_of_measurement: lines
 - platform: uptime
 - platform: template
   sensors:

@@ -7,25 +7,36 @@ cards:
     cards:
       - type: markdown
         content: "### <center> Device Battery Info </center>"
-      - type: "custom:flex-table-card"
-        clickable: false
-        entities:
+      - type: "custom:auto-entities"
+        filter:
           include:
-            - sensor.*_battery
-            - sensor.battery_status_*
-            - sensor.lumi_*_power
+            - group: group.battery_devices
           exclude:
-            - sensor.mirobot_1s_battery
-        sort_by: state+
-        columns:
-          - data: friendly_name
-            name: Friendly Name
-            modify: '(x+"").replace(/ Battery$/,"").replace(/ power$/,"")'
-          - data: state
-            name: Remaining %
-            modify: "isNaN(parseInt(x, 10)) ? 0 : parseInt(x, 10)"
-        css:
-          table+: "padding-top: 2px;"
-          "tbody tr:nth-child(even)": "background-color: #a2542f6;"
-          td.left: "padding: 2px 2px 2px 2px"
-          th.left: "padding: 0px 0px 2px 2px"
+            - entity_id: sensor.mirobot_1s_battery
+        sort:
+          method: state
+          numeric: true
+        card:
+          type: "custom:flex-table-card"
+          clickable: false
+#          entities:
+#            include:
+#              - sensor.*_battery
+#              - sensor.battery_status_*
+#              - sensor.lumi_*_power
+#            exclude:
+#              - sensor.mirobot_1s_battery
+#          sort_by: state+
+          columns:
+            - data: friendly_name
+              name: Friendly Name
+              modify: '(x+"").replace(/ Battery$/,"").replace(/ power$/,"")'
+            - data: state
+              name: Remaining
+              #modify: "isNaN(parseInt(x, 10)) ? 0 : parseInt(x, 10)"
+              modify: x+' %'
+          css:
+            table+: "padding-top: 2px;"
+            "tbody tr:nth-child(even)": "background-color: #a2542f6;"
+            td.left: "padding: 2px 2px 2px 2px"
+            th.left: "padding: 0px 0px 2px 2px"
