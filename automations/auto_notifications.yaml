@@ -31,12 +31,15 @@
     - condition: template
       value_template: "{{ trigger.to_state.state != off }}"
   action:
-    - service: notify.telegram_stall
-      data_template:
+    - service: telegram_bot.send_message
+      data:
+        target: !secret tlg_stall_id
+        disable_web_page_preview: true
         message: |
           *Внимание!*
           Неудачная попытка входа, ошибка авторизации!
-          {{ state_attr('persistent_notification.http_login','message') }}
+          Источник: {{ state_attr('persistent_notification.http_login','message') | regex_findall_index('from (.*)\. ') }}
+          _http://whatismyipaddress.com/ip/{{ state_attr('persistent_notification.http_login','message') | regex_findall_index('\((.*)\)') }}_
     - service: persistent_notification.dismiss
       data:
         notification_id: http_login
@@ -46,8 +49,10 @@
     - platform: state
       entity_id: persistent_notification.ip_ban
   action:
-    - service: notify.telegram_stall
-      data_template:
+    - service: telegram_bot.send_message
+      data:
+        target: !secret tlg_stall_id
+        disable_web_page_preview: true
         message: |
           *Внимание!*
           Заблокирован IP: {{ state_attr('persistent_notification.ip_ban', 'message').split('Too many login attempts from ')[1] }}
