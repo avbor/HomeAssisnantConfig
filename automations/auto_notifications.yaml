@@ -228,7 +228,7 @@
         {{ trigger.event.data.entity_id in (expand('group.battery_devices') | map(attribute='entity_id')) }}
     - condition: template
       value_template: |
-        {{ trigger.event.data.new_state.state != 'unknown' }}
+        {{ not trigger.event.data.new_state.state in [unknown, unavailable] }}
     - condition: template
       value_template: |
         {{ (trigger.event.data.new_state.state | int) < 20 }}

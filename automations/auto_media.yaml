@@ -2,7 +2,7 @@
 # Media automatization
 #################################################
 
-- alias: 'PowerOff all media when nobody at home'
+- alias: "PowerOff all media when nobody at home"
   initial_state: true
   trigger:
     platform: state
@@ -27,7 +27,7 @@
       data:
         entity_id: group.all_chromecasts
 
-- alias: 'Громкость радио'
+- alias: "Громкость радио"
   trigger:
     platform: state
     entity_id: input_number.volume_radio
@@ -40,17 +40,17 @@
         {% elif is_state("input_select.output_device", "Детская (TV)") %} media_player.detskaia
         {% elif is_state("input_select.output_device", "Детская (Home Mini)") %} media_player.googlehome3792
         {% endif %}
-      volume_level: '{{  states.input_number.volume_radio.state  }}'
+      volume_level: "{{  states.input_number.volume_radio.state  }}"
 
-- alias: 'Wakeup Radio - Childrens'
+- alias: "Wakeup Radio - Childrens"
   initial_state: true
   trigger:
-    platform: template
-    value_template: "{{ states('sensor.time') == (states('input_datetime.wakeup_radio_in_nursery')[:5]) }}"
+    platform: time
+    at: input_datetime.wakeup_radio_in_nursery
   condition:
     condition: state
     entity_id: binary_sensor.workday_sensor
-    state: 'on'
+    state: "on"
   action:
     - service: media_player.volume_set
       entity_id: media_player.googlehome3792
@@ -61,18 +61,65 @@
         entity_id: media_player.googlehome3792
         media_content_id: "http://ic7.101.ru:8000/a199"
         media_content_type: music
-    - service: automation.turn_on
-      entity_id: automation.increase_volume_loop_childrens_room
-    - delay:
-        minutes: 18
-    - service: automation.turn_off
-      entity_id: automation.increase_volume_loop_childrens_room
+    - alias: Increase volume by 5%
+      repeat:
+        while:
+          - condition: template
+            value_template: "{{ repeat.index <= 5 }}"
+        sequence:
+          - delay: "00:03:00"
+          - service: media_player.volume_set
+            entity_id: media_player.googlehome3792
+            data_template:
+              volume_level: >
+                {% set level = (state_attr('media_player.googlehome3792', 'volume_level') | float) + (0.05 | float) %}
+                {% if level < 1 %} {{ level }}
+                {% else %} 1
+                {% endif %}
 
-- alias: Increase volume loop - Childrens Room
-  initial_state: false
-  trigger:
-    platform: time_pattern
-    minutes: "/3"
-  action:
-    - service: script.turn_on
-      entity_id: script.googlehome3792_increase_volume
+#    - service: automation.turn_on
+#      entity_id: automation.increase_volume_loop_childrens_room
+#    - delay:
+#        minutes: 18
+#    - service: automation.turn_off
+#      entity_id: automation.increase_volume_loop_childrens_room
+
+#- alias: "Wakeup Radio - Test"
+#  initial_state: true
+#  trigger:
+#    platform: time
+#    at: "15:33:00"
+#  action:
+#    - service: media_player.volume_set
+#      entity_id: media_player.googlehome9967
+#      data:
+#        volume_level: "0.1"
+#    - service: media_player.play_media
+#      data:
+#        entity_id: media_player.googlehome9967
+#        media_content_id: "http://ic7.101.ru:8000/a199"
+#        media_content_type: music
+#    - alias: Increase volume by 5%
+#      repeat:
+#        while:
+#          - condition: template
+#            value_template: "{{ repeat.index <= 5 }}"
+#        sequence:
+#          - delay: "00:03:00"
+#          - service: media_player.volume_set
+#            entity_id: media_player.googlehome9967
+#            data_template:
+#              volume_level: >
+#                {% set level = (state_attr('media_player.googlehome9967', 'volume_level') | float) + (0.05 | float) %}
+#                {% if level < 1 %} {{ level }}
+#                {% else %} 1
+#                {% endif %}
+
+#- alias: Increase volume loop - Childrens Room
+#  initial_state: false
+#  trigger:
+#    platform: time_pattern
+#    minutes: "/3"
+#  action:
+#    - service: script.turn_on
+#      entity_id: script.googlehome3792_increase_volume

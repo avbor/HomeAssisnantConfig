@@ -44,17 +44,17 @@ radio_stop:
           {% elif is_state("input_select.output_device", "Детская (Home Mini)") %} media_player.googlehome3792
           {% endif %}
 
-googlehome3792_increase_volume:
-  alias: Increase volume by 5%
-  sequence:
-    - service: media_player.volume_set
-      entity_id: media_player.googlehome3792
-      data_template:
-        volume_level: >
-          {% set level = (state_attr('media_player.googlehome3792', 'volume_level') | float) + (0.05 | float) %}
-          {% if level < 1 %} {{ level }}
-          {% else %} 1
-          {% endif %}
+#googlehome3792_increase_volume:
+#  alias: Increase volume by 5%
+#  sequence:
+#    - service: media_player.volume_set
+#      entity_id: media_player.googlehome3792
+#      data_template:
+#        volume_level: >
+#          {% set level = (state_attr('media_player.googlehome3792', 'volume_level') | float) + (0.05 | float) %}
+#          {% if level < 1 %} {{ level }}
+#          {% else %} 1
+#          {% endif %}
 
 power_off_samsungtv_40c5100:
   alias: PowerOff Samsung TV 40c5100 by IR
