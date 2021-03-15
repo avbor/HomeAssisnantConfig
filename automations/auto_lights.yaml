@@ -215,8 +215,8 @@
 - alias: Sunrise Lighting (Nursery)
   initial_state: true
   trigger:
-    - platform: template
-      value_template: "{{ states('sensor.time') == (states('input_datetime.sunrise_in_nursery')[:5]) }}"
+    - platform: time
+      at: input_datetime.sunrise_in_nursery
   condition:
     condition: and
     conditions:
@@ -326,8 +326,8 @@
 - alias: Sunrise Lighting (Bedroom)
   initial_state: true
   trigger:
-    - platform: template
-      value_template: "{{ states('sensor.time') == (states('input_datetime.sunrise_in_bedroom')[:5]) }}"
+    - platform: time
+      at: input_datetime.sunrise_in_bedroom
   condition:
     condition: and
     conditions:
