@@ -18,6 +18,7 @@
 - sensor.0x158d000413b210_gas_density
 - binary_sensor.0x158d00044ee524_contact
 - binary_sensor.neptun_water_leakage
+- sensor.yaml_code_lines_count
 # Power sensors
 - sensor.tplinksmartplug01_volts
 - sensor.tplinksmartplug01_amps

@@ -94,7 +94,11 @@ humidifiers_pack:
         smartmi_humidifier_01_speed:
           friendly_name: "Скорость работы"
           value_template: >
-            {{ state_attr('fan.xiaomi_miio_device', 'speed') }}
+            {% if state_attr('fan.xiaomi_miio_device', 'speed') %}
+              {{ state_attr('fan.xiaomi_miio_device', 'speed') }}
+            {% else %}
+              off
+            {% endif %}
         # 02
         smartmi_humidifier_02_temperature:
           friendly_name: "Температура"
@@ -126,7 +130,11 @@ humidifiers_pack:
         smartmi_humidifier_02_speed:
           friendly_name: "Скорость работы"
           value_template: >
-            {{ state_attr('fan.smartmi_humidifier_02', 'speed') }}
+            {% if state_attr('fan.smartmi_humidifier_02', 'speed') %}
+              {{ state_attr('fan.smartmi_humidifier_02', 'speed') }}
+            {% else %}
+              off
+            {% endif %}
 
   # Scripts
   script:
