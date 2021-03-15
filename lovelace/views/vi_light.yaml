@@ -193,7 +193,7 @@ cards:
             - type: entities
               entities:
                 - entity: automation.sunrise_lighting_bedroom
-                  name: "Включать свет (рабочие дни)"
+                  name: "Включать свет (рабочие дни):"
                   icon: mdi:weather-sunset-up
                 - entity: input_datetime.sunrise_in_bedroom
                   name: "Время включения:"
