@@ -109,6 +109,7 @@ class SyncmiIO(BasemiIO):
         """Send command to miIO device and get result from it. Params can be
         dict or list depend on command.
         """
+        pings = 0
         for times in range(1, 4):
             try:
                 # create socket every time for reset connection, because we can
@@ -118,8 +119,8 @@ class SyncmiIO(BasemiIO):
                 sock.settimeout(self.timeout)
 
                 # need device_id for send command, can get it from ping cmd
-                if not self.device_id and not self.ping(sock):
-                    _LOGGER.debug(f"{self.addr[0]} | ping")
+                if self.delta_ts is None and not self.ping(sock):
+                    pings += 1
                     continue
 
                 # pack each time for new message id
@@ -133,24 +134,32 @@ class SyncmiIO(BasemiIO):
                 data = self._unpack_raw(raw_recv).rstrip(b'\x00')
 
                 if data == b'':
-                    _LOGGER.debug(f"{self.addr[0]} | receive empty data")
-                    continue
+                    # mgl03 fw 1.4.6_0012 without Internet respond on miIO.info
+                    # command with empty answer
+                    data = {'result': ''}
+                    break
 
                 data = json.loads(data)
                 # check if we received response for our cmd
                 if data['id'] == msg_id:
                     break
+
                 _LOGGER.debug(f"{self.addr[0]} | wrong ID")
+
             except timeout:
                 _LOGGER.debug(f"{self.addr[0]} | timeout {times}")
             except Exception as e:
                 _LOGGER.debug(f"{self.addr[0]} | exception {e}")
 
             # init ping again
-            self.device_id = None
+            self.delta_ts = None
 
         else:
-            _LOGGER.warning(f"{self.addr[0]} | Can't send {method} {params}")
+            _LOGGER.warning(
+                f"{self.addr[0]} | Device offline"
+                if pings >= 2 else
+                f"{self.addr[0]} | Can't send {method} {params}"
+            )
             return None
 
         if self.debug:
@@ -180,8 +189,15 @@ class SyncmiIO(BasemiIO):
         except:
             return None
 
-    def info(self):
-        """Get info about miIO device."""
+    def info(self) -> Union[dict, str, None]:
+        """Get info about miIO device.
+
+        Response dict - device ok, token ok
+        Response empty string - device ok, token ok (mgl03 on fw 1.4.6_0012
+            without cloud connection)
+        Response None, device_id not None - device ok, token wrong
+        Response None, device_id None - device offline
+        """
         return self.send('miIO.info')
 
 

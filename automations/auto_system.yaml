@@ -87,3 +87,12 @@
           %}
           {{ state.entity_id }}{%- if not loop.last -%}, {%- endif -%}
           {%- endfor %}
+
+#- alias: "Disable Things on Shutdown HA"
+#  trigger:
+#    platform: homeassistant
+#    event: shutdown
+#  action:
+#    - service: automation.turn_off
+#      data:
+#        entity_id: automation.device_needs_attention
