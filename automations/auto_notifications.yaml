@@ -241,7 +241,7 @@
         parse_mode: html
         disable_notification: true
         message: |
-          <i>INFO</i>: Объект {{ trigger.event.data.entity_id }} в статусе {{ trigger.event.data.new_state.state }}.
+          <i>INFO</i>: Объект {{ trigger.event.data.entity_id }} сменил статус на {{ trigger.event.data.new_state.state }}.
 
 - alias: "Low Battery Alert [notify to stall]"
   trigger:

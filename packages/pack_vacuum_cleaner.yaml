@@ -238,9 +238,12 @@ vacuum_cleaner:
         entity_id: vacuum.xiaomi_vacuum_cleaner
         to: "cleaning"
       action:
-        - service: notify.telegram_stall
+        - service: telegram_bot.send_message
           data:
+            target: !secret tlg_stall_id
             message: "Mi Robot начал уборку."
+            inline_keyboard:
+              - 'Остановить:/vacuum_stop, На базу:/vacuum_go_home'
 
     - alias: 'Оповещение о возращении пылесоса на базу [notify to stall]'
       initial_state: true
@@ -362,3 +365,31 @@ vacuum_cleaner:
             {% elif trigger.to_state.state == 'Gentle' %}
               script.set_vacuum_power_gentle
             {% endif %}
+
+    - alias: 'Vacuum - Telegram Control - Stop'
+      trigger:
+        platform: event
+        event_type: telegram_callback
+        event_data:
+          data: '/vacuum_stop'
+      action:
+        - service: vacuum.pause
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+        - service: telegram_bot.answer_callback_query
+          data_template:
+            callback_query_id: '{{ trigger.event.data.id }}'
+            message: 'Пылесос остановлен.'
+
+    - alias: 'Vacuum - Telegram Control - Go to Base'
+      trigger:
+        platform: event
+        event_type: telegram_callback
+        event_data:
+          data: '/vacuum_go_home'
+      action:
+        - service: vacuum.return_to_base
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+        - service: telegram_bot.answer_callback_query
+          data_template:
+            callback_query_id: '{{ trigger.event.data.id }}'
+            message: 'Пылесос отправлен на базу.'
