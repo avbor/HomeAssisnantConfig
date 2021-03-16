@@ -417,24 +417,6 @@
   max: 5
   max_exceeded: silent
   trigger:
-    # --- --- --- State based (GW3)
-    #    platform: state
-    #    entity_id: sensor.0x158d0005292ad9_action
-    #    to: 'rotate'
-    #
-    # --- --- --- Device based (ZHA)
-    #    - device_id: 1b77e179c20997a9730f634809b9853d
-    #      domain: zha
-    #      platform: device
-    #      type: device_rotated
-    #      subtype: right
-    #    - device_id: 1b77e179c20997a9730f634809b9853d
-    #      domain: zha
-    #      platform: device
-    #      type: device_rotated
-    #      subtype: left
-    #
-    # --- --- --- Event based (ZHA)
     - platform: event
       event_type: zha_event
       event_data:
@@ -445,20 +427,42 @@
       event_data:
         device_ieee: "00:15:8d:00:05:29:2a:d9"
         command: "rotate_right"
-  #
   action:
-    # --- --- --- State based (GW3)
-    #    - service: light.turn_on
-    #      data_template:
-    #        entity_id: light.0x86bd7fffe616b72_light
-    #        brightness: >-
-    #          {{ (state_attr('light.0x86bd7fffe616b72_light', 'brightness') | int) +
-    #          (state_attr('sensor.0x158d0005292ad9_action', 'angle') | int) }}
-    #
-    # --- --- --- Device or Event based (ZHA)
     - service: light.turn_on
       entity_id: light.0x86bd7fffe616b72_light
       data:
         brightness: >-
           {{ (state_attr('light.0x86bd7fffe616b72_light', 'brightness') | int) +
           (trigger.event.data.args.relative_degrees | int) }}
+
+- alias: Aqara Cube Flip 90
+  trigger:
+    - platform: event
+      event_type: zha_event
+      event_data:
+        device_ieee: "00:15:8d:00:05:29:2a:d9"
+        command: "flip"
+  condition:
+    - condition: template
+      value_template: >-
+        {{ (trigger.event.data.args.flip_degrees | int) == 90 }}
+  action:
+    - service: light.toggle
+      entity_id: light.0x86bd7fffe616b72_light
+      data:
+        brightness: 255
+
+- alias: Aqara Cube Flip 180
+  trigger:
+    - platform: event
+      event_type: zha_event
+      event_data:
+        device_ieee: "00:15:8d:00:05:29:2a:d9"
+        command: "flip"
+  condition:
+    - condition: template
+      value_template: >-
+        {{ (trigger.event.data.args.flip_degrees | int) == 180 }}
+  action:
+    - service: light.toggle
+      entity_id: light.sonoff_1000f30a9e
