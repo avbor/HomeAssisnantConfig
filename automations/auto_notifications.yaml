@@ -224,6 +224,8 @@
       message: "_INFO:_ Доступны новые версии Custom Components (HACS) (кол-во: {{ states('sensor.hacs') }})"
 
 - alias: "Device Needs Attention"
+  mode: queued
+  max: 25
   trigger:
     - platform: event
       event_type: state_changed
