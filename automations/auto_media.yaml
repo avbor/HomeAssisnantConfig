@@ -27,21 +27,6 @@
       data:
         entity_id: group.all_chromecasts
 
-- alias: "Громкость радио"
-  trigger:
-    platform: state
-    entity_id: input_number.volume_radio
-  action:
-    service: media_player.volume_set
-    data_template:
-      entity_id: >
-        {% if is_state("input_select.output_device", "Гостинная (TV)") %} media_player.gostinaia
-        {% elif is_state("input_select.output_device", "Гостинная (Home Mini)") %} media_player.googlehome9967
-        {% elif is_state("input_select.output_device", "Детская (TV)") %} media_player.detskaia
-        {% elif is_state("input_select.output_device", "Детская (Home Mini)") %} media_player.googlehome3792
-        {% endif %}
-      volume_level: "{{  states.input_number.volume_radio.state  }}"
-
 - alias: "Wakeup Radio - Childrens"
   initial_state: true
   trigger:

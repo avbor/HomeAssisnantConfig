@@ -2,7 +2,6 @@
 # Shell Commands
 #################################################
 
-chromecast_tv_on: "curl -X POST -H \"Content-Type: application/json\" -H \"Host: {{ ip_addr }}:8008\" -d '{\"use_channel\":true,\"allow_restart\":true,\"allow_empty_post_data\":true,\"app_id\":\"00000000-0000-0000-0000-000000000000\",\"url\":\"chrome://home?remote_url=https%3A%2F%2Fclients3.google.com%2Fcast%2Fchromecast%2Fhome%3Fchs%3D1\",\"dial_enabled\":true}' http://{{ ip_addr }}:8008/apps/00000000-0000-0000-0000-000000000000"
 reboot_beurer_carecam: "curl -X GET \"http://{{ ip_addr }}/?action=command&command=restart_system\""
 delete_file_by_path: "rm -f \"{{ file_path }}\""
 delete_all_cam_snapshots: "rm -f /config/www/cam_snapshots/*.jpg"

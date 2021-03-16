@@ -2,25 +2,3 @@
 # Input select
 #################################################
 
-radio_station:
-  name: 'Радиостанция:'
-  options:
-    - Радио Jazz
-    - Monte Carlo
-    - Monte Carlo Lounge
-    - Наше Радио
-    - ENERGY
-    - Русское Радио
-    - Maximum
-    - Детское Радио
-    - Детское Радио (Старое радио)
-
-output_device:
-    name: 'Где включить:'
-    options:
-      - Гостинная (Home Mini)
-      - Гостинная (TV)
-      - Детская (Home Mini)
-      - Детская (TV)
-    initial: Гостинная (Home Mini)
-    icon: mdi:speaker-wireless

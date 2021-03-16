@@ -2,48 +2,6 @@
 # Scripts for media
 #################################################
 
-radio_play:
-  alias: Play Radio on Chromecast
-  sequence:
-    - service: shell_command.chromecast_tv_on
-      data_template:
-        ip_addr: >
-          {% if is_state("input_select.output_device", "Гостинная (TV)") %} "172.16.16.211"
-          {% elif is_state("input_select.output_device", "Детская (TV)") %} "172.16.16.212"
-          {% endif %}
-    - service: media_player.play_media
-      data_template:
-        entity_id: >
-          {% if is_state("input_select.output_device", "Гостинная (TV)") %} media_player.gostinaia
-          {% elif is_state("input_select.output_device", "Гостинная (Home Mini)") %} media_player.googlehome9967
-          {% elif is_state("input_select.output_device", "Детская (TV)") %} media_player.detskaia
-          {% elif is_state("input_select.output_device", "Детская (Home Mini)") %} media_player.googlehome3792
-          {% endif %}
-        media_content_id: >
-          {% if is_state("input_select.radio_station", "Радио Jazz") %} http://nashe1.hostingradio.ru/jazz-128.mp3
-          {% elif is_state("input_select.radio_station", "Monte Carlo") %} http://montecarlo.hostingradio.ru/montecarlo128.mp3
-          {% elif is_state("input_select.radio_station", "Monte Carlo Lounge") %} http://stream.zeno.fm/953wvvz4gseuv
-          {% elif is_state("input_select.radio_station", "Наше Радио") %} http://nashe5.hostingradio.ru/nashe-128.mp3
-          {% elif is_state("input_select.radio_station", "ENERGY") %} http://ic2.101.ru:8000/v1_1
-          {% elif is_state("input_select.radio_station", "Русское Радио") %} http://rusradio.hostingradio.ru/rusradio128.mp3
-          {% elif is_state("input_select.radio_station", "Maximum") %} http://maximum.hostingradio.ru/maximum128.mp3
-          {% elif is_state("input_select.radio_station", "Детское Радио") %} http://ic7.101.ru:8000/a199
-          {% elif is_state("input_select.radio_station", "Детское Радио (Старое радио)") %} http://195.91.237.50:8000/detskoe128
-          {% endif %}
-        media_content_type: music
-
-radio_stop:
-  alias: Stop Radio on Chromecast
-  sequence:
-    - service: media_player.turn_off
-      data_template:
-        entity_id: >
-          {% if is_state("input_select.output_device", "Гостинная (TV)") %} media_player.gostinaia
-          {% elif is_state("input_select.output_device", "Гостинная (Home Mini)") %} media_player.googlehome9967
-          {% elif is_state("input_select.output_device", "Детская (TV)") %} media_player.detskaia
-          {% elif is_state("input_select.output_device", "Детская (Home Mini)") %} media_player.googlehome3792
-          {% endif %}
-
 #googlehome3792_increase_volume:
 #  alias: Increase volume by 5%
 #  sequence:
