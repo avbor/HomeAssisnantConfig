@@ -7,7 +7,7 @@ ha_radio:
   # Shell Command
   shell_command:
 
-    chromecast_tv_on: "curl -X POST -H \"Content-Type: application/json\" -H \"Host: {{ ip_addr }}:8008\" -d '{\"use_channel\":true,\"allow_restart\":true,\"allow_empty_post_data\":true,\"app_id\":\"00000000-0000-0000-0000-000000000000\",\"url\":\"chrome://home?remote_url=https%3A%2F%2Fclients3.google.com%2Fcast%2Fchromecast%2Fhome%3Fchs%3D1\",\"dial_enabled\":true}' http://{{ ip_addr }}:8008/apps/00000000-0000-0000-0000-000000000000"
+    chromecast_tv_on: "curl -s -X POST -H \"Content-Type: application/json\" -H \"Host: {{ ip_addr }}:8008\" -d '{\"use_channel\":true,\"allow_restart\":true,\"allow_empty_post_data\":true,\"app_id\":\"00000000-0000-0000-0000-000000000000\",\"url\":\"chrome://home?remote_url=https%3A%2F%2Fclients3.google.com%2Fcast%2Fchromecast%2Fhome%3Fchs%3D1\",\"dial_enabled\":true}' http://{{ ip_addr }}:8008/apps/00000000-0000-0000-0000-000000000000"
 
   # Input Select
   input_select:
@@ -26,14 +26,23 @@ ha_radio:
         - Детское Радио (Старое радио)
 
     output_device:
-        name: 'Где включить:'
-        options:
-          - Гостинная (Home Mini)
-          - Гостинная (TV)
-          - Детская (Home Mini)
-          - Детская (TV)
-        initial: Гостинная (Home Mini)
-        icon: mdi:speaker-wireless
+      name: 'Где включить:'
+      options:
+        - Гостинная (Home Mini)
+        - Гостинная (TV)
+        - Детская (Home Mini)
+        - Детская (TV)
+      initial: Гостинная (Home Mini)
+      icon: mdi:speaker-wireless
+
+  # Input Text
+  input_text:
+
+    radio_url_to_play:
+      name: 'Radio URL To Play'
+
+    output_device_to_play:
+      name: 'Radio Output Device'
 
   # Input Number
   input_number:
@@ -50,61 +59,97 @@ ha_radio:
   script:
 
     radio_play:
-      alias: Play Radio on Chromecast
+      alias: Play Internet Radio
       sequence:
-        - service: shell_command.chromecast_tv_on
-          data_template:
-            ip_addr: >
-              {% if is_state("input_select.output_device", "Гостинная (TV)") %} "172.16.16.211"
-              {% elif is_state("input_select.output_device", "Детская (TV)") %} "172.16.16.212"
-              {% endif %}
+        - choose:
+          - conditions: "{{ '(TV)' in states('input_select.output_device') }}"
+            sequence:
+              - service: shell_command.chromecast_tv_on
+                data:
+                  ip_addr: >-
+                    {% if is_state("input_select.output_device", "Гостинная (TV)") -%}
+                      "172.16.16.211"
+                    {% elif is_state("input_select.output_device", "Детская (TV)") -%}
+                      "172.16.16.212"
+                    {% endif %}
+        - service: media_player.volume_set
+          data:
+            entity_id: "{{ states('input_text.output_device_to_play') }}"
+            volume_level: "{{ states.input_number.volume_radio.state }}"
         - service: media_player.play_media
-          data_template:
-            entity_id: >
-              {% if is_state("input_select.output_device", "Гостинная (TV)") %} media_player.gostinaia
-              {% elif is_state("input_select.output_device", "Гостинная (Home Mini)") %} media_player.googlehome9967
-              {% elif is_state("input_select.output_device", "Детская (TV)") %} media_player.detskaia
-              {% elif is_state("input_select.output_device", "Детская (Home Mini)") %} media_player.googlehome3792
-              {% endif %}
-            media_content_id: >
-              {% if is_state("input_select.radio_station", "Радио Jazz") %} http://nashe1.hostingradio.ru/jazz-128.mp3
-              {% elif is_state("input_select.radio_station", "Monte Carlo") %} http://montecarlo.hostingradio.ru/montecarlo128.mp3
-              {% elif is_state("input_select.radio_station", "Monte Carlo Lounge") %} http://stream.zeno.fm/953wvvz4gseuv
-              {% elif is_state("input_select.radio_station", "Наше Радио") %} http://nashe5.hostingradio.ru/nashe-128.mp3
-              {% elif is_state("input_select.radio_station", "ENERGY") %} http://ic2.101.ru:8000/v1_1
-              {% elif is_state("input_select.radio_station", "Русское Радио") %} http://rusradio.hostingradio.ru/rusradio128.mp3
-              {% elif is_state("input_select.radio_station", "Maximum") %} http://maximum.hostingradio.ru/maximum128.mp3
-              {% elif is_state("input_select.radio_station", "Детское Радио") %} http://ic7.101.ru:8000/a199
-              {% elif is_state("input_select.radio_station", "Детское Радио (Старое радио)") %} http://195.91.237.50:8000/detskoe128
-              {% endif %}
+          data:
+            entity_id: "{{ states('input_text.output_device_to_play') }}"
+            media_content_id: "{{ states('input_text.radio_url_to_play') }}"
             media_content_type: music
 
     radio_stop:
-      alias: Stop Radio on Chromecast
+      alias: Stop Internet Radio
       sequence:
         - service: media_player.turn_off
-          data_template:
-            entity_id: >
-              {% if is_state("input_select.output_device", "Гостинная (TV)") %} media_player.gostinaia
-              {% elif is_state("input_select.output_device", "Гостинная (Home Mini)") %} media_player.googlehome9967
-              {% elif is_state("input_select.output_device", "Детская (TV)") %} media_player.detskaia
-              {% elif is_state("input_select.output_device", "Детская (Home Mini)") %} media_player.googlehome3792
-              {% endif %}
+          data:
+            entity_id: "{{ states('input_text.output_device_to_play') }}"
 
   # Automations
   automation:
 
-    - alias: "Громкость радио"
+    - alias: "Radio - Selected Name to URL"
+      trigger:
+        - platform: homeassistant
+          event: start
+        - platform: state
+          entity_id: input_select.radio_station
+      action:
+        - service: input_text.set_value
+          data:
+            entity_id: input_text.radio_url_to_play
+            value: >-
+              {% if is_state("input_select.radio_station", "Радио Jazz") -%}
+                http://nashe1.hostingradio.ru/jazz-128.mp3
+              {% elif is_state("input_select.radio_station", "Monte Carlo") -%}
+                http://montecarlo.hostingradio.ru/montecarlo128.mp3
+              {% elif is_state("input_select.radio_station", "Monte Carlo Lounge") -%}
+                http://stream.zeno.fm/953wvvz4gseuv
+              {% elif is_state("input_select.radio_station", "Наше Радио") -%}
+                http://nashe5.hostingradio.ru/nashe-128.mp3
+              {% elif is_state("input_select.radio_station", "ENERGY") -%}
+                http://ic2.101.ru:8000/v1_1
+              {% elif is_state("input_select.radio_station", "Русское Радио") -%}
+                http://rusradio.hostingradio.ru/rusradio128.mp3
+              {% elif is_state("input_select.radio_station", "Maximum") -%}
+                http://maximum.hostingradio.ru/maximum128.mp3
+              {% elif is_state("input_select.radio_station", "Детское Радио") -%}
+                http://ic7.101.ru:8000/a199
+              {% elif is_state("input_select.radio_station", "Детское Радио (Старое радио)") -%}
+                http://195.91.237.50:8000/detskoe128
+              {% endif %}
+
+    - alias: "Radio - Selected Name to Device"
+      trigger:
+        - platform: homeassistant
+          event: start
+        - platform: state
+          entity_id: input_select.output_device
+      action:
+        - service: input_text.set_value
+          data:
+            entity_id: input_text.output_device_to_play
+            value: >-
+              {% if is_state("input_select.output_device", "Гостинная (TV)") -%}
+                media_player.gostinaia
+              {% elif is_state("input_select.output_device", "Гостинная (Home Mini)") -%} 
+                media_player.googlehome9967
+              {% elif is_state("input_select.output_device", "Детская (TV)") -%}
+                media_player.detskaia
+              {% elif is_state("input_select.output_device", "Детская (Home Mini)") -%}
+                media_player.googlehome3792
+              {% endif %}
+
+    - alias: "Radio - Volume Control"
       trigger:
         platform: state
         entity_id: input_number.volume_radio
       action:
         service: media_player.volume_set
-        data_template:
-          entity_id: >
-            {% if is_state("input_select.output_device", "Гостинная (TV)") %} media_player.gostinaia
-            {% elif is_state("input_select.output_device", "Гостинная (Home Mini)") %} media_player.googlehome9967
-            {% elif is_state("input_select.output_device", "Детская (TV)") %} media_player.detskaia
-            {% elif is_state("input_select.output_device", "Детская (Home Mini)") %} media_player.googlehome3792
-            {% endif %}
-          volume_level: "{{ states.input_number.volume_radio.state }}"
+        data:
+          entity_id: "{{ states('input_text.output_device_to_play') }}"
+          volume_level: "{{ states('input_number.volume_radio') }}"
