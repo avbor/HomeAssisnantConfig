@@ -378,7 +378,7 @@ vacuum_cleaner:
         - service: telegram_bot.answer_callback_query
           data_template:
             callback_query_id: '{{ trigger.event.data.id }}'
-            message: 'Пылесос остановлен.'
+            message: 'Команда отправлена'
 
     - alias: 'Vacuum - Telegram Control - Go to Base'
       trigger:
@@ -387,9 +387,12 @@ vacuum_cleaner:
         event_data:
           data: '/vacuum_go_home'
       action:
+        - service: vacuum.pause
+          entity_id: vacuum.xiaomi_vacuum_cleaner
+        - delay: 1
         - service: vacuum.return_to_base
           entity_id: vacuum.xiaomi_vacuum_cleaner
         - service: telegram_bot.answer_callback_query
           data_template:
             callback_query_id: '{{ trigger.event.data.id }}'
-            message: 'Пылесос отправлен на базу.'
+            message: 'Команда отправлена'
