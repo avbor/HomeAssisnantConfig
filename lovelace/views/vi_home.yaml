@@ -1,29 +1,93 @@
 title: Home
 path: home
 icon: 'hass:home-assistant'
-#    badges:
-# Настройка карточек:
 cards:
   - type: vertical-stack
     cards:
-      - type: entity
-        entity: sensor.time
-        name: Время
-      - type: horizontal-stack
+#      - type: entity
+#        entity: sensor.time
+#        name: Время
+      - type: custom:vertical-stack-in-card
         cards:
-          - type: entity
-            entity: sensor.date_formatted
-            attribute: day_of_week
-            name: День недели
-            icon: mdi:calendar-cursor
-          - type: entity
-            entity: sensor.date_formatted
-            name: Дата
-            icon: mdi:calendar-today
+          - type: markdown
+            content: |
+              #
+              # <center>{{ states('sensor.time') }}</center>
+              ## <center>{{ state_attr('sensor.date_formatted', 'day_of_week') }}, {{ states('sensor.date_formatted') }}</center>
+          - type: entities
+            show_header_toggle: false
+            entities:
+              - entity: sun.sun
+                name: Солнце
+              - entity: sensor.moon
+                name: Луна
+
+#      - type: horizontal-stack
+#        cards:
+#          - type: entity
+#            entity: sensor.date_formatted
+#            attribute: day_of_week
+#            name: День недели
+#            icon: mdi:calendar-cursor
+#          - type: entity
+#            entity: sensor.date_formatted
+#            name: Дата
+#            icon: mdi:calendar-today
 #      - type: entities
 #        entities:
 #          - sensor.date
 #          - sensor.time
+
+  - type: vertical-stack
+    cards:
+      - type: markdown
+        content: >
+          ### Климат в квартире:
+      - type: horizontal-stack
+        cards:
+          - type: 'custom:mini-graph-card'
+            name: Температура
+            icon: mdi:thermometer
+            hours_to_show: 24
+            points_per_hour: 4
+            decimals: 1
+            hour24: true
+            align_state: center
+            entities:
+                - entity: sensor.average_temperature_in_flat
+            color_thresholds:
+              - value: 21
+                color: "#1f4bf0"
+              - value: 23
+                color: "#36ce0e"
+              - value: 25
+                color: "#c0392b" 
+            show:
+              labels: false
+          - type: 'custom:mini-graph-card'
+            name: Влажность
+            icon: mdi:water-percent
+            hours_to_show: 24
+            points_per_hour: 4
+            decimals: 1
+            hour24: true
+            align_state: center
+            entities:
+                - entity: sensor.average_humidity_in_flat
+            color_thresholds:
+              - value: 15
+                color: "#e6b80f"
+              - value: 20
+                color: "#b6920c"
+              - value: 40
+                color: "#36ce0e"
+              - value: 50
+                color: "#1fb4f0"
+              - value: 60
+                color: "#0c30b6" 
+            show:
+              labels: false
+
     # --- Сейчас дома:
       - type: markdown
         content: >
@@ -116,79 +180,48 @@ cards:
                 - sensor.do_doma_sasha
                 - sensor.do_doma_ira_luxoft
 
-# --- Статус ламп
+# --- Свет
   - type: vertical-stack
     cards:
       - type: markdown
         content: >
           ### Освещение:
-      - type: entities
-        state_color: true
-        entities:
-          - type: buttons
-            entities:
-              - entity: group.all_lamps
-                name: Выключить весь свет
-                icon: mdi:lightbulb-group
-                tap_action:
-                  action: call-service
-                  service: light.turn_off
-                  service_data:
-                    entity_id: group.all_lamps
-          - type: section
-            label: Прихожая и коридор
-          - entity: binary_sensor.lamp_status_prikhozhaya
-            name: Споты в прихожей
-            icon: mdi:spotlight-beam
-          - entity: binary_sensor.lamp_status_koridor
-            name: Споты в коридоре
-            icon: mdi:spotlight-beam
-          - type: section
-            label: Детская
-          - entity: binary_sensor.lamp_status_detskaia
-            name: Люстра
-            icon: mdi:ceiling-light
-          - entity: binary_sensor.lamp_status_detskaia_okno
-            name: Подсветка окна
-            icon: mdi:string-lights
-          - type: section
-            label: Гостиная
-          - entity: binary_sensor.lamp_status_gostinaya_bra
-            name: Бра
-            icon: mdi:wall-sconce-flat
-          - entity: binary_sensor.lamp_status_gostinaia_okno
-            name: Подсветка окна
-            icon: mdi:string-lights
-          - entity: binary_sensor.lamp_status_workdesk_gostinaya
-            name: Лампа на столе
-            icon: mdi:desk-lamp
-          - entity: binary_sensor.lamp_status_gostinaya_liustra
-            name: Люстра
-            icon: mdi:ceiling-light
-          - entity: binary_sensor.lamp_status_gostinaya_spots
-            name: Споты
-            icon: mdi:spotlight-beam
-          - type: section
-            label: Спальня
-          - entity: binary_sensor.lamp_status_spalnia_stol
-            name: Лампа на столе
-            icon: mdi:desk-lamp
-          - type: section
-            label: Кухня
-          - entity: binary_sensor.lamp_status_kukhnia_spots
-            name: Споты
-            icon: mdi:spotlight-beam
-          - entity: binary_sensor.lamp_status_kukhnia_lenta
-            name: Подсветка кухни
-            icon: mdi:led-strip-variant
-          - entity: binary_sensor.lamp_status_kukhnia_liustra
-            name: Люстра
-            icon: mdi:ceiling-light
-          - type: section
-            label: Кладовая
-          - entity: binary_sensor.lamp_status_kladovaya
-            name: Люстра
-            icon: mdi:vanity-light
+      - type: conditional
+        conditions:
+          - entity: group.all_lamps
+            state: "on"
+        card:
+          type: vertical-stack
+          cards:
+            - type: "custom:auto-entities"
+              filter:
+                include:
+                  - entity_id: binary_sensor.lamp_status_*
+                    state: 'on'
+              card:
+                type: entities
+                state_color: true
+            - type: entities
+              state_color: true
+              entities:
+                - type: buttons
+                  entities:
+                    - entity: group.all_lamps
+                      name: Выключить свет
+                      icon: mdi:lightbulb-group
+                      tap_action:
+                        action: call-service
+                        service: light.turn_off
+                        service_data:
+                          entity_id: group.all_lamps
+      - type: conditional
+        conditions:
+          - entity: group.all_lamps
+            state: "off"
+        card:
+          type: markdown
+          content: >
+            *Весь свет выключен...*
 
 # --- Статус всякого
   - type: vertical-stack
@@ -219,21 +252,11 @@ cards:
           - entity: binary_sensor.ac_bedroom_status
             name: Спальня
             icon: mdi:air-conditioner
-          # Температура
+          # Увлажнители
           - type: section
-            label: Температура
-          - entity: sensor.0x158d0003230618_temperature
-            name: Гостинная
-          - entity: sensor.0x158d0003931aec_temperature
-            name: Детская
-          - entity: sensor.0x158d0003931b0e_temperature
-            name: Спальня
-          - entity: sensor.0x158d0003931a55_temperature
-            name: Ванная
-          - entity: sensor.a4c138414e9a_temperature
-            name: Туалет
-          - entity: sensor.0x158d00039e2ecb_temperature
-            name: Кладовая
+            label: Увлажнители воздуха
+          - entity: binary_sensor.humidifier_nursery_status
+          - entity: binary_sensor.humidifier_bedroom_status
           # Разное
           - type: section
             label: Разное
@@ -269,12 +292,13 @@ cards:
               #show_fill: false
         show:
           fill: false
+
     # --- Солнце\Луна:
-      - type: entities
-        show_header_toggle: false
-        entities:
-          - sun.sun
-          - sensor.moon
+#      - type: entities
+#        show_header_toggle: false
+#        entities:
+#          - sun.sun
+#          - sensor.moon
 
 # --- COVID-19
 #  - type: vertical-stack

@@ -6,40 +6,71 @@
   sensors:
     lamp_status_spalnia_stol:
       device_class: power
+      friendly_name: Лампа на столе в Спальне
+      icon_template: mdi:desk-lamp
       value_template: "{{ is_state('light.spalnia_stol', 'on') }}"
     lamp_status_detskaia:
       device_class: power
+      friendly_name: Люстра в Детской
+      icon_template: mdi:ceiling-light
       value_template: "{{ is_state('light.detskaia', 'on') }}"
     lamp_status_detskaia_okno:
       device_class: power
+      friendly_name: Подсветка окна в Детской
+      icon_template: mdi:string-lights
       value_template: "{{ is_state('light.detskaia_podsvetka_na_okne', 'on') }}"
     lamp_status_gostinaia_okno:
       device_class: power
+      friendly_name: Подсветка окна в Гостиной
+      icon_template: mdi:string-lights
       value_template: "{{ is_state('light.gostinaia_podsvetka_na_okne', 'on') }}"
     lamp_status_gostinaya_bra:
       device_class: power
+      friendly_name: Бра в Гостиной
+      icon_template: mdi:wall-sconce-flat
       value_template: "{{ is_state('light.sonoff_1000ab3c28', 'on') }}"
     lamp_status_gostinaya_liustra:
       device_class: power
+      friendly_name: Люстра в Гостиной
+      icon_template: mdi:ceiling-light
       value_template: "{{ is_state('light.sonoff_1000f3035d', 'on') }}"
     lamp_status_gostinaya_spots:
       device_class: power
+      friendly_name: Споты в Гостиной
+      icon_template: mdi:spotlight-beam
       value_template: "{{ is_state('light.sonoff_1000f30a9e', 'on') }}"
     lamp_status_kukhnia_lenta:
       device_class: power
+      friendly_name: Подсветка Кухни
+      icon_template: mdi:led-strip-variant
       value_template: "{{ is_state('light.kukhnia_lenta', 'on') }}"
     lamp_status_kukhnia_liustra:
       device_class: power
+      friendly_name: Люстра на Кухне
+      icon_template: mdi:ceiling-light
       value_template: "{{ is_state('light.kukhnia_liustra', 'on') }}"
     lamp_status_kukhnia_spots:
+      device_class: power
+      friendly_name: Споты на Кухне
+      icon_template: mdi:spotlight-beam
       value_template: "{{ is_state('light.sonoff_1000b72483', 'on') }}"
     lamp_status_kladovaya:
       device_class: power
+      friendly_name: Люстра в Кладовой
+      icon_template: mdi:vanity-light
       value_template: "{{ is_state('light.sonoff_1000b6831b', 'on') }}"
     lamp_status_workdesk_gostinaya:
       device_class: power
+      friendly_name: Лампа на столе в Гостиной
+      icon_template: mdi:desk-lamp
       value_template: "{{ is_state('light.0x86bd7fffe616b72_light', 'on') }}"
     lamp_status_prikhozhaya:
+      device_class: power
+      friendly_name: Споты в Прихожей
+      icon_template: mdi:spotlight-beam
       value_template: "{{ is_state('light.sonoff_1000f2f14a', 'on') }}"
     lamp_status_koridor:
+      device_class: power
+      friendly_name: Споты в Коридоре
+      icon_template: mdi:spotlight-beam
       value_template: "{{ is_state('light.sonoff_1000f2a500', 'on') }}"
