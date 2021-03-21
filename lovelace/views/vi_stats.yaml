@@ -6,7 +6,7 @@ cards:
     cards:
       - type: markdown
         content: >
-          ### Водонагреватель:
+          ### <center>Водонагреватель</center>
       - type: history-graph
         hours_to_show: 24
         refresh_interval: 600
@@ -26,7 +26,7 @@ cards:
     cards:
       - type: markdown
         content: >
-          ### Стиральная машина:
+          ### <center>Стиральная машина</center>
       - type: history-graph
         hours_to_show: 24
         refresh_interval: 600
@@ -46,7 +46,7 @@ cards:
     cards:
       - type: markdown
         content: >
-          ### Температура:
+          ### <center>Температура</center>
       - type: history-graph
         hours_to_show: 24
         refresh_interval: 600
@@ -81,7 +81,7 @@ cards:
     cards:
       - type: markdown
         content: >
-          ### Влажность:
+          ### <center>Влажность</center>
       - type: history-graph
         hours_to_show: 24
         refresh_interval: 600
@@ -116,7 +116,7 @@ cards:
     cards:
       - type: markdown
         content: >
-          ### Счетчики воды:
+          ### <center>Счетчики воды</center>
       - type: entities
         entities:
           - entity: sensor.sauresha_5555_09_104476

@@ -6,7 +6,7 @@ cards:
     cards:
       - type: markdown
         content: >
-          ### Статус:
+          ### <center>Статус</center>
       - type: entities
         entities:
           - entity: vacuum.xiaomi_vacuum_cleaner
@@ -19,7 +19,7 @@ cards:
             name: "Заряд батареи:"
       - type: markdown
         content: >
-          ### Уборка:
+          ### <center>Уборка</center>
       - type: entities
         entities:
           - input_select.room_to_vacuum
@@ -75,7 +75,7 @@ cards:
     cards:
     - type: markdown
       content: >
-        ### Расходные материалы:
+        ### <center>Расходные материалы</center>
     - type: entities
       entities:
         - entity: sensor.mirobot_1s_main_brush_left
@@ -92,7 +92,7 @@ cards:
           icon: mdi:leak
     - type: markdown
       content: >
-        #### Сброс счетчиков:
+        #### Сброс счетчиков
     - type: horizontal-stack
       cards:
         - type: button
@@ -152,7 +152,7 @@ cards:
     cards:
     - type: markdown
       content: >
-        ### Карта:
+        ### <center>Карта</center>
     - type: picture-glance
   #    title: Карта
       show_state: false

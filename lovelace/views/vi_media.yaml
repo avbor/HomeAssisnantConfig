@@ -7,7 +7,7 @@ cards:
     cards:
       - type: markdown
         content: > 
-          ### Радио:
+          ### <center>Радио</center>
       - type: custom:vertical-stack-in-card
         cards:
           - type: entities
@@ -43,7 +43,7 @@ cards:
     cards:
     - type: markdown
       content: > 
-        ### Chromecast:
+        ### <center>Chromecast</center>
     - type: conditional
       conditions:
         - entity: group.all_chromecasts
@@ -87,7 +87,7 @@ cards:
     # --- Спальня
     - type: markdown
       content: >
-        ### TV:
+        ### <center>TV</center>
     - type: markdown
       content: >
         *Спальня:*
@@ -180,7 +180,7 @@ cards:
     cards:
     - type: markdown
       content: >
-        ### Plex:
+        ### <center>Plex</center>
     - type: conditional
       conditions:
         - entity: media_player.plex_tv_ue46es5507

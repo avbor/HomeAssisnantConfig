@@ -1,0 +1,95 @@
+#################################################
+# Package Domofon
+#################################################
+
+domofon_pack:
+
+  automation:
+
+    - alias: Domofon - Opened by Bbutton Notification
+      initial_state: true
+      trigger:
+        platform: state
+        entity_id: binary_sensor.domofon_button
+        to: 'on'
+      condition:
+        - condition: state
+          entity_id: binary_sensor.domofon_incoming_call
+          state: 'on'
+      action:
+        service: notify.telegram_stall
+        data:
+          message: "Домофон открыт кнопкой"
+
+    - alias: Domofon - Incoming Call Notification
+      initial_state: true
+      trigger:
+        platform: state
+        entity_id: binary_sensor.domofon_incoming_call
+        to: 'on'
+      action:
+        service: notify.telegram_stall
+        data:
+          message: "Звонок в домофон {% if is_state('switch.domofon_automatically_open', 'on') or is_state('switch.domofon_automatically_open_once', 'on') %}(откроется автоматически){% endif %}"
+          data:
+            inline_keyboard:
+              - "{{ '-' if is_state('switch.domofon_automatically_open', 'on') or is_state('switch.domofon_automatically_open_once', 'on') else 'Открыть:/domofon_open, Отклонить:/domofon_reject' }}"
+
+    - alias: Domofon - Telegram Control - domofon_open
+      initial_state: true
+      trigger:
+        platform: event
+        event_type: telegram_callback
+        event_data:
+          data: '/domofon_open'
+      action:
+        - service: telegram_bot.answer_callback_query
+          data:
+            callback_query_id: "{{ trigger.event.data.id }}"
+            message: "{{ 'Открываю...' if is_state('binary_sensor.domofon_incoming_call', 'on') else 'Нет входящего звонка' }}"
+        - service: esphome.domofon_accept_call
+
+    - alias: Domofon - Telegram Control - domofon_reject
+      initial_state: true
+      trigger:
+        platform: event
+        event_type: telegram_callback
+        event_data:
+          data: '/domofon_reject'
+      action:
+        - service: telegram_bot.answer_callback_query
+          data:
+            callback_query_id: "{{ trigger.event.data.id }}"
+            message: "{{ 'Отклоняю...' if is_state('binary_sensor.domofon_incoming_call', 'on') else 'Нет входящего звонка' }}"
+        - service: esphome.domofon_reject_call
+
+    - alias: Domofon - Mute and UnMute by Time
+      trigger:
+        - platform: time
+          at: "23:00:00"
+        - platform: time
+          at: "07:00:00"
+      action:
+        - service: >-
+            {% if trigger.now.hour == 23 -%}
+              switch.turn_on
+            {% elif trigger.now.hour == 7 -%}
+              switch.turn_off
+            {% endif %}
+          data:
+            entity_id: switch.domofon_mute_sound
+
+    - alias: Domofon - ESP Board Lost Connection
+      trigger:
+        - platform: state
+          entity_id: binary_sensor.domofon_status
+      action:
+        - service: notify.telegram_stall
+          data:
+            message: |
+              *Внимание!*
+              {% if trigger.to_state.state == 'off' -%}
+                Домофон: потеряно подключение к HA.
+              {% elif trigger.to_state.state == 'on' -%}
+                Домофон: восстановлено подключение к HA
+              {% endif %}

@@ -4,9 +4,6 @@ icon: 'hass:home-assistant'
 cards:
   - type: vertical-stack
     cards:
-#      - type: entity
-#        entity: sensor.time
-#        name: Время
       - type: custom:vertical-stack-in-card
         cards:
           - type: markdown
@@ -17,32 +14,13 @@ cards:
           - type: entities
             show_header_toggle: false
             entities:
-              - entity: sun.sun
-                name: Солнце
+              - entity: sensor.sun_next_rising
+              - entity: sensor.sun_next_setting
               - entity: sensor.moon
                 name: Луна
-
-#      - type: horizontal-stack
-#        cards:
-#          - type: entity
-#            entity: sensor.date_formatted
-#            attribute: day_of_week
-#            name: День недели
-#            icon: mdi:calendar-cursor
-#          - type: entity
-#            entity: sensor.date_formatted
-#            name: Дата
-#            icon: mdi:calendar-today
-#      - type: entities
-#        entities:
-#          - sensor.date
-#          - sensor.time
-
-  - type: vertical-stack
-    cards:
       - type: markdown
         content: >
-          ### Климат в квартире:
+          ### <center>Климат в квартире</center>
       - type: horizontal-stack
         cards:
           - type: 'custom:mini-graph-card'
@@ -89,9 +67,11 @@ cards:
               labels: false
 
     # --- Сейчас дома:
+  - type: vertical-stack
+    cards:
       - type: markdown
         content: >
-          ### Сейчас дома:
+          ### <center>Сейчас дома</center>
       - type: conditional
         conditions:
           - entity: group.family_persons
@@ -180,12 +160,71 @@ cards:
                 - sensor.do_doma_sasha
                 - sensor.do_doma_ira_luxoft
 
+
+# --- Домофон
+  - type: vertical-stack
+    cards:
+      - type: markdown
+        content: >
+          ### <center>Домофон</center>
+      - type: custom:vertical-stack-in-card
+        cards:
+          - type: entities
+            entities:
+              - entity: switch.domofon_mute_sound
+                name: Выключить звук
+              - entity: switch.domofon_mute_sound_once
+                name: Выключить звук (однократно)
+              - entity: switch.domofon_automatically_open
+                name: Открывать автоматически
+              - entity: switch.domofon_automatically_open_once
+                name: Открыть автоматически (однократно)
+              - entity: switch.domofon_automatically_reject
+                name: Отклонять все вызовы
+          - type: horizontal-stack
+            cards:
+              - type: button
+                show_name: false
+                name: Открыть
+                icon_height: 32px
+                tap_action:
+                  action: call-service
+                  service: switch.turn_on
+                  service_data:
+                    entity_id: switch.domofon_accept_call
+                entity: switch.domofon_accept_call
+              - type: button
+                show_name: false
+                name: Отклонить
+                icon_height: 32px
+                tap_action:
+                  action: call-service
+                  service: switch.turn_on
+                  service_data:
+                    entity_id: switch.domofon_reject_call
+                entity: switch.domofon_reject_call
+# --- Газ
+#  - type: vertical-stack
+#    cards:
+      - type: markdown
+        content: >
+          ### <center>Датчик газа</center>
+      - type: custom:vertical-stack-in-card
+        cards:
+          - type: entities
+            entities:
+              - entity: switch.mi_smartplugwifi_02
+                name: Питание
+              - entity: binary_sensor.0x158d000413b210_gas
+                name: "Газ в воздухе"
+              - entity: sensor.0x158d000413b210_gas_density
+                name: "Концентрация"
 # --- Свет
   - type: vertical-stack
     cards:
       - type: markdown
         content: >
-          ### Освещение:
+          ### <center>Освещение</center>
       - type: conditional
         conditions:
           - entity: group.all_lamps
@@ -228,7 +267,7 @@ cards:
     cards:
       - type: markdown
         content: >
-          ### Статус:
+          ### <center>Статус</center>
       - type: entities
         state_color: true
         entities:
@@ -272,7 +311,7 @@ cards:
     # --- Погода:
       - type: markdown
         content: >
-          ### Погода:
+          ### <center>Погода</center>
       - type: weather-forecast
         entity: weather.gismeteo
       - type: 'custom:mini-graph-card'

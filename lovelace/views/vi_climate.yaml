@@ -7,7 +7,7 @@ cards:
     cards:
       - type: markdown
         content: >
-          ### Детская:
+          ### <center>Детская</center>
       - type: horizontal-stack
         cards:
           - type: sensor
@@ -32,11 +32,11 @@ cards:
         control:
           _names: false
           hvac:
-            _name: "Режим:"
+            _name: "Режим"
             dry: false
             fan_only: false
           swing:
-            _name: "Движение шторки:"
+            _name: "Движение шторки"
             "off":
               icon: mdi:shuffle-disabled
             vertical:
@@ -67,15 +67,15 @@ cards:
               - type: section
                 label: Контроль влажности
               - entity: input_boolean.smartmi_humidifier_01_autocontrol
-                name: "Авто:"
+                name: "Автоматичеки"
               - entity: input_number.target_humidity_01
-                name: "Цель:"
+                name: "Поддерживать"
   # Гостинная
   - type: vertical-stack
     cards:
       - type: markdown
         content: >
-          ### Гостиная:
+          ### <center>Гостиная</center>
       - type: horizontal-stack
         cards:
           - type: sensor
@@ -100,11 +100,11 @@ cards:
         control:
           _names: false
           hvac:
-            _name: "Режим:"
+            _name: "Режим"
             dry: false
             fan_only: false
           swing:
-            _name: "Движение шторки:"
+            _name: "Движение шторки"
             "off":
               icon: mdi:shuffle-disabled
             vertical:
@@ -114,7 +114,7 @@ cards:
     cards:
       - type: markdown
         content: >
-          ### Спальня:
+          ### <center>Спальня</center>
       - type: horizontal-stack
         cards:
           - type: sensor
@@ -139,11 +139,11 @@ cards:
         control:
           _names: false
           hvac:
-            _name: "Режим:"
+            _name: "Режим"
             dry: false
             fan_only: false
           swing:
-            _name: "Движение шторки:"
+            _name: "Движение шторки"
             "off":
               icon: mdi:shuffle-disabled
             vertical:
@@ -173,16 +173,16 @@ cards:
               - type: section
                 label: Контроль влажности
               - entity: input_boolean.smartmi_humidifier_02_autocontrol
-                name: "Авто:"
+                name: "Автоматически"
               - entity: input_number.target_humidity_02
-                name: "Цель:"
+                name: "Поддерживать"
 
   # Кладовая
   - type: vertical-stack
     cards:
       - type: markdown
         content: >
-          ### Кладовая:
+          ### <center>Кладовая</center>
       - type: horizontal-stack
         cards:
           - type: sensor
@@ -217,7 +217,7 @@ cards:
     cards:
       - type: markdown
         content: >
-          ### Ванная:
+          ### <center>Ванная</center>
       - type: horizontal-stack
         cards:
           - type: sensor
@@ -233,7 +233,7 @@ cards:
     cards:
       - type: markdown
         content: >
-          ### Туалет:
+          ### <center>Туалет</center>
       - type: horizontal-stack
         cards:
           - type: sensor

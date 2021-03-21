@@ -106,6 +106,16 @@
       icon_template: mdi:clock
       value_template: "{{ ((as_timestamp(now()) | int - as_timestamp(states('sensor.uptime')) | int) / 60) | int }}"
       unit_of_measurement: minutes
+    sun_next_rising:
+      friendly_name: Восход солнца
+      icon_template: mdi:weather-sunset-up
+      value_template: >-
+        {{ as_timestamp(state_attr('sun.sun', 'next_rising')) | timestamp_custom('%H:%M') }}
+    sun_next_setting:
+      friendly_name: Заход солнца
+      icon_template: mdi:weather-sunset-down
+      value_template: >-
+        {{ as_timestamp(state_attr('sun.sun', 'next_setting')) | timestamp_custom('%H:%M') }}
     # Temperature sensors for use in ESPHome firmwares
     for_esphome_temp_in_livingroom:
       friendly_name: Температура в гостиной

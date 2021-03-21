@@ -6,7 +6,7 @@ cards:
     cards:
     - type: markdown
       content: >
-        ### System information:
+        ### <center>System information</center>
     - type: entities
       show_header_toggle: false
       entities:
@@ -52,7 +52,7 @@ cards:
     cards:
     - type: markdown
       content: >
-        ### HA Control:
+        ### <center>HA Control</center>
     - type: horizontal-stack
       cards:
         - type: button
@@ -79,13 +79,7 @@ cards:
           entity: script.hass_restart
     - type: markdown
       content: >
-        ### Xiaomi Gateway 3 Control:
-#    - type: entities
-#      entities:
-#        - entity: remote.0x588e81fffedca899_pair
-#          name: "GW 3-1: Pair Mode"
-#        - entity: remote.0x842e14fffe4dff7f_pair
-#          name: "GW 3-2: Pair Mode"
+        ### <center>Xiaomi Gateway 3 Control</center>
     - type: entities
       entities:
           - input_select.xiaomi_gateway3_name
@@ -136,7 +130,7 @@ cards:
 
     - type: markdown
       content: >
-        ### Scripts:
+        ### <center>Scripts</center>
     - type: horizontal-stack
       cards:
       - type: button
@@ -155,7 +149,7 @@ cards:
     cards:
       - type: markdown
         content: >
-          ### Automations on\off:
+          ### <center>Automations on\off</center>
       - type: entities
         show_header_toggle: false
         entities:
@@ -200,7 +194,7 @@ cards:
     cards:
       - type: markdown
         content: >
-          ### Разное:
+          ### <center>Разное</center>
       - type: entities
         show_header_toggle: false
         entities:
@@ -218,7 +212,7 @@ cards:
             name: Розетка TP-Link SmartPlug 02
       - type: markdown
         content: >
-          ### Недоступные розетки:
+          ### <center>Недоступные розетки</center>
       - type: entity-filter
         card:
           show_header_toggle: false
@@ -236,7 +230,7 @@ cards:
         cards:
           - type: markdown
             content: >
-              ### Недоступные лампы:
+              ### <center>Недоступные лампы</center>
           - type: entity-filter
             entities:
               - entity: sensor.lamp_status_detskaia

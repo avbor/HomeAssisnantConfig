@@ -8,7 +8,7 @@ cards:
     cards:
       - type: markdown
         content: >
-          ### Прихожая и коридор:
+          ### <center>Прихожая и коридор</center>
       - type: horizontal-stack
         cards:
           - type: conditional
@@ -35,7 +35,7 @@ cards:
     cards:
       - type: markdown
         content: >
-          ### Детская:
+          ### <center>Детская</center>
       - type: vertical-stack
         cards:
           - type: horizontal-stack
@@ -61,22 +61,22 @@ cards:
           - type: entities
             entities:
               - entity: automation.sunrise_lighting_nursery
-                name: "Включать свет (рабочие дни):"
+                name: "Включать свет (рабочие дни)"
                 icon: mdi:weather-sunset-up
               - entity: input_datetime.sunrise_in_nursery
-                name: "Время включения:"
+                name: "Время включения"
               - entity: automation.wakeup_radio_childrens
-                name: "Включать радио (рабочие дни):"
+                name: "Включать радио (рабочие дни)"
                 icon: mdi:radio
               - entity: input_datetime.wakeup_radio_in_nursery
-                name: "Время включения радио:"
+                name: "Время включения радио"
 
   # Гостиная
   - type: vertical-stack
     cards:
       - type: markdown
         content: >
-          ### Гостиная:
+          ### <center>Гостиная</center>
       - type: horizontal-stack
         cards:
           - type: conditional
@@ -136,7 +136,7 @@ cards:
     cards:
       - type: markdown
         content: >
-          ### Кухня:
+          ### <center>Кухня</center>
       - type: conditional
         conditions:
           - entity: light.sonoff_1000b72483
@@ -178,7 +178,7 @@ cards:
     cards:
       - type: markdown
         content: >
-          ### Спальня:
+          ### <center>Спальня</center>
       - type: conditional
         conditions:
           - entity: light.spalnia_stol
@@ -193,17 +193,17 @@ cards:
             - type: entities
               entities:
                 - entity: automation.sunrise_lighting_bedroom
-                  name: "Включать свет (рабочие дни):"
+                  name: "Включать свет (рабочие дни)"
                   icon: mdi:weather-sunset-up
                 - entity: input_datetime.sunrise_in_bedroom
-                  name: "Время включения:"
+                  name: "Время включения"
 
   # Кладовая
   - type: vertical-stack
     cards:
       - type: markdown
         content: >
-          ### Кладовая:
+          ### <center>Кладовая</center>
       - type: conditional
         conditions:
           - entity: light.sonoff_1000b6831b
@@ -218,7 +218,7 @@ cards:
     cards:
       - type: markdown
         content: >
-          ### Разное:
+          ### <center>Разное</center>
       - type: button
         entity: group.all_lamps
         name: Выключить весь свет

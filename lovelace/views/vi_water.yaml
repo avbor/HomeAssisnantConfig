@@ -6,7 +6,7 @@ cards:
     cards:
       - type: markdown
         content: >
-          ### Управление кранами:
+          ### <center>Управление кранами</center>
       - type: horizontal-stack
         cards:
           - type: button
@@ -47,7 +47,7 @@ cards:
     cards:
       - type: markdown
         content: >
-          ### Датчики протечки:
+          ### <center>Датчики протечки</center>
       - type: markdown
         content: >
           #### Neptun

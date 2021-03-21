@@ -88,11 +88,14 @@
           {{ state.entity_id }}{%- if not loop.last -%}, {%- endif -%}
           {%- endfor %}
 
-#- alias: "Disable Things on Shutdown HA"
-#  trigger:
-#    platform: homeassistant
-#    event: shutdown
-#  action:
-#    - service: automation.turn_off
-#      data:
-#        entity_id: automation.device_needs_attention
+- alias: "Mirror Notifications from Android's to Telegram"
+  trigger:
+    - platform: state
+      entity_id:
+        - sensor.kb2003_poslednee_uvedomlenie
+        - sensor.mi_8_poslednee_uvedomlenie
+  action:
+    - service: notify.telegram_stall
+      data:
+        message: >-
+          {{ trigger.to_state.state }}
