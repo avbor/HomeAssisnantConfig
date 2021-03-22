@@ -75,6 +75,9 @@ Some **screenshots** from my HA can be found [here](docs/screenshots.md).
   - Tuya SmartIR Remote (UFO-R1 and similar) flashed to [ESPHome](https://esphome.io/)\
   Integration "ESPHome"
 
+  - Analog intercom integrated via [custom board](https://github.com/Anonym-tsk/smart-domofon/tree/master/ge1mer) based on ESP8266\
+  Integration "ESPHome"
+
   - Xiaomi Xiao AI Smart Alarm Clock (AI01ZM, zimi.clock.myk01)\
   Not used in HA
 
