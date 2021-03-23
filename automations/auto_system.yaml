@@ -97,5 +97,6 @@
   action:
     - service: notify.telegram_stall
       data:
-        message: >-
+        message: |
+          {{ trigger.to_state.attributes.package }}
           {{ trigger.to_state.state }}

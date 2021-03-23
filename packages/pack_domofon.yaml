@@ -83,6 +83,8 @@ domofon_pack:
       trigger:
         - platform: state
           entity_id: binary_sensor.domofon_status
+          for:
+            seconds: 5
       action:
         - service: notify.telegram_stall
           data:
@@ -93,3 +95,57 @@ domofon_pack:
               {% elif trigger.to_state.state == 'on' -%}
                 Домофон: восстановлено подключение к HA
               {% endif %}
+
+    - alias: Domofon - Open Once for Delivery Boys
+      trigger:
+        - platform: state
+          entity_id:
+            - sensor.kb2003_poslednee_uvedomlenie
+            - sensor.mi_8_poslednee_uvedomlenie
+      condition:
+        - condition: template
+          value_template: >-
+            {{ trigger.to_state.state | regex_search('Курьер .* будет у вас в течение .*') }}
+      action:
+        - service: switch.turn_on
+          data:
+            entity_id: switch.domofon_automatically_open_once
+        - service: switch.turn_on
+          data:
+            entity_id: switch.domofon_mute_sound_once
+        - service: notify.telegram_stall
+          data:
+            message: "Курьер уже в пути, для домофона включен режим однократного авто-открытия."
+
+    - alias: Domofon - Open Once at Enter to Home Zone
+      trigger: 
+        - platform: zone
+          entity_id:
+            - person.alexander
+            - person.irina
+          zone: zone.domofon
+          event: enter
+      action:
+        - service: switch.turn_on
+          data:
+            entity_id: switch.domofon_automatically_open_once
+        - service: switch.turn_on
+          data:
+            entity_id: switch.domofon_mute_sound_once
+        - service: notify.telegram_stall
+          data:
+            message: "_Домофон_: включен режим однократного авто-открытия."
+        - delay: "00:10:00"
+        - choose:
+          - conditions: >-
+              {{ is_state('switch.domofon_automatically_open_once', 'on') }}
+            sequence:
+              - service: switch.turn_off
+                data:
+                  entity_id: switch.domofon_automatically_open_once
+              - service: switch.turn_off
+                data:
+                  entity_id: switch.domofon_mute_sound_once
+              - service: notify.telegram_stall
+                data:
+                  message: "_Домофон_: отключен режим однократного авто-открытия."

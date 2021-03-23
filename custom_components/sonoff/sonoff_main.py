@@ -6,6 +6,7 @@ import time
 from typing import Optional, List, Callable
 
 from aiohttp import ClientSession
+from homeassistant.const import ATTR_BATTERY_LEVEL
 
 from .sonoff_cloud import EWeLinkCloud
 from .sonoff_local import EWeLinkLocal
@@ -13,7 +14,7 @@ from .sonoff_local import EWeLinkLocal
 _LOGGER = logging.getLogger(__name__)
 
 ATTRS = ('local', 'cloud', 'rssi', 'humidity', 'temperature', 'power',
-         'current', 'voltage', 'battery', 'consumption', 'water')
+         'current', 'voltage', 'consumption', 'water', ATTR_BATTERY_LEVEL)
 
 
 def load_cache(filename: str):
@@ -70,9 +71,15 @@ class EWeLinkRegistry:
 
         # skip update with same sequence (from cloud and local or from local)
         if sequence:
-            if device.get('seq') == sequence:
+            sequence = int(sequence)
+            ts = time.time()
+            # skip same and lower sequence in last 10 seconds
+            if ('seq' in device and ts - device['seq_ts'] < 10 and
+                    sequence <= device['seq']):
+                _LOGGER.debug("Skip update with same sequence")
                 return
             device['seq'] = sequence
+            device['seq_ts'] = ts
 
         # check when cloud offline first time
         if state.get('cloud') == 'offline' and device.get('host'):
