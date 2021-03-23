@@ -96,7 +96,7 @@ domofon_pack:
                 Домофон: восстановлено подключение к HA
               {% endif %}
 
-    - alias: Domofon - Open Once for Delivery Boys
+    - alias: Domofon - Open Once for Couriers
       trigger:
         - platform: state
           entity_id:
@@ -110,9 +110,6 @@ domofon_pack:
         - service: switch.turn_on
           data:
             entity_id: switch.domofon_automatically_open_once
-        - service: switch.turn_on
-          data:
-            entity_id: switch.domofon_mute_sound_once
         - service: notify.telegram_stall
           data:
             message: "Курьер уже в пути, для домофона включен режим однократного авто-открытия."
