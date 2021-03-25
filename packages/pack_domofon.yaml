@@ -132,7 +132,11 @@ domofon_pack:
         - service: notify.telegram_stall
           data:
             message: "_Домофон_: включен режим однократного авто-открытия."
-        - delay: "00:10:00"
+        - wait_for_trigger:
+          - platform: state
+            entity_id: binary_sensor.0x158d00031c790f_contact
+            to: 'on'
+          timeout: "00:10:00"
         - choose:
           - conditions: >-
               {{ is_state('switch.domofon_automatically_open_once', 'on') }}
