@@ -89,6 +89,7 @@ recorder:
       - sensor.*_zigbee
       - sensor.*_ble
       - sensor.keenetic_gateway_*
+      - sensor.*_poslednee_uvedomlenie
     entities:
       - sensor.time
       - sensor.date
