@@ -148,9 +148,11 @@
         level: ERROR
   condition:
     - condition: template
-      value_template: "{{ 'Error while executing automation' in trigger.event.data.message or 'Error executing script' in trigger.event.data.message }}"
+      value_template: >-
+        {{ 'Error while executing automation' in trigger.event.data.message or 'Error executing script' in trigger.event.data.message }}
     - condition: template
-      value_template: "{{ not 'automation.system_automation_error' in trigger.event.data.message }}"
+      value_template: >-
+        {{ not 'automation.system_automation_error' in trigger.event.data.message }}
   action:
     - service: notify.telegram_stall
       data_template:
