@@ -20,10 +20,6 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
     gw.add_setup('remote', setup)
 
 
-async def async_unload_entry(hass, entry):
-    return True
-
-
 class Gateway3Entity(XiaomiEntity, ToggleEntity):
     async def async_added_to_hass(self):
         await super().async_added_to_hass()
@@ -97,7 +93,7 @@ class Gateway3Entity(XiaomiEntity, ToggleEntity):
                 self.gw.pair_model = (model[:-3] if model.endswith('.v1')
                                       else model)
                 self.turn_on()
-            elif cmd in ('reboot', 'ftp'):
+            elif cmd in ('reboot', 'ftp', 'dump'):
                 self.gw.send_telnet(cmd)
             elif cmd == 'power':
                 self.gw.send(self.device, {'power_tx': int(args[1])})

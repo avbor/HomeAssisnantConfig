@@ -32,6 +32,8 @@ RE_VERSION = re.compile(r'version=([0-9._]+)')
 
 FIRMWARE_PATHS = ('/data/firmware.bin', '/data/firmware/firmware_ota.bin')
 
+TAR_DATA = b"tar -czOC /data basic_app basic_gw conf factory miio mijia_automation silicon_zigbee_host zigbee zigbee_gw ble_info miioconfig.db 2>/dev/null | base64\n"
+
 BT_MD5 = {
     '1.4.6_0012': '367bf0045d00c28f6bff8d4132b883de',
     '1.4.6_0043': 'c4fa99797438f21d0ae4a6c855b720d2',
@@ -45,7 +47,8 @@ class TelnetShell(Telnet):
         super().__init__(host, timeout=3)
 
         self.read_until(b"login: ")
-        self.write(b"admin\r\n")
+        # some users have problems with \r\n symbols in login
+        self.write(b"admin\n")
 
         raw = self.read_until(b"\r\n# ", timeout=3)
         if b'Password:' in raw:
@@ -55,7 +58,7 @@ class TelnetShell(Telnet):
 
     def exec(self, command: str, as_bytes=False) -> Union[str, bytes]:
         """Run command and return it result."""
-        self.write(command.encode() + b"\r\n")
+        self.write(command.encode() + b"\n")
         raw = self.read_until(b"\r\n# ")
         return raw if as_bytes else raw.decode()
 
@@ -118,7 +121,7 @@ class TelnetShell(Telnet):
 
     def sniff_bluetooth(self):
         """Deprecated"""
-        self.write(b"killall silabs_ncp_bt; silabs_ncp_bt /dev/ttyS1 1\r\n")
+        self.write(b"killall silabs_ncp_bt; silabs_ncp_bt /dev/ttyS1 1\n")
 
     def run_public_mosquitto(self):
         self.exec("killall mosquitto")
@@ -162,14 +165,20 @@ class TelnetShell(Telnet):
 
     def read_file(self, filename: str, as_base64=False):
         if as_base64:
-            self.write(f"cat {filename} | base64\r\n".encode())
+            self.write(f"cat {filename} | base64\n".encode())
             self.read_until(b"\r\n")  # skip command
             raw = self.read_until(b"# ")
             return base64.b64decode(raw)
         else:
-            self.write(f"cat {filename}\r\n".encode())
+            self.write(f"cat {filename}\n".encode())
             self.read_until(b"\r\n")  # skip command
             return self.read_until(b"# ")[:-2]
+
+    def tar_data(self):
+        self.write(TAR_DATA)
+        self.read_until(b"base64\r\n")  # skip command
+        raw = self.read_until(b"# ", timeout=30)
+        return base64.b64decode(raw)
 
     def run_buzzer(self):
         self.exec("kill $(ps | grep dummy:basic_gw | awk '{print $1}')")

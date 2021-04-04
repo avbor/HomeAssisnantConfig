@@ -23,10 +23,6 @@ async def async_setup_entry(hass, config_entry, async_add_entities):
     gw.add_setup('switch', setup)
 
 
-async def async_unload_entry(hass, entry):
-    return True
-
-
 class XiaomiZigbeeSwitch(XiaomiEntity, ToggleEntity):
     @property
     def is_on(self):
@@ -72,10 +68,13 @@ class XiaomiMeshSwitch(XiaomiEntity, ToggleEntity):
             self.gw.mesh_force_update()
             return
 
-        self.device['online'] = True
-
         if self.attr in data:
-            self._state = bool(data[self.attr])
+            # handle main attribute as online state
+            if data[self.attr] is not None:
+                self._state = bool(data[self.attr])
+                self.device['online'] = True
+            else:
+                self.device['online'] = False
 
         self.schedule_update_ha_state()
 

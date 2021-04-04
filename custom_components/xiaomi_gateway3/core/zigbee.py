@@ -275,7 +275,7 @@ DEVICES = [{
     'lumi.sen_ill.mgl01': ["Xiaomi", "Light Sensor", "GZCGQ01LM"],
     'mi_spec': [
         ['2.1', '2.1', 'illuminance', 'sensor'],
-        ['3.1', '3.1', 'votage', 'sensor'],
+        ['3.1', '3.1', 'battery', 'sensor'],
     ]
 }, {
     'lumi.sensor_smoke': ["Honeywell", "Smoke Sensor", "JTYJ-GD-01LM/BW"],
@@ -353,7 +353,17 @@ DEVICES = [{
     'lumi.motion.agl04': ["Aqara", "Precision Motion Sensor", "RTCGQ13LM"],
     'mi_spec': [
         ['4.1', None, 'motion', 'binary_sensor'],
-        ['3.1', '3.1', 'voltage', 'sensor'],
+        ['3.1', '3.1', 'battery', 'sensor'],
+    ]
+}, {
+    'lumi.airmonitor.acn01': ["Aqara", "TVOC Air Quality Monitor",
+                              "VOCKQJK11LM"],
+    'mi_spec': [
+        ['3.1', '3.1', 'temperature', 'sensor'],
+        ['3.2', '3.2', 'humidity', 'sensor'],
+        ['3.3', '3.3', 'tvoc', 'sensor'],
+        ['4.1', '4.1', 'tvoc_level', 'binary_sensor'],
+        ['4.2', '4.2', 'battery', 'sensor'],
     ]
 }]
 
@@ -436,14 +446,16 @@ def get_device(zigbee_model: str) -> Optional[dict]:
     return {
         'device_name': 'Zigbee',
         'device_mode': zigbee_model,
-        'params': []
+        'params': [],
+        'mi_spec': []
     }
 
 
-def fix_xiaomi_props(params) -> dict:
+def fix_xiaomi_props(model, params) -> dict:
     for k, v in params.items():
         if k in ('temperature', 'humidity', 'pressure'):
-            params[k] = v / 100.0
+            if model != 'lumi.airmonitor.acn01':
+                params[k] = v / 100.0
         elif v in ('on', 'open'):
             params[k] = 1
         elif v in ('off', 'close'):

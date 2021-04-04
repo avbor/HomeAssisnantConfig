@@ -88,15 +88,15 @@
           {{ state.entity_id }}{%- if not loop.last -%}, {%- endif -%}
           {%- endfor %}
 
-- alias: "Mirror Notifications from Android's to Telegram"
-  trigger:
-    - platform: state
-      entity_id:
-        - sensor.kb2003_poslednee_uvedomlenie
-        - sensor.mi_8_poslednee_uvedomlenie
-  action:
-    - service: notify.telegram_stall
-      data:
-        message: |
-          {{ trigger.to_state.attributes.package }}
-          {{ trigger.to_state.state }}
+#- alias: "Mirror Notifications from Android's to Telegram"
+#  trigger:
+#    - platform: state
+#      entity_id:
+#        - sensor.kb2003_poslednee_uvedomlenie
+#        - sensor.mi_8_poslednee_uvedomlenie
+#  action:
+#    - service: notify.telegram_stall
+#      data:
+#        message: |
+#          {{ trigger.to_state.attributes.package }}
+#          {{ trigger.to_state.state }}

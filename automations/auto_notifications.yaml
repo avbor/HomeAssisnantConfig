@@ -4,6 +4,7 @@
 
 - alias: "Home Presence Alert"
   initial_state: true
+  mode: parallel
   trigger:
     platform: state
     entity_id: person.alexander, person.irina, person.galina, person.tatiana, person.olga
