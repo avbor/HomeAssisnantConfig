@@ -23,22 +23,18 @@ from homeassistant.const import (
     DEVICE_CLASS_PRESSURE,
     DEVICE_CLASS_TEMPERATURE,
     LENGTH_MILLIMETERS,
+    PERCENTAGE,
     PRESSURE_HPA,
     SPEED_METERS_PER_SECOND,
     TEMP_CELSIUS,
 )
 
-try:
-    from homeassistant.const import PERCENTAGE
-except ImportError:  # pragma: no cover
-    from homeassistant.const import UNIT_PERCENTAGE as PERCENTAGE
-
 # Base component constants
 NAME = "Gismeteo"
 DOMAIN = "gismeteo"
-VERSION = "2.1.1"
+VERSION = "2.2.0"
 ATTRIBUTION = "Data provided by Gismeteo"
-ISSUE_URL = "https://github.com/Limych/ha-blueprint/issues"
+ISSUE_URL = "https://github.com/Limych/ha-gismeteo/issues"
 
 STARTUP_MESSAGE = f"""
 -------------------------------------------------------------------
@@ -92,16 +88,6 @@ ATTR_FORECAST_PHENOMENON = ATTR_WEATHER_PHENOMENON
 
 ENDPOINT_URL = "https://services.gismeteo.ru/inform-service/inf_chrome"
 
-STARTUP_MESSAGE = f"""
--------------------------------------------------------------------
-{NAME}
-Version: {VERSION}
-This is a custom integration!
-If you have ANY issues with this you need to open an issue here:
-{ISSUE_URL}
--------------------------------------------------------------------
-"""
-
 UPDATE_INTERVAL = timedelta(minutes=5)
 
 CONDITION_FOG_CLASSES = [
@@ -127,45 +113,18 @@ CONDITION_FOG_CLASSES = [
     135,
     528,
 ]
-
-
-ENDPOINT_URL = "https://services.gismeteo.ru/inform-service/inf_chrome"
 
 MMHG2HPA = 1.333223684
 MS2KMH = 3.6
 
-UPDATE_INTERVAL = timedelta(minutes=5)
-
-CONDITION_FOG_CLASSES = [
-    11,
-    12,
-    28,
-    40,
-    41,
-    42,
-    43,
-    44,
-    45,
-    46,
-    47,
-    48,
-    49,
-    120,
-    130,
-    131,
-    132,
-    133,
-    134,
-    135,
-    528,
-]
-
 PRECIPITATION_AMOUNT = (0, 2, 6, 16)
+
+DEVICE_CLASS_TPL = DOMAIN + "__{}"
 
 SENSOR_TYPES = {
     "weather": {},  # => condition
     "condition": {
-        ATTR_DEVICE_CLASS: None,
+        ATTR_DEVICE_CLASS: DEVICE_CLASS_TPL.format("condition"),
         ATTR_ICON: None,
         ATTR_NAME: "Condition",
         ATTR_UNIT_OF_MEASUREMENT: None,
@@ -187,6 +146,12 @@ SENSOR_TYPES = {
         ATTR_ICON: None,
         ATTR_NAME: "Pressure",
         ATTR_UNIT_OF_MEASUREMENT: PRESSURE_HPA,
+    },
+    "pressure_mmhg": {
+        ATTR_DEVICE_CLASS: DEVICE_CLASS_PRESSURE,
+        ATTR_ICON: None,
+        ATTR_NAME: "Pressure mmHg",
+        ATTR_UNIT_OF_MEASUREMENT: "mmHg",
     },
     "wind_speed": {
         ATTR_DEVICE_CLASS: None,
@@ -238,9 +203,9 @@ SENSOR_TYPES = {
     },
 }
 FORECAST_SENSOR_TYPE = {
-    ATTR_DEVICE_CLASS: None,
+    ATTR_DEVICE_CLASS: DEVICE_CLASS_TPL.format("condition"),
     ATTR_ICON: None,
-    ATTR_NAME: "Forecast",
+    ATTR_NAME: "3h Forecast",
     ATTR_UNIT_OF_MEASUREMENT: None,
 }
 

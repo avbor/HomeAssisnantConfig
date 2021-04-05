@@ -16,18 +16,19 @@ import voluptuous as vol
 from aiohttp import ClientConnectorError, ClientError
 from async_timeout import timeout
 from homeassistant import config_entries
-from homeassistant.components.sensor import DOMAIN as SENSOR_DOMAIN
-from homeassistant.components.weather import DOMAIN as WEATHER_DOMAIN
-from homeassistant.const import CONF_LATITUDE, CONF_LONGITUDE, CONF_MODE, CONF_NAME
+from homeassistant.config_entries import SOURCE_IMPORT
+from homeassistant.const import (
+    CONF_LATITUDE,
+    CONF_LONGITUDE,
+    CONF_MODE,
+    CONF_NAME,
+    CONF_PLATFORM,
+)
+from homeassistant.core import callback
 
 from . import DOMAIN, get_gismeteo  # pylint: disable=unused-import
 from .api import ApiError
-from .const import (
-    CONF_FORECAST,
-    CONF_PLATFORMS,
-    FORECAST_MODE_DAILY,
-    FORECAST_MODE_HOURLY,
-)
+from .const import CONF_FORECAST, FORECAST_MODE_DAILY, FORECAST_MODE_HOURLY, PLATFORMS
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -38,6 +39,10 @@ class GismeteoFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
     VERSION = 1
     CONNECTION_CLASS = config_entries.CONN_CLASS_CLOUD_POLL
 
+    def __init__(self):
+        """Init config flow."""
+        self._errors = {}
+
     async def async_step_import(self, platform_config):
         """Import a config entry.
 
@@ -45,27 +50,25 @@ class GismeteoFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         Instead, we're going to rely on the values that are in config file.
         """
         if self._async_current_entries():
-            return self.async_abort(reason="single_instance_allowed")
+            return self.async_abort(reason="no_mixed_config")
 
         return self.async_create_entry(title="configuration.yaml", data=platform_config)
 
     async def async_step_user(self, user_input=None):
         """Handle a flow initialized by the user."""
-        if self._async_current_entries():
-            return self.async_abort(reason="single_instance_allowed")
+        for entry in self._async_current_entries():
+            if entry.source == SOURCE_IMPORT:
+                return self.async_abort(reason="no_mixed_config")
 
-        errors = {}
+        self._errors = {}
 
         if user_input is not None:
-            platforms = user_input.get(CONF_PLATFORMS, [SENSOR_DOMAIN, WEATHER_DOMAIN])
-            user_input[CONF_PLATFORMS] = platforms
-
             try:
                 async with timeout(10):
                     gismeteo = get_gismeteo(self.hass, user_input)
                     await gismeteo.async_update()
             except (ApiError, ClientConnectorError, asyncio.TimeoutError, ClientError):
-                errors["base"] = "cannot_connect"
+                self._errors["base"] = "cannot_connect"
             else:
                 await self.async_set_unique_id(
                     gismeteo.unique_id, raise_on_progress=False
@@ -75,27 +78,80 @@ class GismeteoFlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                     title=user_input[CONF_NAME], data=user_input
                 )
 
+        return self._show_config_form(user_input)
+
+    def _show_config_form(self, config):
+        if config is None:
+            config = {}
         return self.async_show_form(
             step_id="user",
             data_schema=vol.Schema(
                 {
                     vol.Optional(
-                        CONF_LATITUDE, default=self.hass.config.latitude
-                    ): cv.latitude,
-                    vol.Optional(
-                        CONF_LONGITUDE, default=self.hass.config.longitude
-                    ): cv.longitude,
-                    vol.Optional(
-                        CONF_NAME, default=self.hass.config.location_name
+                        CONF_NAME,
+                        default=config.get(CONF_NAME, self.hass.config.location_name),
                     ): str,
                     vol.Optional(
-                        CONF_FORECAST,
-                        default=self.hass.config.get(CONF_FORECAST, False),
-                    ): bool,
-                    vol.Optional(CONF_MODE, default=FORECAST_MODE_HOURLY): vol.In(
-                        [FORECAST_MODE_HOURLY, FORECAST_MODE_DAILY]
-                    ),
+                        CONF_LATITUDE,
+                        default=config.get(CONF_LATITUDE, self.hass.config.latitude),
+                    ): cv.latitude,
+                    vol.Optional(
+                        CONF_LONGITUDE,
+                        default=config.get(CONF_LONGITUDE, self.hass.config.longitude),
+                    ): cv.longitude,
                 }
             ),
-            errors=errors,
+            errors=self._errors,
+        )
+
+    @staticmethod
+    @callback
+    def async_get_options_flow(config_entry):
+        """Get component options flow."""
+        return GismeteoOptionsFlowHandler(config_entry)
+
+
+class GismeteoOptionsFlowHandler(config_entries.OptionsFlow):
+    """Gismeteo config flow options handler."""
+
+    def __init__(self, config_entry):
+        """Initialize HACS options flow."""
+        self.config_entry = config_entry
+        self.options = dict(config_entry.options)
+
+    async def async_step_init(self, user_input=None):  # pylint: disable=unused-argument
+        """Manage the options."""
+        return await self.async_step_user()
+
+    async def async_step_user(self, user_input=None):
+        """Handle a flow initialized by the user."""
+        if user_input is not None:
+            self.options.update(user_input)
+            return await self._update_options()
+
+        schema = {
+            vol.Required(
+                f"{CONF_PLATFORM}_{x}",
+                default=self.options.get(f"{CONF_PLATFORM}_{x}", True),
+            ): bool
+            for x in sorted(PLATFORMS)
+        }
+        schema.update(
+            {
+                vol.Required(
+                    CONF_MODE,
+                    default=self.options.get(CONF_MODE, FORECAST_MODE_HOURLY),
+                ): vol.In([FORECAST_MODE_HOURLY, FORECAST_MODE_DAILY]),
+                vol.Required(
+                    CONF_FORECAST,
+                    default=self.options.get(CONF_FORECAST, False),
+                ): bool,
+            }
+        )
+        return self.async_show_form(step_id="user", data_schema=vol.Schema(schema))
+
+    async def _update_options(self):
+        """Update config entry options."""
+        return self.async_create_entry(
+            title=self.config_entry.data.get(CONF_NAME), data=self.options
         )
