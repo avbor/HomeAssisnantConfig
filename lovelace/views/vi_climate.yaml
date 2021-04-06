@@ -20,10 +20,12 @@ cards:
             graph: line
       - type: "custom:simple-thermostat"
         entity: climate.daikin_nursery
-        show_header: false
+        header: false
         decimals: 0
-        step_layout: row
-        step_size: 1
+        layout:
+          step: row
+          mode:
+            names: false
         hide:
           temperature: true
         sensors:
@@ -88,10 +90,12 @@ cards:
             graph: line
       - type: "custom:simple-thermostat"
         entity: climate.daikin_livingroom
-        show_header: false
+        header: false
         decimals: 0
-        step_layout: row
-        step_size: 1
+        layout:
+          step: row
+          mode:
+            names: false
         hide:
           temperature: true
         sensors:
@@ -127,10 +131,12 @@ cards:
             graph: line
       - type: "custom:simple-thermostat"
         entity: climate.daikin_bedroom
-        show_header: false
+        header: false
         decimals: 0
-        step_layout: row
-        step_size: 1
+        layout:
+          step: row
+          mode:
+            names: false
         hide:
           temperature: true
         sensors:
