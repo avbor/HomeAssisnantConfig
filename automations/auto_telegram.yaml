@@ -57,7 +57,7 @@
         Pong! _{{ now().strftime("%d.%m.%Y %H:%M:%S") }}_
         Current version: {{ states('sensor.current_version') }}
         DB Size: {{ states('sensor.hass_db_size') }} {{ state_attr('sensor.hass_db_size','unit_of_measurement') }}
-        Uptime: {{ states('sensor.ha_uptime') }}
+        Uptime: {{ states('sensor.ha_uptime') }} min.
 # ---- /whoishome
 - alias: 'Telegram Bot - Who is home?'
   trigger:
