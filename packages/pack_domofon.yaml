@@ -6,7 +6,7 @@ domofon_pack:
 
   automation:
 
-    - alias: Domofon - Opened by Bbutton Notification
+    - alias: Domofon - Opened by Button Notification
       initial_state: true
       trigger:
         platform: state
