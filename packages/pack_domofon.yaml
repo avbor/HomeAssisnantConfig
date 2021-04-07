@@ -103,9 +103,14 @@ domofon_pack:
             - sensor.kb2003_poslednee_uvedomlenie
             - sensor.mi_8_poslednee_uvedomlenie
       condition:
-        - condition: template
-          value_template: >-
-            {{ trigger.to_state.state | regex_search('Курьер .* будет у вас в течение .*') }}
+        condition: or
+        conditions:
+          - condition: template
+            value_template: >-
+              {{ trigger.to_state.state | regex_search('Курьер .* будет у вас в течение .*') }}
+          - condition: template
+            value_template: >-
+              {{ trigger.to_state.state | regex_search('Уже спешит к вам') }}
       action:
         - service: switch.turn_on
           data:
