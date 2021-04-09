@@ -157,6 +157,7 @@ humidifiers_pack:
     ### Common
 
     - alias: "Smartmi Humidifier - Заданчивается вода"
+      id: 992f84be-ee32-497c-833f-7ddc8eb574a4
       initial_state: true
       trigger:
         platform: numeric_state
@@ -178,6 +179,7 @@ humidifiers_pack:
               {% endif -%}
 
     - alias: "Smartmi Humidifier - Выключение по остатку воды"
+      id: 41f9fd8c-50e9-43d3-8f1a-777705683f72
       initial_state: true
       trigger:
         platform: numeric_state
@@ -209,6 +211,7 @@ humidifiers_pack:
     ### Smartmi Humidifier 01 - Детская #############
 
     - alias: "Smartmi Humidifier 01 - Выбор скорости"
+      id: dd7a9cd6-0161-4af7-9dce-3359e27dfb7c
       trigger:
         platform: state
         entity_id: input_select.smartmi_humidifier_01_speed
@@ -219,6 +222,7 @@ humidifiers_pack:
           fan_speed: "{{ trigger.to_state.state }}"
 
     - alias: "Увлажнение детской - Старт [время]"
+      id: cb8d8af5-8a41-4ed8-a1c1-05b4a823fcdd
       trigger:
         platform: time
         at: "20:00:00"
@@ -237,6 +241,7 @@ humidifiers_pack:
         entity_id: fan.smartmi_humidifier_01_detskaia
 
     - alias: "Увлажнение детской - Стоп [время]"
+      id: e2a3cd54-5f73-4e8c-b110-483c2f6be654
       trigger:
         platform: time
         at: "07:00:00"
@@ -252,6 +257,7 @@ humidifiers_pack:
         entity_id: fan.smartmi_humidifier_01_detskaia
 
     - alias: "Увлажнение детской - Старт [Влажность]"
+      id: c948d3e9-40c8-48f8-a8d8-dba65319d61b
       trigger:
         platform: state
         entity_id:
@@ -280,6 +286,7 @@ humidifiers_pack:
               В *Детской* включен увлажнитель, текущая влажность {{ states('sensor.0x158d0003931aec_humidity') }}%
 
     - alias: "Увлажнение спальни - Стоп [Влажность]"
+      id: ce34b5e0-d1d9-45b0-8a66-65eb392383ec
       trigger:
         platform: state
         entity_id:
@@ -307,6 +314,7 @@ humidifiers_pack:
     ### Smartmi Humidifier 02 - Спальня #############
 
     - alias: "Smartmi Humidifier 02 - Выбор скорости"
+      id: 23a943a3-9594-4392-bdb4-468eccc9a50b
       trigger:
         platform: state
         entity_id: input_select.smartmi_humidifier_02_speed
@@ -317,6 +325,7 @@ humidifiers_pack:
           fan_speed: "{{ trigger.to_state.state }}"
 
     - alias: "Увлажнение спальни - Старт [Влажность]"
+      id: a9f8c4d8-7b10-4128-8411-1aa68a330760
       trigger:
         platform: state
         entity_id:
@@ -345,6 +354,7 @@ humidifiers_pack:
               В *Спальне* включен увлажнитель, текущая влажность {{ states('sensor.0x158d0003931b0e_humidity') }}%
 
     - alias: "Увлажнение спальни - Стоп [Влажность]"
+      id: ec2f9de0-dacb-4a84-b0c9-0b5eb8e2b4f9
       trigger:
         platform: state
         entity_id:

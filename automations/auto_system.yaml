@@ -27,6 +27,7 @@
 #        notification_id: config_entry_discovery
 
 - alias: "HASSIO: Create Snapshot [notify to stall]"
+  id: 03e8310d-cabf-4988-896b-f4a9a3f2f723
   initial_state: true
   trigger:
     - platform: time
@@ -46,6 +47,7 @@
         message: _INFO:_ Создан еженедельный бэкап HASSIO
 
 - alias: "HASS: ERRORs in System Log - Counter"
+  id: 3b8230a5-49d5-437b-8bd9-d3f72f95425f
   trigger:
     platform: event
     event_type: system_log_event
@@ -58,6 +60,7 @@
       entity_id: counter.syslog_errors
 
 - alias: "HASS: WARNINGs in System Log - Counter"
+  id: acdf3489-b611-445c-bd24-2efc9c431124
   trigger:
     platform: event
     event_type: system_log_event
@@ -70,6 +73,7 @@
       entity_id: counter.syslog_warnings
 
 - alias: "HASS: Create Group of Battery Devices"
+  id: 823d8378-6723-4e71-93ce-29c59946347a
   trigger:
     - platform: homeassistant
       event: start

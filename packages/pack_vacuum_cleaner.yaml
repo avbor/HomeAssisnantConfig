@@ -233,6 +233,7 @@ vacuum_cleaner:
 # Automations
   automation:
     - alias: 'Оповещение о начале уборки [notify to stall]'
+      id: 61fb954b-3450-4fc6-9848-cc5304b54a16
       initial_state: true
       trigger:
         platform: state
@@ -247,6 +248,7 @@ vacuum_cleaner:
               - 'Остановить:/vacuum_stop, На базу:/vacuum_go_home'
 
     - alias: 'Оповещение о возращении пылесоса на базу [notify to stall]'
+      id: 68311ec4-1030-4d7d-a2ea-e9cb21f7f40c
       initial_state: true
       trigger:
         platform: state
@@ -262,6 +264,7 @@ vacuum_cleaner:
             message: "Mi Robot вернулся на базу (закончил уборку)."
 
     - alias: 'Оповещение о забытом пылесосе [notify to stall]'
+      id: db76ec80-b5d6-4991-8a6c-9272b25c1a39
       initial_state: true
       trigger:
         platform: state
@@ -278,6 +281,7 @@ vacuum_cleaner:
             entity_id: vacuum.xiaomi_vacuum_cleaner
 
     - alias: 'Оповещение об ошибке [notify to stall]'
+      id: fe6bb5c1-f886-4161-bad7-4bf04be83258
       initial_state: true
       trigger:
         platform: state
@@ -291,6 +295,7 @@ vacuum_cleaner:
               {{ state_attr('vacuum.xiaomi_vacuum_cleaner', "error") }}
 
     - alias: 'Ежедневная уборка по будням [утро]'
+      id: 67acac52-bf44-4661-9140-2e40f0006175
       initial_state: true
       trigger:
         platform: state
@@ -322,6 +327,7 @@ vacuum_cleaner:
             entity_id: vacuum.xiaomi_vacuum_cleaner
 
     - alias: 'Регулярная уборка прихожей'
+      id: 6c64060c-0a65-4caf-8064-1d5cdfea50a3
       initial_state: true
       trigger:
         platform: state
@@ -350,6 +356,7 @@ vacuum_cleaner:
             entity_id: script.start_vacuum_hallway_by_door_sensor
 
     - alias: 'Set cleaning mode'
+      id: 8fef5cc1-030e-4549-91b4-ffe25207672c
       trigger:
         platform: state
         entity_id: input_select.vacuum_power
@@ -368,6 +375,7 @@ vacuum_cleaner:
             {% endif %}
 
     - alias: 'Vacuum - Telegram Control - Stop'
+      id: 78e4ee4f-d0d7-4d23-9e3c-4ec125f19400
       trigger:
         platform: event
         event_type: telegram_callback
@@ -382,6 +390,7 @@ vacuum_cleaner:
             message: 'Команда отправлена'
 
     - alias: 'Vacuum - Telegram Control - Go to Base'
+      id: 0b1fd434-4044-4ce7-ab8a-262d6250407a
       trigger:
         platform: event
         event_type: telegram_callback

@@ -93,6 +93,7 @@ ha_radio:
   automation:
 
     - alias: "Radio - Selected Name to URL"
+      id: 113d01d2-80b9-4a5e-9745-ad34cb66ea4d
       trigger:
         - platform: homeassistant
           event: start
@@ -124,6 +125,7 @@ ha_radio:
               {% endif %}
 
     - alias: "Radio - Selected Name to Device"
+      id: fda46b3d-2b94-4aeb-b58d-69d537756cd5
       trigger:
         - platform: homeassistant
           event: start
@@ -145,6 +147,7 @@ ha_radio:
               {% endif %}
 
     - alias: "Radio - Volume Control"
+      id: a5915a17-ec28-4adf-a3c3-6ac08f71d11f
       trigger:
         platform: state
         entity_id: input_number.volume_radio

@@ -3,6 +3,7 @@
 #################################################
 
 - alias: "Home Presence Alert"
+  id: 12b0184c-bb8b-436a-887a-733d0ddac126
   initial_state: true
   mode: parallel
   trigger:
@@ -25,6 +26,7 @@
           {% endif %}
 
 - alias: "HASS: Login Failed [notify to stall]"
+  id: 142e502b-3e63-49e3-b790-9150f155dc6d
   trigger:
     - platform: state
       entity_id: persistent_notification.http_login
@@ -46,6 +48,7 @@
         notification_id: http_login
 
 - alias: "HASS: IP Banned [notify to stall]"
+  id: ba2318c5-5c2e-4575-aa13-02f53063793d
   trigger:
     - platform: state
       entity_id: persistent_notification.ip_ban
@@ -63,6 +66,7 @@
         notification_id: ip_ban
 
 - alias: "HASS: Home Assistant Start"
+  id: 60f94d65-93d1-49e5-94d7-ca58471d02c4
   initial_state: true
   trigger:
     - platform: homeassistant
@@ -73,6 +77,7 @@
       message: "_INFO:_ Home Assistant *запущен* за {{ states('sensor.start_time') }} сек."
 
 - alias: "HASS: Home Assistant Shutdown"
+  id: 44bdbc77-2894-4c80-9739-6c690bde13f9
   initial_state: true
   trigger:
     platform: homeassistant
@@ -86,6 +91,7 @@
         message: "_INFO:_ Home Assistant *остановлен*."
 
 - alias: "HASS: ERRORs in System Log [notify to stall]"
+  id: e4140626-d5b1-4a6c-abe1-f99ae0547f0b
   initial_state: false
   trigger:
     platform: event
@@ -98,6 +104,7 @@
         message: "_{{ trigger.event.data.level }}:_ {{ trigger.event.data.message }}"
 
 - alias: "HASS: WARNINGs in System Log [notify to stall]"
+  id: 42541570-874a-46a9-86d0-0db433aaec5b
   initial_state: false
   trigger:
     platform: event
@@ -110,6 +117,7 @@
         message: "_{{ trigger.event.data.level }}:_ {{ trigger.event.data.message }}"
 
 - alias: "HASS: System Config Errors [notify to stall]"
+  id: 3770bcbf-435a-43b2-bfde-b04711e32b61
   trigger:
     - platform: event
       event_type: call_service
@@ -141,6 +149,7 @@
           {{ trigger.event.data.service_data.notification_id }}
 
 - alias: "HASS: ERRORs in Automations [notify to stall]"
+  id: 67d49afb-cac6-45e2-99b0-0ad5904d84b2
   mode: parallel
   trigger:
     - platform: event
@@ -162,6 +171,7 @@
           {{ trigger.event.data.message }}.
 
 - alias: "HASS: Critical Error [notify to stall]"
+  id: d70721b8-e0f2-415a-b917-331781a463ee
   mode: parallel
   trigger:
     - platform: event
@@ -180,6 +190,7 @@
           {{ trigger.event.data.message }}!
 
 - alias: "HASSIO: New Version Available [notify to stall]"
+  id: 4f0d8495-8abd-4513-9348-7630c5576088
   initial_state: true
   trigger:
     platform: template
@@ -190,6 +201,7 @@
       message: "_INFO:_ Доступна новая версия Home Assistant ({{ states('sensor.latest_version') }})"
 
 - alias: "HASSIO: New Addons Update Available [notify to stall]"
+  id: 19295cc3-b128-4b64-925a-ffde2688cf9c
   initial_state: true
   trigger:
     - platform: state
@@ -205,6 +217,7 @@
         message: "_INFO:_ Доступны новые версии Add-ons (Supervisor) (кол-во: {{ states('sensor.supervisor_updates') }})"
 
 - alias: "HASSIO: New Supervisor Version Available [notify to stall]"
+  id: 80b629d2-3441-467b-ad60-dd49de9f8703
   initial_state: true
   trigger:
     - platform: state
@@ -217,6 +230,7 @@
         message: "_INFO:_ Доступна новая версия Supervisor ({{ state_attr('sensor.supervisor_updates', 'newest_version') }})"
 
 - alias: "HACS: New Component Version Available [notify to stall]"
+  id: 4bc5609a-1e8b-4e66-944a-e613bcaad6d2
   initial_state: true
   trigger:
     platform: state
@@ -230,6 +244,7 @@
       message: "_INFO:_ Доступны новые версии Custom Components (HACS) (кол-во: {{ states('sensor.hacs') }})"
 
 - alias: "Device Needs Attention"
+  id: 4c71fbea-a965-4bd8-85de-180d073ef899
   mode: queued
   max: 30
   trigger:
@@ -261,6 +276,7 @@
                   <i>INFO</i>: Объект {{ trigger.event.data.entity_id }} сменил статус на {{ trigger.event.data.new_state.state }}.
 
 - alias: "Low Battery Alert [notify to stall]"
+  id: 6d87e0a2-8a6b-4b20-bd28-900af1620584
   trigger:
     - platform: event
       event_type: state_changed
@@ -282,6 +298,7 @@
           {{ trigger.event.data.new_state.attributes.friendly_name }}: {{ trigger.event.data.new_state.state }} %!
 
 - alias: "Torrent Completed [notify to stall]"
+  id: fe45c917-f489-4c38-a3a1-c66e5fedb07f
   initial_state: true
   trigger:
     platform: event
@@ -292,6 +309,7 @@
       message: "Загрузка torrent-файла завершена"
 
 - alias: "Полнолуние [notify to stall]"
+  id: d698bdcc-4ce9-4954-a118-8a1f29cf327e
   initial_state: true
   trigger:
     platform: state
@@ -303,6 +321,7 @@
       message: "Сегодня полнолуние!"
 
 - alias: Entrance Door - Opened
+  id: 067c832a-9626-4f61-8d19-444d6156e889
   initial_state: true
   trigger:
     platform: state
@@ -315,6 +334,7 @@
       message: Открыта входная дверь!
 
 - alias: Entrance Door - Closed
+  id: c6df423a-a1ec-41fb-b600-3874ffef758b
   initial_state: true
   trigger:
     platform: state
@@ -327,6 +347,7 @@
       message: Входная дверь закрыта.
 
 - alias: Gas Alert
+  id: 0ca74008-65a2-4ed1-b860-e27e57b216f2
   initial_state: true
   trigger:
     platform: state
@@ -342,6 +363,7 @@
         Откройте окна и перекройте подачу газа (за холодильником).
 
 - alias: New Network Device Notification
+  id: 7e5b4f9a-eb87-487f-8e1a-4b980de13734
   initial_state: true
   mode: parallel
   trigger:

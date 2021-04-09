@@ -4,6 +4,7 @@
 
 # Детская #######################################
 - alias: Termo alert [Nursery]
+  id: bb3a7df3-3e20-4ebe-8b49-bc9ba69ad2b6
   trigger:
     - platform: template
       value_template: "{{ (states('sensor.0x158d0003931aec_temperature') | float) < 22 }}"
@@ -24,6 +25,7 @@
 
 # Гостиная ######################################
 - alias: Termo alert [Living Room]
+  id: 0e135e8d-3ad5-40cb-9d8f-9ab3df6b91bd
   trigger:
     - platform: template
       value_template: "{{ (states('sensor.0x158d0003230618_temperature') | float) < 22 }}"
@@ -44,6 +46,7 @@
 
 # Спальня #######################################
 - alias: Termo alert [Bedroom]
+  id: 524b5b92-0f5d-4429-88d2-9903ec325389
   trigger:
     - platform: template
       value_template: "{{ (states('sensor.0x158d0003931b0e_temperature') | float) < 21 }}"
@@ -64,6 +67,7 @@
 
 # Оповещения о долгой работе кондиционеров ######
 - alias: AC - long running [8h]
+  id: 09f64418-db04-4327-a714-57d9ea39d1ed
   initial_state: true
   trigger:
     platform: state
@@ -82,6 +86,7 @@
         Внимание, *{{ trigger.to_state.attributes.friendly_name }}* работает больше 8 часов.
 
 - alias: AC - long running [16h]
+  id: 970eef7a-4b66-4186-88ff-a0542c13c10a
   initial_state: true
   trigger:
     platform: state
@@ -100,6 +105,7 @@
         Внимание, *{{ trigger.to_state.attributes.friendly_name }}* работает больше *16* часов.
 
 - alias: AC - long running [24h]
+  id: 106513d8-941c-4bfe-8f42-1fe9c95a77de
   initial_state: true
   trigger:
     platform: state

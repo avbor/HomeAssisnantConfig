@@ -3,6 +3,7 @@
 #################################################
 
 - alias: 'Humidity in humidor too low'
+  id: 4ccbd0aa-829a-45d3-abe7-33ae2552215b
   initial_state: true
   trigger:
     platform: numeric_state
@@ -16,6 +17,7 @@
         message: Влажность в хьюмидоре ниже 65% (текущая {{ states("sensor.a4c1381b3d13_humidity") }}%)
 
 - alias: 'Humidity in humidor too high'
+  id: f6158c69-c088-4258-a623-6c2ee3c2cf72
   initial_state: true
   trigger:
     platform: numeric_state
@@ -29,6 +31,7 @@
         message: Влажность в хьюмидоре выше 80% (текущая {{ states("sensor.a4c1381b3d13_humidity") }}%)
 
 - alias: 'Temperature in humidor too low'
+  id: 0d95f393-ab18-4aef-8eb9-9bf5165d6638
   initial_state: true
   trigger:
     platform: numeric_state
@@ -42,6 +45,7 @@
         message: Температура в хьюмидоре ниже 20°C (текущая {{ states("sensor.a4c1381b3d13_temperature") }}°C)
 
 - alias: 'Temperature in humidor too high'
+  id: dcfce935-f705-4ae5-be45-ffb780b3f290
   initial_state: true
   trigger:
     platform: numeric_state

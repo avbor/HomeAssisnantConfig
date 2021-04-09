@@ -3,6 +3,7 @@
 #################################################
 
 - alias: Движение в детской
+  id: 6166ef07-c478-44e3-a226-24d7737d6646
   initial_state: false
   trigger:
     platform: state
@@ -37,6 +38,7 @@
             - url: !secret dafangcam_03_snapshot_url
 
 - alias: 'Вкл контроль движения в детской'
+  id: f46ce78b-11b1-42e9-b217-34ed6eabb7bb
   initial_state: true
   trigger:
     platform: time
@@ -46,6 +48,7 @@
       entity_id: automation.dvizhenie_v_detskoi
 
 - alias: 'Выкл контроль движения в детской'
+  id: 0ffb0c86-cd64-4990-9571-da1799709488
   initial_state: true
   trigger:
     platform: time
@@ -55,6 +58,7 @@
       entity_id: automation.dvizhenie_v_detskoi
 
 - alias: Вход в квартиру
+  id: 47a5b56e-5c41-4ae6-a3c2-25984c67b1b5
   initial_state: true
   trigger:
     platform: state
@@ -100,6 +104,7 @@
             - url: !secret dafangcam_02_snapshot_url
 
 - alias: 'DafangCam-02 Turn Off Night Mode by Light'
+  id: ff6813b7-a4a7-4682-bacb-c28290e43f88
   initial_state: true
   trigger:
     platform: state

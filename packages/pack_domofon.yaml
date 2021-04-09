@@ -7,6 +7,7 @@ domofon_pack:
   automation:
 
     - alias: Domofon - Opened by Button Notification
+      id: cb5e25c1-dcb7-4b75-a6c4-6b12eb84f86b
       initial_state: true
       trigger:
         platform: state
@@ -22,6 +23,7 @@ domofon_pack:
           message: "Домофон открыт кнопкой"
 
     - alias: Domofon - Incoming Call Notification
+      id: 741a9858-1687-4b2d-8afd-73373e8cc8ba
       initial_state: true
       trigger:
         platform: state
@@ -36,6 +38,7 @@ domofon_pack:
               - "{{ '-' if is_state('switch.domofon_automatically_open', 'on') or is_state('switch.domofon_automatically_open_once', 'on') else 'Открыть:/domofon_open, Отклонить:/domofon_reject' }}"
 
     - alias: Domofon - Telegram Control - domofon_open
+      id: 99d5c580-c382-48b3-bd2d-f6eb00b62c31
       initial_state: true
       trigger:
         platform: event
@@ -50,6 +53,7 @@ domofon_pack:
         - service: esphome.domofon_accept_call
 
     - alias: Domofon - Telegram Control - domofon_reject
+      id: a50fb75b-0083-4866-8496-bdd013332a88
       initial_state: true
       trigger:
         platform: event
@@ -64,6 +68,7 @@ domofon_pack:
         - service: esphome.domofon_reject_call
 
     - alias: Domofon - Mute and UnMute by Time
+      id: 97a74c5f-6a9f-4af6-9f8e-2a7fcd0a5070
       trigger:
         - platform: time
           at: "23:00:00"
@@ -80,6 +85,7 @@ domofon_pack:
             entity_id: switch.domofon_mute_sound
 
     - alias: Domofon - ESP Board Lost Connection
+      id: 6cac01e7-945c-4f37-8b2d-d75e03107d76
       trigger:
         - platform: state
           entity_id: binary_sensor.domofon_status
@@ -97,6 +103,7 @@ domofon_pack:
               {% endif %}
 
     - alias: Domofon - Open Once for Couriers
+      id: c916925d-cd33-4f30-882b-4049e52acf12
       trigger:
         - platform: state
           entity_id:
@@ -120,6 +127,7 @@ domofon_pack:
             message: "Курьер уже в пути, для домофона включен режим однократного авто-открытия."
 
     - alias: Domofon - Open Once at Enter to Home Zone
+      id: 40d4a1f6-576c-438a-b20f-ba161d9bd3ee
       trigger: 
         - platform: zone
           entity_id:

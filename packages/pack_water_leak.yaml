@@ -68,6 +68,7 @@ water_leak_protection:
   automation:
     # Защита от протечек - отключение подачи воды по датчикам
     - alias: Water Leak Detected
+      id: 2eb96392-3d8a-41b7-87f2-7c6e5c5b6232
       trigger:
         platform: state
         entity_id:
@@ -83,6 +84,7 @@ water_leak_protection:
 
     # Получение активации Нептуна
     - alias: Catch Neptun Activated
+      id: 0e013823-d5f8-4362-b7aa-2be3c25da064
       mode: queued
       trigger:
         platform: state
@@ -101,6 +103,7 @@ water_leak_protection:
 
     # Получение деактивации Нептуна
     - alias: Catch Neptun DeActivated
+      id: f17481ec-0be2-4774-b2cb-53fffab68781
       mode: queued
       trigger:
         platform: state
@@ -118,6 +121,7 @@ water_leak_protection:
 
     # Перезагрузка контроллера Нептун раз в 2 недели (обход проворота кранов раз в месяц)
     - alias: Restart Neptun [twice a month]
+      id: 896b9256-93fc-41d2-8ffc-a4c6503f62e0
       trigger:
         - platform: time
           at: "11:00:00"
@@ -143,6 +147,7 @@ water_leak_protection:
 
     # Автоматическое отключение напряжения на кранах (работа >60 сек)
     - alias: PowerOff Valves After 60 Seconds
+      id: ac6042cd-ab15-4ff2-a0ed-9f873830d221
       trigger:
         - platform: state
           entity_id:
@@ -157,6 +162,7 @@ water_leak_protection:
 
     # Оповещения
     - alias: Оповещение об активации Нептуна [notify to stall]
+      id: 05f8b487-bec7-43fa-bc7d-58bb1699c162
       initial_state: true
       trigger: 
         platform: state
@@ -172,6 +178,7 @@ water_leak_protection:
             Необходимо проверить Кухню, Ванную, Туалет, Кладовую.
         
     - alias: Оповещение о деактивации Нептуна [notify to stall]
+      id: 344fff46-b0f1-41c3-b6e7-6386b5bc1256
       initial_state: true
       trigger: 
         platform: state
@@ -183,6 +190,7 @@ water_leak_protection:
           message: Нептун деактивирован.
         
     - alias: Оповещение о протечке Aqara в Кладовой [notify to stall]
+      id: 48575884-108e-403b-afe0-cb16ad5652cb
       initial_state: true
       trigger:
         platform: state
@@ -199,6 +207,7 @@ water_leak_protection:
             Необходимо проверить наличие воды за стиральной машиной.
 
     - alias: Оповещение о протечке Aqara под Ванной [notify to stall]
+      id: db363ec5-2617-4234-9657-303dce6a91fe
       initial_state: true
       trigger:
         platform: state
@@ -215,6 +224,7 @@ water_leak_protection:
             Необходимо проверить наличие воды *слева под ванной*.
 
     - alias: Оповещение об отключенном Нептуне (>2 мин)
+      id: 1a017a47-40b1-4315-892e-36760a8e86ec
       trigger:
         platform: state
         entity_id: switch.sonoff_1000b68886

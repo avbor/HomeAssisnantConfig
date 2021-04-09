@@ -8,6 +8,7 @@ new_year_holidays_pack:
   automation:
 
     - alias: 'New Year Light - Off [Scheduled]'
+      id: 63ea7cdd-f8bc-4a4d-b3ce-72fc493e7392
       initial_state: false
       trigger:
         - platform: time
@@ -37,6 +38,7 @@ new_year_holidays_pack:
             message: Отключаем новогоднюю подсветку (пора спать).
           
     - alias: 'New Year Light - On [Scheduled]'
+      id: 7f531ef1-a7b8-45e3-b8da-fe54dd7018ad
       initial_state: false
       trigger:
         - platform: time

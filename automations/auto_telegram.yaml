@@ -4,6 +4,7 @@
 
 # ---- Mirror all text messages
 - alias: 'Telegram Bot - Mirror text'
+  id: d35faec4-c949-4358-8aff-00e11b560444
   trigger:
     platform: event
     event_type: telegram_text
@@ -15,6 +16,7 @@
         {{ trigger.event.data.text }}
 # ---- /start
 - alias: 'Telegram Bot - Start'
+  id: d50c7e2c-9f67-40f2-9495-41ba1140c9b5
   trigger:
     platform: event
     event_type: telegram_command
@@ -27,6 +29,7 @@
       message: 'Привет! Помощь - /help'
 # ---- /help
 - alias: 'Telegram Bot - Help'
+  id: 1e265eea-3d26-4a04-8402-f25a828f841d
   trigger:
     platform: event
     event_type: telegram_command
@@ -44,6 +47,7 @@
         /ping - Проверить доступность сервиса HASS
 # ---- /ping
 - alias: 'Telegram Bot - Ping'
+  id: 936c648b-18b6-4636-a941-cc3f3361fdd0
   trigger:
     platform: event
     event_type: telegram_command
@@ -60,6 +64,7 @@
         Uptime: {{ states('sensor.ha_uptime') }} min.
 # ---- /whoishome
 - alias: 'Telegram Bot - Who is home?'
+  id: f3af5ecc-3eb8-4542-8207-97f90b6f5abf
   trigger:
     platform: event
     event_type: telegram_command
@@ -76,6 +81,7 @@
         {% if is_state("group.family_persons", "not_home") %}Никого нет{% endif %}
 # ---- /weather
 - alias: 'Telegram Bot - Weather'
+  id: b0b0a539-14fb-440c-b57c-269460961819
   trigger:
     platform: event
     event_type: telegram_command
@@ -92,6 +98,7 @@
           Давление {{ state_attr('weather.gismeteo', 'pressure') }} hPa ({{ states('sensor.gismeteo_pressure_mmhg') }} mmHg)
 # ---- /status
 - alias: 'Telegram Bot - Status'
+  id: 51572bf5-4960-4034-b09a-17d202c07c18
   trigger:
     platform: event
     event_type: telegram_command

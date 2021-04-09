@@ -51,6 +51,7 @@ xiaomi_gateway_3:
   # Automations
   automation:
     - alias: 'Mirror Gtw3 input_select Name to ID'
+      id: 1431ee14-08ae-4c0b-bb44-d55faa8e406c
       trigger:
         platform: state
         entity_id: input_select.xiaomi_gateway3_name

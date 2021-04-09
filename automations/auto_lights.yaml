@@ -5,6 +5,7 @@
 ### Прихожая
 
 - alias: "Кнопка Xiaomi в Прихожей single"
+  id: 0783d105-f01b-488c-a4ee-14633d7b8d7e
   initial_state: true
   trigger:
     platform: state
@@ -16,6 +17,7 @@
       entity_id: light.sonoff_1000f2f14a
 
 - alias: "Кнопка Xiaomi в Прихожей double"
+  id: 03118e47-0a7f-45a1-acbb-ad0d50a76927
   initial_state: true
   trigger:
     platform: state
@@ -27,6 +29,7 @@
       entity_id: light.sonoff_1000f2a500
 
 - alias: "Кнопка Xiaomi в Прихожей hold"
+  id: 84c7e355-651c-4d59-9605-73590dc3423e
   initial_state: true
   trigger:
     platform: state
@@ -38,6 +41,7 @@
       entity_id: group.all_lamps
 
 - alias: "ДД Aqara включение света в прихожей"
+  id: d3497859-d127-44ed-8980-be8963c0e618
   initial_state: true
   trigger:
     platform: state
@@ -58,6 +62,7 @@
       entity_id: light.sonoff_1000f2f14a
 
 - alias: "ДД Aqara выключение света в прихожей"
+  id: 3da7d0fb-89c4-4136-98cd-d52f0f3cede9
   initial_state: true
   trigger:
     platform: state
@@ -74,6 +79,7 @@
     entity_id: light.sonoff_1000f2f14a
 
 - alias: "Вход в квартиру - включение света"
+  id: bcadbe8a-b2cd-459c-924a-eb1d08876b3b
   initial_state: true
   trigger:
     platform: state
@@ -92,6 +98,7 @@
 ### Коридор
 
 - alias: "Кнопка Xiaomi в Коридоре single"
+  id: ea8dda71-4d1e-4e16-bd76-5d27bfffb975
   initial_state: true
   trigger:
     platform: state
@@ -103,6 +110,7 @@
       entity_id: light.sonoff_1000f2a500
 
 - alias: "Кнопка Xiaomi в Коридоре double"
+  id: aeb03ae7-3e12-41cf-ac87-7d291e7f7b9a
   initial_state: true
   trigger:
     platform: state
@@ -114,6 +122,7 @@
       entity_id: light.sonoff_1000f2f14a
 
 - alias: "Кнопка Xiaomi в Коридоре hold"
+  id: 35a01f66-3f67-4f9c-ae38-363f0581fe13
   initial_state: true
   trigger:
     platform: state
@@ -127,6 +136,7 @@
 ### Детская
 
 - alias: "Kids must sleep at night"
+  id: a2e4ec8e-926f-44bf-96fb-0029bd137f32
   initial_state: true
   trigger:
     platform: state
@@ -146,6 +156,7 @@
         message: _{{ now().strftime("%d.%m.%Y %H:%M:%S") }}_ автоматически выключен свет в детской.
 
 - alias: "Свет в детсокй Вкл-Выкл"
+  id: dcd06f0b-d4da-4772-b2e7-c0c7a27f845d
   initial_state: true
   trigger:
     - platform: state
@@ -160,6 +171,7 @@
       entity_id: light.detskaia
 
 - alias: "Подсветка окна в детской Вкл-Выкл"
+  id: 6d473a7d-6cfd-4dd7-a3a4-061a1e73e23d
   initial_state: true
   trigger:
     - platform: state
@@ -174,6 +186,7 @@
       entity_id: switch.0x158d00033b702e_switch
 
 - alias: "Яркость света в детской"
+  id: d4ce60e4-9bd5-446d-ac4d-035d903e5066
   initial_state: true
   trigger:
     - platform: state
@@ -213,6 +226,7 @@
               brightness: 255
 
 - alias: Sunrise Lighting (Nursery)
+  id: d50bfe78-2e35-4870-a24c-71d0f6ebf969
   initial_state: true
   trigger:
     - platform: time
@@ -235,6 +249,7 @@
 ### Кухня
 
 - alias: "Подсветка на кухне (кнопка Xiaomi)"
+  id: e5c30f0b-e56d-4b03-b81f-f40998909831
   trigger:
     platform: state
     entity_id: sensor.0x158d00035ff631_action
@@ -245,6 +260,7 @@
       entity_id: light.kukhnia_lenta
 
 - alias: "Люстра на кухне (кнопка Xiaomi)"
+  id: 050e258b-ff2c-4da2-8676-030e0eda668d
   trigger:
     platform: state
     entity_id: sensor.0x158d00035ff631_action
@@ -255,6 +271,7 @@
       entity_id: light.kukhnia_liustra
 
 - alias: "Подсветка на кухне (сенсор движения - вкл)"
+  id: 72c4f7ac-f72c-47fd-bf06-6e3671d12b1d
   initial_state: true
   trigger:
     platform: state
@@ -274,6 +291,7 @@
     entity_id: light.kukhnia_lenta
 
 - alias: "Подсветка на кухне (сенсор движения - выкл)"
+  id: 47413029-b8c2-4ec1-ad98-7c72b271766d
   initial_state: true
   trigger:
     platform: state
@@ -292,6 +310,7 @@
 ### Кладовая
 
 - alias: "Свет в кладовой (сенсор движения - вкл)"
+  id: 58129c01-7211-47c8-83f4-a954a88bea9f
   initial_state: true
   trigger:
     platform: state
@@ -306,6 +325,7 @@
     entity_id: light.sonoff_1000b6831b
 
 - alias: "Свет в Кладовой (сенсор движения - выкл)"
+  id: b1d55360-e2e7-41a9-8552-8367bf84d712
   initial_state: true
   trigger:
     platform: state
@@ -324,6 +344,7 @@
 # Спальня
 
 - alias: Sunrise Lighting (Bedroom)
+  id: 35fa00c7-72bd-4a5f-9bef-7bcf13a3bf49
   initial_state: true
   trigger:
     - platform: time
@@ -350,6 +371,7 @@
 
 # Споты
 - alias: "Кнопка Xiaomi в Гостиной single"
+  id: 90058a3d-e36b-4384-a304-bf7ce2f4752d
   trigger:
     platform: state
     entity_id: sensor.0x158d00035a9bc5_action
@@ -360,6 +382,7 @@
         entity_id: light.sonoff_1000ab3c28
   # Люстра
 - alias: "Кнопка Xiaomi Гостиная double"
+  id: 228250e9-ff19-419b-9817-2fb812f0be76
   trigger:
     platform: state
     entity_id: sensor.0x158d00035a9bc5_action
@@ -370,6 +393,7 @@
         entity_id: light.sonoff_1000f3035d
 
 - alias: "Кнопка Aqara 1 single"
+  id: 07c60bca-a9a9-4ad1-9bc5-7e3776d55f31
   trigger:
     platform: state
     entity_id: sensor.0x158d0004ab468e_action
@@ -380,6 +404,7 @@
         entity_id: light.0x86bd7fffe616b72_light
 
 - alias: "Кнопка Aqara 1 double"
+  id: d7cb6c13-4f80-46cd-9c3b-a862657f1db0
   trigger:
     platform: state
     entity_id: sensor.0x158d0004ab468e_action
@@ -390,6 +415,7 @@
         entity_id: light.sonoff_1000b72483
 
 - alias: "Кнопка Aqara 1 hold"
+  id: 07cd182d-1013-4e32-94f7-b6f20a232c73
   trigger:
     platform: state
     entity_id: sensor.0x158d0004ab468e_action
@@ -401,6 +427,7 @@
         entity_id: light.sonoff_1000ab3c28
 
 - alias: "Кнопка Aqara 1 shake"
+  id: 4d769d02-55d5-41aa-a59c-68c08154eeff
   trigger:
     platform: state
     entity_id: sensor.0x158d0004ab468e_action
@@ -413,7 +440,7 @@
 # Разное
 
 - alias: Aqara Cube Rotate
-  id: 'aqara_cube_rotate'
+  id: bca58eda-70ce-431c-893f-8ba0baeb7c56
   mode: queued
   max: 5
   max_exceeded: silent
@@ -437,6 +464,7 @@
           (trigger.event.data.args.relative_degrees | int) }}
 
 - alias: Aqara Cube Flip 90
+  id: ebb64a34-ef85-4cf8-a450-d57a9dcb51b6
   trigger:
     - platform: event
       event_type: zha_event
@@ -454,6 +482,7 @@
         brightness: 255
 
 - alias: Aqara Cube Flip 180
+  id: c5563c01-dca4-4e46-940f-1ee5cd15e4c9
   trigger:
     - platform: event
       event_type: zha_event
