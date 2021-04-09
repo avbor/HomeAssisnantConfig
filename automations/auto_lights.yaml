@@ -413,6 +413,7 @@
 # Разное
 
 - alias: Aqara Cube Rotate
+  id: 'aqara_cube_rotate'
   mode: queued
   max: 5
   max_exceeded: silent
