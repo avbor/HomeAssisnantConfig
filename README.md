@@ -33,14 +33,14 @@ Some **screenshots** from my HA can be found [here](docs/screenshots.md).
 
 **ZigBee/BT Gateways:**
 - Xiaomi Gateway 2 (DGNWG02LM, lumi.gateway.v3)\
-  Integration "Xiaomi Gateway (Aqara)" & "Zigbee Home Automation (ZHA)"
+  Integration "Xiaomi Gateway (Aqara)"
 
 - Xiaomi Gateway 3 (ZNDMWG03LM, lumi.gateway.mgl03)\
-  Integration "Xiaomi Gateway 3" by [AlexxIT](https://github.com/AlexxIT/XiaomiGateway3)
+  Integration "Xiaomi Gateway 3" by [AlexxIT](https://github.com/AlexxIT/XiaomiGateway3) & "Zigbee Home Automation (ZHA)"
 
 #### WiFi Devices:
 - Relays:
-  - Sonoff Mini\
+  - Sonoff MINI & MINI R2\
   Integration "Sonoff LAN" by [AlexxIT](https://github.com/AlexxIT/SonoffLAN)
 - Plugs:
   - TP-Link HS110\
