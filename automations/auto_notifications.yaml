@@ -214,7 +214,12 @@
   action:
     - service: notify.telegram_stall
       data_template:
-        message: "_INFO:_ Доступны новые версии Add-ons (Supervisor) (кол-во: {{ states('sensor.supervisor_updates') }})"
+        message: |
+          _INFO:_ Доступны новые версии Add-ons (Supervisor) (кол-во: {{ states('sensor.supervisor_updates') }})
+          {%- for repo in state_attr('sensor.supervisor_updates', 'addons') -%}
+          {{ repo.name }} (_{{ repo.version }}_ -> _{{ repo.version_latest }}_
+          {%- if not loop.last -%}, {%- endif -%}
+          {%- endfor -%}
 
 - alias: "HASSIO: New Supervisor Version Available [notify to stall]"
   id: 80b629d2-3441-467b-ad60-dd49de9f8703
@@ -241,7 +246,12 @@
   action:
     service: notify.telegram_stall
     data_template:
-      message: "_INFO:_ Доступны новые версии Custom Components (HACS) (кол-во: {{ states('sensor.hacs') }})"
+      message: |
+        _INFO:_ Доступны новые версии Custom Components (HACS) (кол-во: {{ states('sensor.hacs') }})
+        {%- for repo in state_attr('sensor.hacs', 'repositories') -%}
+        {{ repo.display_name }} (_{{ repo.installed_version }}_ -> _{{ repo.available_version }}_)
+        {%- if not loop.last -%}, {%- endif -%}
+        {%- endfor -%}
 
 - alias: "Device Needs Attention"
   id: 4c71fbea-a965-4bd8-85de-180d073ef899
