@@ -22,12 +22,14 @@ cards:
         entity: climate.daikin_nursery
         header: false
         decimals: 0
+        step_size: 1
         layout:
           step: row
           mode:
             names: false
         hide:
           temperature: true
+          state: true
         sensors:
           - entity: binary_sensor.ac_nursery_status
             icon: mdi:air-conditioner
@@ -92,12 +94,14 @@ cards:
         entity: climate.daikin_livingroom
         header: false
         decimals: 0
+        step_size: 1
         layout:
           step: row
           mode:
             names: false
         hide:
           temperature: true
+          state: true
         sensors:
           - entity: binary_sensor.ac_living_room_status
             icon: mdi:air-conditioner
@@ -133,12 +137,14 @@ cards:
         entity: climate.daikin_bedroom
         header: false
         decimals: 0
+        step_size: 1
         layout:
           step: row
           mode:
             names: false
         hide:
           temperature: true
+          state: true
         sensors:
           - entity: binary_sensor.ac_bedroom_status
             icon: mdi:air-conditioner
