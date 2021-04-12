@@ -167,11 +167,11 @@
       to: "single"
   action:
     - choose:
-      - conditions: "{{ is_state('light.sonoff_minizb_01_on_off', 'off') }}"
+      - conditions: "{{ is_state('light.sonoff_zbmini_01_on_off', 'off') }}"
         sequence:
           - service: light.turn_on
             data:
-              entity_id: light.sonoff_minizb_01_on_off
+              entity_id: light.sonoff_zbmini_01_on_off
           - wait_for_trigger:
             - platform: state
               entity_id: light.detskaia
@@ -182,7 +182,7 @@
               entity_id: light.detskaia
             data:
               brightness: 255
-      - conditions: "{{ is_state('light.sonoff_minizb_01_on_off', 'on') }}"
+      - conditions: "{{ is_state('light.sonoff_zbmini_01_on_off', 'on') }}"
         sequence:
           - service: light.toggle
             data:
