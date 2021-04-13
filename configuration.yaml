@@ -210,6 +210,7 @@ notify:
 
 group: !include groups.yaml
 automation: !include_dir_merge_list automations
+automation gui: !include automations.yaml
 script: !include_dir_merge_named scripts
 camera: !include_dir_merge_list entities/cameras
 counter: !include_dir_merge_named entities/counters
