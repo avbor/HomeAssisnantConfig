@@ -89,8 +89,6 @@ domofon_pack:
       trigger:
         - platform: state
           entity_id: binary_sensor.domofon_status
-          for:
-            seconds: 5
       action:
         - service: notify.telegram_stall
           data:
@@ -118,6 +116,9 @@ domofon_pack:
           - condition: template
             value_template: >-
               {{ trigger.to_state.state | regex_search('Уже спешит к вам') }}
+          - condition: template
+            value_template: >-
+              {{ trigger.to_state.state | regex_search('Будет через *.') }}
       action:
         - service: switch.turn_on
           data:
