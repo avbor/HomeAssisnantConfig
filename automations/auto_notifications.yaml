@@ -217,7 +217,7 @@
         message: |
           _INFO:_ Доступны новые версии Add-ons (Supervisor) ({{ states('sensor.supervisor_updates') }}):
           {%- for repo in state_attr('sensor.supervisor_updates', 'addons') %}
-          {{ repo.name }} (_{{ repo.version }}_ -> _{{ repo.version_latest }}_{% if not loop.last %}, {% endif %}
+          {{ repo.name }} (_{{ repo.version }}_ -> _{{ repo.version_latest }}_){% if not loop.last %}, {% endif %}
           {%- endfor -%}
 
 - alias: "HASSIO: New Supervisor Version Available [notify to stall]"
