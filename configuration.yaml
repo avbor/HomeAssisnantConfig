@@ -60,7 +60,8 @@ http:
 
 logger:
   default: warn
-#  logs:
+  logs:
+    custom_components.electrolux_remote: debug
 #    homeassistant.components.tuya: debug
 #    homeassistant.components.http.ban: warning
 #    homeassistant.components.device_tracker: debug

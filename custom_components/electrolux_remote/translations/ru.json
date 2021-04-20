@@ -1,0 +1,32 @@
+{
+  "config": {
+    "abort": {
+      "already_configured": "Интеграция уже настроена"
+    },
+    "error": {
+      "cannot_connect": "Failed to connect",
+      "invalid_auth": "Invalid authentication",
+      "unknown": "Unexpected error"
+    },
+    "step": {
+      "user": {
+        "data": {
+          "host": "Host",
+          "password": "Пароль",
+          "username": "Телефон",
+          "appcode": "appcode"
+        }
+      }
+    }
+  },
+  "title": "Electrolux Remote",
+  "state": {
+    "_": {
+      "no_frost": "Anti Frost",
+      "calendar": "Календарь",
+      "manual": "Вручную",
+      "forsage": "Форсаж",
+      "vacation": "Отпуск"
+    }
+  }
+}
