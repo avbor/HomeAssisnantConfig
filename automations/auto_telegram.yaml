@@ -93,9 +93,10 @@
         target: '{{ trigger.event.data.user_id }}'
         file: '/config/www/weather_icons/{{ states("weather.gismeteo") }}.webp'
         caption: |
-          Температура {{ state_attr('weather.gismeteo', 'temperature') }}°C
+          Температура {{ states('sensor.gismeteo_temperature') }}°C
+          Ощущается как {{ states('sensor.gismeteo_temperature_feels_like') }}°C
           Влажность {{ state_attr('weather.gismeteo', 'humidity') }}%
-          Давление {{ state_attr('weather.gismeteo', 'pressure') }} hPa ({{ states('sensor.gismeteo_pressure_mmhg') }} mmHg)
+          Давление {{ states('sensor.gismeteo_pressure') }} hPa ({{ states('sensor.gismeteo_pressure_mmhg') }} mmHg)
 # ---- /status
 - alias: 'Telegram Bot - Status'
   id: 51572bf5-4960-4034-b09a-17d202c07c18
