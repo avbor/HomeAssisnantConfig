@@ -150,7 +150,7 @@
 
 - alias: "HASS: ERRORs in Automations [notify to stall]"
   id: 67d49afb-cac6-45e2-99b0-0ad5904d84b2
-  mode: parallel
+  mode: queued
   trigger:
     - platform: event
       event_type: system_log_event
@@ -159,20 +159,24 @@
   condition:
     - condition: template
       value_template: >-
-        {{ 'Error while executing automation' in trigger.event.data.message or 'Error executing script' in trigger.event.data.message }}
+        {{ 
+          trigger.event.data.message | regex_search('Error while executing automation') or
+          trigger.event.data.message | regex_search('Error executing script')
+        }}
     - condition: template
-      value_template: >-
-        {{ not 'automation.system_automation_error' in trigger.event.data.message }}
+      value_template: "{{ not 'automation.system_automation_error' in trigger.event.data.message }}"
   action:
-    - service: notify.telegram_stall
-      data_template:
+    - service: telegram_bot.send_message
+      data:
+        target: !secret tlg_stall_id
+        parse_mode: html
         message: |
-          _INFO:_ Ошибка выполнения автоматизации: 
+          <i>INFO:</i> Ошибка выполнения автоматизации: 
           {{ trigger.event.data.message }}.
 
 - alias: "HASS: Critical Error [notify to stall]"
   id: d70721b8-e0f2-415a-b917-331781a463ee
-  mode: parallel
+  mode: queued
   trigger:
     - platform: event
       event_type: system_log_event
