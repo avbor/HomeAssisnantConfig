@@ -163,8 +163,8 @@
           trigger.event.data.message | regex_search('Error while executing automation') or
           trigger.event.data.message | regex_search('Error executing script')
         }}
-    - condition: template
-      value_template: "{{ not 'automation.system_automation_error' in trigger.event.data.message }}"
+#    - condition: template
+#      value_template: "{{ not 'automation.system_automation_error' in trigger.event.data.message }}"
   action:
     - service: telegram_bot.send_message
       data:
@@ -187,8 +187,10 @@
       event_data:
         level: CRITICAL
   action:
-    - service: notify.telegram_stall
-      data_template:
+    - service: telegram_bot.send_message
+      data:
+        target: !secret tlg_stall_id
+        parse_mode: html
         message: |
           Критическая ошибка системы:
           {{ trigger.event.data.message }}!
