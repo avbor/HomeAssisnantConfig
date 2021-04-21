@@ -1,12 +1,12 @@
-"""Boiler to Climate class"""
+"""Centurio to Climate class"""
 
 import logging
 
 from typing import Any, Dict, List, Optional
 
 from .climate_base import ClimateBase
-from .device_boiler import (
-    Boiler,
+from .device_centurio import (
+    Centurio,
     WaterMode,
     TEMP_MIN,
     TEMP_MAX,
@@ -62,10 +62,10 @@ HA_PRESET_TO_DEVICE = {
 }
 DEVICE_PRESET_TO_HA = {v: k for k, v in HA_PRESET_TO_DEVICE.items()}
 
-DEFAULT_NAME = "Boiler"
+DEFAULT_NAME = "Centurio IQ"
 
 
-class Boiler2Climate(ClimateBase):
+class Centurio2Climate(ClimateBase):
     """
     Representation of a climate device
     """
@@ -88,7 +88,7 @@ class Boiler2Climate(ClimateBase):
         self.coordinator = coordinator
         coordinator.async_add_listener(self._update)
 
-        self._device = Boiler()
+        self._device = Centurio()
         self._heating = False
 
         self._update()
@@ -106,7 +106,7 @@ class Boiler2Climate(ClimateBase):
 
     async def async_set_hvac_mode(self, hvac_mode):
         """Set new target hvac mode."""
-        params = {"state": 1 - int(self._heating)}
+        params = {"mode": 1 - int(self._heating)}
 
         result = await self.coordinator.api.set_device_params(self._uid, params)
 
@@ -173,20 +173,39 @@ class Boiler2Climate(ClimateBase):
         or automations based on teh provided information
         """
         return {
+            "timer": self._device.timer,
+            "hours": self._device.timer_hours,
+            "minutes": self._device.timer_minutes,
+            "clock_hours": self._device.clock_hours,
+            "clock_minutes": self._device.clock_minutes,
+            "self_clean": self._device.self_clean,
+            "volume": self._device.volume.value,
+            "self_clean_state": self._device.self_clean_state.value,
+            "economy_state": self._device.economy_state,
+            "economy_morning": self._device.economy_morning,
+            "economy_evening": self._device.economy_evening,
+            "economy_pause": self._device.economy_pause,
+            "power_per_h_1": self._device.power_per_h_1,
+            "power_per_h_2": self._device.power_per_h_2,
+            "timezone": self._device.timezone,
+            "timer_hours_store": self._device.timer_hours_store,
+            "timer_minutes_store": self._device.timer_minutes_store,
+            "room": self._device.room,
         }
 
     def _update(self):
         """
         Update local data
         """
-        _LOGGER.debug("Boiler2Climate.update")
+        _LOGGER.debug("Centurio2Climate.update")
 
         for data in self.coordinator.data:
             if data["uid"] == self._uid:
+                _LOGGER.debug(data)
                 self._device.from_json(data)
 
         self._current_temp = self._device.current_temp
-        self._heating = self._device.state
+        self._heating = self._device.mode.value > 0
         self._preset = DEVICE_PRESET_TO_HA.get(self._device.mode.value)
         self._available = self._device.online
         self._target_temperature = self._device.temp_goal

@@ -1,13 +1,13 @@
-"""Boiler class (type=floor)"""
+"""Centurio class (type=centurio)"""
 
 import logging
 
-from enum import IntEnum
+from enum import Enum, IntEnum
 
 _LOGGER = logging.getLogger(__name__)
 
-TEMP_MIN = 0
-TEMP_MAX = 40
+TEMP_MIN = 30
+TEMP_MAX = 75
 
 
 class State(IntEnum):
@@ -15,23 +15,23 @@ class State(IntEnum):
     ON = 1
 
 
-class WaterSelfCleanState(IntEnum):
-    OFF = 0
-    WAIT = 1
-    WAIT_ONLINE = 2
-    HEAT = 3
-    HEAT_ONLINE = 4
-    HOLD = 5
-    HOLD_ONLINE = 6
-    PASSED = 7
-    DISABLED = 8
+class WaterSelfCleanState(Enum):
+    OFF = 'off'
+    WAIT = 'wait'
+    WAIT_ONLINE = 'wait_online'
+    HEAT = 'heat'
+    HEAT_ONLINE = 'heat_online'
+    HOLD = 'hold'
+    HOLD_ONLINE = 'hold_online'
+    PASSED = 'passed'
+    DISABLED = 'disabled'
 
 
 class Capacity(IntEnum):
-    CAPACITY_30 = 0
-    CAPACITY_50 = 1
-    CAPACITY_80 = 2
-    CAPACITY_100 = 3
+    CAPACITY_30 = 30
+    CAPACITY_50 = 50
+    CAPACITY_80 = 80
+    CAPACITY_100 = 100
 
 
 class WaterMode(IntEnum):
@@ -41,12 +41,11 @@ class WaterMode(IntEnum):
     NO_CONNECTION = 3
 
 
-class Boiler:
+class Centurio:
     def __init__(self):
-        self._state = State.OFF.value
         self._online = State.OFF.value
         self._room = None  # название помещения
-        self._mode = None  # режим работы
+        self._mode = WaterMode.OFF.value  # мощность нагрева
         self._current_temp = 75
         self._temp_goal = 75
         self._timer = State.OFF.value
@@ -54,7 +53,7 @@ class Boiler:
         self._timer_minutes = 0
         self._clock_hours = 0
         self._clock_minutes = 0
-        self._self_clean = State.OFF.value
+        self._self_clean = State.OFF.value  # bacteria stop system
         self._volume = Capacity.CAPACITY_100.value
         self._error = 0
         self._code = 0
@@ -72,44 +71,15 @@ class Boiler:
         self._timer_hours_store = 0
         self._timer_minutes_store = 0
         self._seconds_diff = 0
-        self._mac = None
         self._sort = 0
         self._curr_slot = 0
         self._active_slot = 0
+        self._slop = 0
         self._curr_scene = 0
         self._curr_scene_id = 0
         self._wait_slot = 0
         self._curr_slot_dropped = 0
         self._curr_scene_dropped = 0
-        self._undefined1 = 0
-        self._undefined2 = 0
-        self._undefined3 = 0
-        self._undefined4 = 0
-        self._uv = 0
-        self._ion = 0
-        self._timer_off = 0
-        self._timer_on = 0
-        self._co2_sensor_connect = 0
-        self._lock = State.OFF.value
-        self._indoor = State.OFF.value
-        self._timer_inf = State.OFF.value
-        self._timer_auto = State.OFF.value
-        self._timer_sleep = State.OFF.value
-        self._error_code = 0
-        self._filter_s = 0
-        self._timer_on_hours = 0
-        self._timer_on_minutes = 0
-        self._timer_off_hours = 0
-        self._timer_off_minutes = 0
-        self._hours = 0
-        self._minutes = 0
-        self._pm2_5_index = 0
-        self._co2date1 = 0
-        self._co2date2 = 0
-        self._speed = 0
-        self._windows_temp = 0
-        self._ptc_heat = 0
-        self._slop = 0
 
     def from_json(self, data: dict):
         """Fill self from json data"""
@@ -119,10 +89,6 @@ class Boiler:
     @property
     def room(self) -> str:
         return self._room
-
-    @property
-    def state(self) -> bool:
-        return int(self._state) == State.ON.value
 
     @property
     def online(self) -> bool:
@@ -185,5 +151,25 @@ class Boiler:
         return int(self._economy_pause) == State.ON.value
 
     @property
+    def economy_state(self) -> bool:
+        return (int(self._economy_morning) + int(self._economy_evening)) > 0
+
+    @property
     def current_temp(self) -> float:
         return float(self._current_temp)
+
+    @property
+    def self_clean_state(self) -> WaterSelfCleanState:
+        return WaterSelfCleanState(self._self_clean_state)
+
+    @property
+    def power_per_h_1(self) -> int:
+        return int(self._power_per_h_1)
+
+    @property
+    def power_per_h_2(self) -> int:
+        return int(self._power_per_h_2)
+
+    @property
+    def timezone(self) -> int:
+        return int(self._timezone)
