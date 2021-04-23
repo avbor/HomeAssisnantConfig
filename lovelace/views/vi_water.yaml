@@ -1,6 +1,6 @@
 title: Water
 path: water
-icon: mdi:water-alert
+icon: mdi:water
 cards:
   - type: vertical-stack
     cards:
@@ -80,3 +80,46 @@ cards:
         - type: entity
           entity: binary_sensor.0x158d0004030d84_moisture
           name: Под Ванной (слева)
+
+  - type: vertical-stack
+    cards:
+      - type: markdown
+        content: >
+          ### <center>Бойлер</center>
+      - type: entities
+        state_color: true
+        entities:
+          - entity: switch.tplink_smartplug_01
+            name: Питание
+            icon: mdi:water-boiler
+      - type: "custom:simple-thermostat"
+        entity: climate.boiler_194340
+        header: false
+#        header:
+#          name: Centurio IQ 2.0
+#          icon: false
+#          name: false
+#          icon: mdi:water-boiler
+#          toggle:
+#            entity: switch.tplink_smartplug_01
+#            name: Питание
+#            faults:
+#              - entity: switch.tplink_smartplug_01
+        decimals: 0
+        step_size: 1
+        layout:
+          step: row
+          mode:
+            names: false
+        label:
+          temperature: Температура воды
+        hide:
+          state: true
+        control:
+          preset:
+            _name: Режим
+            no_connection: false
+            half:
+              icon: mdi:roman-numeral-1
+            full:
+              icon: mdi:roman-numeral-2

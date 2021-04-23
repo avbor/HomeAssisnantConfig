@@ -42,3 +42,5 @@ binary_sensor.0x158d000309920a_motion:
   occupancy_timeout: [120, 180, 240]
 sensor.start_time:
   unit_of_measurement: 's'
+climate.boiler_194340:
+  friendly_name: Centurio IQ 2.0
