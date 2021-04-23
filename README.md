@@ -146,6 +146,9 @@ Integration "Integration Saures controllers with HA" by [volshebniks](https://gi
 - AC Daikin [FTXB-C](https://www.daikin.eu/en_us/products/ftxb-c.html) Series\
   Via Tuya SmartIR flashed to ESPHome, IRremoteESP8266 lib and Xiaomi Magnet Sensors
 
+- Electrolux [Centurio IQ 2.0](https://home-comfort.ru/catalog/vodonagrevateli/nakopitelnye_vodonagrevateli/seriya_centurio_iq_2_0/) with [ECH/WF-01](https://home-comfort.ru/catalog/vodonagrevateli/nakopitelnye_vodonagrevateli/seriya_centurio_iq_2_0/modul_syemnyy_upravlyayushchiy_electrolux_ech_wf_01_smart_wi_fi/) module\
+  Integration "Electrolux Remote" by [Ailme](https://github.com/Ailme/home_assistant_electrolux_remote)
+
 ### Software
 
 **Server:**
