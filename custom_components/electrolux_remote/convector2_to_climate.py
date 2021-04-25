@@ -244,6 +244,30 @@ class Convector2Climate(ClimateBase):
             "room": self._device.room,
         }
 
+    async def async_turn_on(self) -> None:
+        """Turn the entity on."""
+        if self._device.state:
+            return
+
+        params = {"state": State.ON.value}
+
+        result = await self.coordinator.api.set_device_params(self._uid, params)
+
+        if result:
+            self._update_coordinator_data(params)
+
+    async def async_turn_off(self) -> None:
+        """Turn the entity off."""
+        if not self._device.state:
+            return
+
+        params = {"state": State.OFF.value}
+
+        result = await self.coordinator.api.set_device_params(self._uid, params)
+
+        if result:
+            self._update_coordinator_data(params)
+
     def _update(self):
         """
         Update local data

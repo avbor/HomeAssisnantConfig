@@ -268,9 +268,17 @@
     - condition: template
       value_template: >-
         {{ states('input_boolean.ha_shutdown') == 'off' }}
+#    - condition: template
+#      value_template: >-
+#        {{ not trigger.event.data.entity_id in ['group.battery_devices'] }}
     - condition: template
       value_template: >-
-        {{ not trigger.event.data.entity_id in ['group.battery_devices'] }}
+        {{ not trigger.event.data.entity_id | regex_search
+          (
+          '^group.battery_devices|'
+          '^binary_sensor.lamp_status_'
+          ) 
+        }}
     - condition: template
       value_template: >-
         {{ trigger.event.data.new_state.state != trigger.event.data.old_state.state }}

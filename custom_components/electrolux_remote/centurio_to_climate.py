@@ -119,6 +119,7 @@ class Centurio2Climate(ClimateBase):
 
     async def async_set_preset_mode(self, preset_mode) -> None:
         """Set a new preset mode. If preset_mode is None, then revert to auto."""
+        _LOGGER.debug(preset_mode)
 
         if self._preset == preset_mode:
             return
@@ -189,6 +190,30 @@ class Centurio2Climate(ClimateBase):
             "timer_minutes_store": self._device.timer_minutes_store,
             "room": self._device.room,
         }
+
+    async def async_turn_on(self) -> None:
+        """Turn the entity on."""
+        if self._heating:
+            return
+
+        params = {"mode": WaterMode.HALF.value}
+
+        result = await self.coordinator.api.set_device_params(self._uid, params)
+
+        if result:
+            self._update_coordinator_data(params)
+
+    async def async_turn_off(self) -> None:
+        """Turn the entity off."""
+        if not self._heating:
+            return
+
+        params = {"mode": WaterMode.OFF.value}
+
+        result = await self.coordinator.api.set_device_params(self._uid, params)
+
+        if result:
+            self._update_coordinator_data(params)
 
     def _update(self):
         """
