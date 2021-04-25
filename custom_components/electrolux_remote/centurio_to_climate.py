@@ -19,7 +19,7 @@ from homeassistant.components.climate.const import (
     HVAC_MODE_HEAT,
     HVAC_MODE_OFF,
     CURRENT_HVAC_HEAT,
-    CURRENT_HVAC_IDLE,
+    CURRENT_HVAC_OFF,
 )
 
 from homeassistant.const import (
@@ -33,16 +33,14 @@ _LOGGER = logging.getLogger(__name__)
 SUPPORT_FLAGS = SUPPORT_TARGET_TEMPERATURE | SUPPORT_PRESET_MODE
 
 PRESET_OFF = 'off'
-PRESET_HALF = 'half'
-PRESET_FULL = 'full'
-PRESET_NO_CONNECTION = 'no_connection'
+PRESET_HALF = 'I'
+PRESET_FULL = 'II'
 
 
 SUPPORT_PRESETS = [
     PRESET_OFF,
     PRESET_HALF,
     PRESET_FULL,
-    PRESET_NO_CONNECTION,
 ]
 
 """
@@ -58,7 +56,6 @@ HA_PRESET_TO_DEVICE = {
     PRESET_OFF: WaterMode.OFF.value,
     PRESET_HALF: WaterMode.HALF.value,
     PRESET_FULL: WaterMode.FULL.value,
-    PRESET_NO_CONNECTION: WaterMode.NO_CONNECTION.value,
 }
 DEVICE_PRESET_TO_HA = {v: k for k, v in HA_PRESET_TO_DEVICE.items()}
 
@@ -100,9 +97,9 @@ class Centurio2Climate(ClimateBase):
     @property
     def hvac_mode(self):
         """Return hvac operation """
-        if self._heating:
-            return HVAC_MODE_HEAT
-        return HVAC_MODE_OFF
+        if self._preset == PRESET_OFF:
+            return HVAC_MODE_OFF
+        return HVAC_MODE_HEAT
 
     async def async_set_hvac_mode(self, hvac_mode):
         """Set new target hvac mode."""
@@ -116,9 +113,9 @@ class Centurio2Climate(ClimateBase):
     @property
     def hvac_action(self) -> Optional[str]:
         """Return the current running hvac operation if supported.  Need to be one of CURRENT_HVAC_*.  """
-        if self._heating:
-            return CURRENT_HVAC_HEAT
-        return CURRENT_HVAC_IDLE
+        if self._preset == PRESET_OFF:
+            return CURRENT_HVAC_OFF
+        return CURRENT_HVAC_HEAT
 
     async def async_set_preset_mode(self, preset_mode) -> None:
         """Set a new preset mode. If preset_mode is None, then revert to auto."""
@@ -126,11 +123,11 @@ class Centurio2Climate(ClimateBase):
         if self._preset == preset_mode:
             return
 
-        if not preset_mode.lower() in SUPPORT_PRESETS:
+        if preset_mode not in SUPPORT_PRESETS:
             _LOGGER.warning(
                 "%s: set preset mode to '%s' is not supported. "
                 "Supported preset modes are %s",
-                self._name, str(preset_mode.lower()), SUPPORT_PRESETS)
+                self._name, preset_mode, SUPPORT_PRESETS)
             return None
 
         params = {"mode": HA_PRESET_TO_DEVICE.get(preset_mode, PRESET_OFF)}

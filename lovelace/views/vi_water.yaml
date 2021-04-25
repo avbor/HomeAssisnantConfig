@@ -118,8 +118,7 @@ cards:
         control:
           preset:
             _name: Режим
-            no_connection: false
-            half:
+            I:
               icon: mdi:roman-numeral-1
-            full:
+            II:
               icon: mdi:roman-numeral-2

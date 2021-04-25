@@ -191,9 +191,6 @@ class Thermostat2Climate(ClimateBase):
             "power_per_h": self._device.power_per_h,
             "antifreeze_temp": self._device.antifreeze_temp,
             "antifreeze_mode": self._device.antifreeze_temp > 0,
-            "tariff_1": self._device.tariff_1,
-            "tariff_2": self._device.tariff_2,
-            "tariff_3": self._device.tariff_3,
         }
 
     def _update(self):
