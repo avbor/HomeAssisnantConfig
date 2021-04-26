@@ -271,5 +271,3 @@ cards:
                 icon: mdi:spotlight-beam
             state_filter:
               - unavailable
-  - type: thermostat
-    entity: climate.boiler_194340
