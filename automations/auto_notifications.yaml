@@ -277,7 +277,7 @@
           '^sensor.lamp_status_|'
           '^sensor.mirobot_1s_|'
           '^switch.smartir_'
-          ) 
+          )
         }}
     - condition: template
       value_template: >-

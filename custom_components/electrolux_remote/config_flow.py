@@ -7,7 +7,7 @@ from homeassistant import config_entries
 from homeassistant.const import CONF_HOST, CONF_USERNAME, CONF_PASSWORD
 from homeassistant.helpers.aiohttp_client import async_create_clientsession
 
-from .const import DOMAIN, HOST_RUSKLIMAT, APPCODE_ELECTROLUX, CONF_APPCODE
+from .const import DOMAIN, HOST_RUSKLIMAT, APPCODE_ELECTROLUX, APPCODE_BALLU, CONF_APPCODE
 from .api import RusclimatApi, TestApi
 
 _LOGGER = logging.getLogger(__name__)
@@ -51,7 +51,7 @@ class FlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
                 vol.Required(CONF_USERNAME): str,
                 vol.Required(CONF_PASSWORD): str,
                 vol.Optional(CONF_HOST, default=HOST_RUSKLIMAT): str,
-                vol.Optional(CONF_APPCODE, default=APPCODE_ELECTROLUX): str,
+                vol.Optional(CONF_APPCODE, default=APPCODE_ELECTROLUX): vol.In([APPCODE_ELECTROLUX, APPCODE_BALLU]),
             }),
             errors=self._errors,
         )

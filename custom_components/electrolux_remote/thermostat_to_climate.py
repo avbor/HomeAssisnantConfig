@@ -80,24 +80,17 @@ class Thermostat2Climate(ClimateBase):
         """
         Initialize the climate device
         """
+        self.coordinator = coordinator
+
         super().__init__(
             coordinator=coordinator,
             uid=uid,
             name=f"{DEFAULT_NAME} {uid}",
-            temp_min=TEMP_MIN,
-            temp_max=TEMP_MAX,
             support_flags=SUPPORT_FLAGS,
             support_modes=SUPPORT_MODES,
             support_presets=SUPPORT_PRESETS,
+            device=Thermostat()
         )
-
-        self.coordinator = coordinator
-        coordinator.async_add_listener(self._update)
-
-        self._device = Thermostat()
-        self._heating = False
-
-        self._update()
 
     @staticmethod
     def device_type() -> str:
@@ -106,13 +99,13 @@ class Thermostat2Climate(ClimateBase):
     @property
     def hvac_mode(self):
         """Return hvac operation """
-        if self._heating:
+        if self._device.state:
             return HVAC_MODE_HEAT
         return HVAC_MODE_OFF
 
     async def async_set_hvac_mode(self, hvac_mode):
         """Set new target hvac mode."""
-        params = {"state": 1 - int(self._heating)}
+        params = {"state": 1 - int(self._device.state)}
 
         result = await self.coordinator.api.set_device_params(self._uid, params)
 
@@ -122,14 +115,14 @@ class Thermostat2Climate(ClimateBase):
     @property
     def hvac_action(self) -> Optional[str]:
         """Return the current running hvac operation if supported.  Need to be one of CURRENT_HVAC_*.  """
-        if self._heating:
+        if self._device.state:
             return CURRENT_HVAC_HEAT
         return CURRENT_HVAC_IDLE
 
     async def async_set_preset_mode(self, preset_mode) -> None:
         """Set a new preset mode. If preset_mode is None, then revert to auto."""
 
-        if self._preset == preset_mode:
+        if self.preset_mode == preset_mode:
             return
 
         if not preset_mode.lower() in SUPPORT_PRESETS:
@@ -152,13 +145,13 @@ class Thermostat2Climate(ClimateBase):
         if target_temperature is None:
             return
 
-        if (target_temperature < self._min_temp or
-                target_temperature > self._max_temp):
+        if (target_temperature < self.min_temp or
+                target_temperature > self.max_temp):
             _LOGGER.warning(
                 "%s: set target temperature to %s°C is not supported. "
                 "The temperature can be set between %s°C and %s°C",
                 self._name, str(target_temperature),
-                self._min_temp, self._max_temp)
+                self.min_temp, self.max_temp)
             return
 
         params = {"set_temp": target_temperature * 10}
@@ -195,7 +188,7 @@ class Thermostat2Climate(ClimateBase):
 
     async def async_turn_on(self) -> None:
         """Turn the entity on."""
-        if self._heating:
+        if self._device.state:
             return
 
         params = {"state": State.ON.value}
@@ -207,7 +200,7 @@ class Thermostat2Climate(ClimateBase):
 
     async def async_turn_off(self) -> None:
         """Turn the entity off."""
-        if not self._heating:
+        if not self._device.state:
             return
 
         params = {"state": State.OFF.value}
@@ -217,30 +210,40 @@ class Thermostat2Climate(ClimateBase):
         if result:
             self._update_coordinator_data(params)
 
-    def _update(self):
+    @property
+    def available(self) -> bool:
+        """Return if entity is available."""
+        return self._device.online
+
+    @property
+    def current_temperature(self) -> Optional[float]:
+        """Return the current temperature."""
+        return self._device.floor_temp
+
+    @property
+    def target_temperature(self) -> Optional[float]:
+        """Return the temperature we try to reach."""
+        return self._device.set_temp
+
+    @property
+    def min_temp(self) -> float:
+        """Return the minimum temperature."""
+        return TEMP_MIN
+
+    @property
+    def max_temp(self) -> float:
+        """Return the maximum temperature."""
+        return TEMP_MAX
+
+    @property
+    def preset_mode(self) -> Optional[str]:
+        """Return the current preset mode, e.g., home, away, temp."""
+        return DEVICE_PRESET_TO_HA.get(self._device.mode.value)
+
+    def _update(self) -> None:
         """
         Update local data
         """
-        _LOGGER.debug("Thermostat2Climate.update")
-
         for data in self.coordinator.data:
             if data["uid"] == self._uid:
                 self._device.from_json(data)
-
-        self._current_temp = self._device.floor_temp
-        self._heating = self._device.state
-        self._preset = DEVICE_PRESET_TO_HA.get(self._device.mode.value)
-        self._available = self._device.online
-        self._target_temperature = self._device.set_temp
-
-    def _update_coordinator_data(self, params: dict) -> None:
-        """Update data in coordinator"""
-        devices = self.coordinator.data
-
-        for index, device in enumerate(devices):
-            if device["uid"] == self._uid:
-                for param in params:
-                    devices[index][param] = params[param]
-
-        self.coordinator.async_set_updated_data(devices)
-        self._update()

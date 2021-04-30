@@ -67,24 +67,17 @@ class Convector2Climate(ClimateBase):
         """
         Initialize the climate device
         """
+        self.coordinator = coordinator
+
         super().__init__(
             coordinator=coordinator,
             uid=uid,
             name=f"{DEFAULT_NAME} {uid}",
-            temp_min=TEMP_MIN,
-            temp_max=TEMP_MAX,
             support_flags=SUPPORT_FLAGS,
             support_modes=SUPPORT_MODES,
             support_presets=SUPPORT_PRESETS,
+            device=Convector2()
         )
-
-        self.coordinator = coordinator
-        coordinator.async_add_listener(self._update)
-
-        self._device = Convector2()
-        self._hvac_mode = HVAC_MODE_OFF
-
-        self._update()
 
     @staticmethod
     def device_type() -> str:
@@ -93,7 +86,13 @@ class Convector2Climate(ClimateBase):
     @property
     def hvac_mode(self):
         """Return hvac operation """
-        return self._hvac_mode
+        if self._device.state and self._device.heat_mode_auto:
+            return HVAC_MODE_AUTO
+
+        if self._device.state:
+            return HVAC_MODE_HEAT
+
+        return HVAC_MODE_OFF
 
     async def async_set_hvac_mode(self, hvac_mode):
         """Set new target hvac mode."""
@@ -129,7 +128,7 @@ class Convector2Climate(ClimateBase):
     async def async_set_preset_mode(self, preset_mode: str) -> None:
         """Set a new preset mode. If preset_mode is None, then revert to auto."""
 
-        if self._preset == preset_mode:
+        if self.preset_mode == preset_mode:
             return
 
         if not preset_mode.lower() in SUPPORT_PRESETS:
@@ -152,19 +151,19 @@ class Convector2Climate(ClimateBase):
         if target_temperature is None:
             return
 
-        if (target_temperature < self._min_temp or
-                target_temperature > self._max_temp):
+        if (target_temperature < self.min_temp or
+                target_temperature > self.max_temp):
             _LOGGER.warning(
                 "%s: set target temperature to %s°C is not supported. "
                 "The temperature can be set between %s°C and %s°C",
                 self._name, str(target_temperature),
-                self._min_temp, self._max_temp)
+                self.min_temp, self.max_temp)
             return
 
         params = {}
-        if self._preset == PRESET_NO_FROST:
+        if self.preset_mode == PRESET_NO_FROST:
             params["temp_antifrost"] = target_temperature
-        elif self._preset == PRESET_ECO:
+        elif self.preset_mode == PRESET_ECO:
             target_temperature = target_temperature + self._device.delta_eco
             params["temp_comfort"] = target_temperature
         else:
@@ -268,51 +267,62 @@ class Convector2Climate(ClimateBase):
         if result:
             self._update_coordinator_data(params)
 
-    def _update(self):
+    @property
+    def available(self) -> bool:
+        """Return if entity is available."""
+        return self._device.online
+
+    @property
+    def current_temperature(self) -> Optional[float]:
+        """Return the current temperature."""
+        return self._device.current_temp
+
+    @property
+    def target_temperature(self) -> Optional[float]:
+        """Return the temperature we try to reach."""
+        if self._device.mode is WorkMode.COMFORT:
+            return self._device.temp_comfort
+
+        if self._device.mode is WorkMode.ECO:
+            return self._device.temp_comfort - self._device.delta_eco
+
+        if self._device.mode is WorkMode.NO_FROST:
+            return self._device.temp_antifrost
+
+        return None
+
+    @property
+    def min_temp(self) -> float:
+        """Return the minimum temperature."""
+        if self._device.mode is WorkMode.ECO:
+            return TEMP_MIN - self._device.delta_eco
+
+        if self._device.mode is WorkMode.NO_FROST:
+            return TEMP_ANTIFROST_MIN
+
+        return TEMP_MIN
+
+    @property
+    def max_temp(self) -> float:
+        """Return the maximum temperature."""
+        if self._device.mode is WorkMode.ECO:
+            return TEMP_MAX - self._device.delta_eco
+
+        if self._device.mode is WorkMode.NO_FROST:
+            return TEMP_ANTIFROST_MAX
+
+        return TEMP_MAX
+
+    @property
+    def preset_mode(self) -> Optional[str]:
+        """Return the current preset mode, e.g., home, away, temp."""
+        return DEVICE_PRESET_TO_HA.get(self._device.mode.value)
+
+    def _update(self) -> None:
         """
         Update local data
         """
-        _LOGGER.debug("Convector2Climate.update")
-
         for data in self.coordinator.data:
             if data["uid"] == self._uid:
                 self._device.from_json(data)
 
-        self._current_temp = self._device.current_temp
-
-        if self._device.state and self._device.heat_mode_auto:
-            self._hvac_mode = HVAC_MODE_AUTO
-        elif self._device.state:
-            self._hvac_mode = HVAC_MODE_HEAT
-        else:
-            self._hvac_mode = HVAC_MODE_OFF
-
-        self._preset = DEVICE_PRESET_TO_HA.get(self._device.mode.value)
-        self._available = self._device.online
-
-        if self._device.mode is WorkMode.COMFORT:
-            self._target_temperature = self._device.temp_comfort
-            self._min_temp = TEMP_MIN
-            self._max_temp = TEMP_MAX
-        elif self._device.mode is WorkMode.ECO:
-            self._target_temperature = self._device.temp_comfort - self._device.delta_eco
-            self._min_temp = TEMP_MIN - self._device.delta_eco
-            self._max_temp = TEMP_MAX - self._device.delta_eco
-        elif self._device.mode is WorkMode.NO_FROST:
-            self._target_temperature = self._device.temp_antifrost
-            self._min_temp = TEMP_ANTIFROST_MIN
-            self._max_temp = TEMP_ANTIFROST_MAX
-        else:
-            self._target_temperature = None
-
-    def _update_coordinator_data(self, params: dict) -> None:
-        """Update data in coordinator"""
-        devices = self.coordinator.data
-
-        for index, device in enumerate(devices):
-            if device["uid"] == self._uid:
-                for param in params:
-                    devices[index][param] = params[param]
-
-        self.coordinator.async_set_updated_data(devices)
-        self._update()

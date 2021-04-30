@@ -25,11 +25,10 @@ class ClimateBase(CoordinatorEntity, ClimateEntity):
             coordinator: Coordinator,
             uid: str,
             name: str,
-            temp_min: float,
-            temp_max: float,
             support_flags: int,
             support_modes: List[str],
             support_presets: List[str],
+            device
     ):
         """
         Initialize the climate device
@@ -39,16 +38,13 @@ class ClimateBase(CoordinatorEntity, ClimateEntity):
         self._icon = "mdi:radiator"
         self._uid = uid
         self._name = name
-        self._min_temp = temp_min
-        self._max_temp = temp_max
         self._support_flags = support_flags
         self._support_modes = support_modes
         self._support_presets = support_presets
+        self._device = device
 
-        self._current_temp = None
-        self._preset = None
-        self._target_temperature = None
-        self._available = False
+        coordinator.async_add_listener(self._update)
+        self._update()
 
     @staticmethod
     @abstractmethod
@@ -74,33 +70,6 @@ class ClimateBase(CoordinatorEntity, ClimateEntity):
         return self._uid
 
     @property
-    def current_temperature(self) -> Optional[float]:
-        """Return the current temperature."""
-        return self._current_temp
-
-    @property
-    def min_temp(self) -> float:
-        """Return the minimum temperature."""
-        if self._min_temp:
-            return self._min_temp
-
-    @property
-    def max_temp(self) -> float:
-        """Return the maximum temperature."""
-        if self._max_temp:
-            return self._max_temp
-
-    @property
-    def target_temperature(self) -> Optional[float]:
-        """Return the temperature we try to reach."""
-        return self._target_temperature
-
-    @property
-    def preset_mode(self) -> Optional[str]:
-        """Return the current preset mode, e.g., home, away, temp."""
-        return self._preset
-
-    @property
     def name(self) -> str:
         """Return the name of the climate device."""
         return self._name
@@ -115,7 +84,22 @@ class ClimateBase(CoordinatorEntity, ClimateEntity):
         """Return a list of available preset modes."""
         return self._support_presets
 
-    @property
-    def available(self) -> bool:
-        """Return if entity is available."""
-        return self._available
+    def _update(self) -> None:
+        """
+        Update local data
+        """
+        for data in self.coordinator.data:
+            if data["uid"] == self._uid:
+                self._device.from_json(data)
+
+    def _update_coordinator_data(self, params: dict) -> None:
+        """Update data in coordinator"""
+        devices = self.coordinator.data
+
+        for index, device in enumerate(devices):
+            if device["uid"] == self._uid:
+                for param in params:
+                    devices[index][param] = params[param]
+
+        self.coordinator.async_set_updated_data(devices)
+        self._update()
