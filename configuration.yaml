@@ -209,10 +209,11 @@ notify:
 # Inclusions
 #################################################
 
-group: !include groups.yaml
 automation: !include_dir_merge_list automations
 automation gui: !include automations.yaml
 script: !include_dir_merge_named scripts
+script gui: !include scripts.yaml
+group: !include groups.yaml
 camera: !include_dir_merge_list entities/cameras
 counter: !include_dir_merge_named entities/counters
 device_tracker: !include_dir_merge_list entities/device_trackers
