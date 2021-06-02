@@ -8,7 +8,7 @@ from homeassistant.const import CONF_HOST, CONF_USERNAME, CONF_PASSWORD
 from homeassistant.helpers.aiohttp_client import async_create_clientsession
 
 from .const import DOMAIN, HOST_RUSKLIMAT, APPCODE_ELECTROLUX, APPCODE_BALLU, CONF_APPCODE
-from .api import RusclimatApi, TestApi
+from .api import ApiInterface, Api
 
 _LOGGER = logging.getLogger(__name__)
 
@@ -60,7 +60,7 @@ class FlowHandler(config_entries.ConfigFlow, domain=DOMAIN):
         """Return true if credentials is valid."""
         try:
             session = async_create_clientsession(self.hass)
-            client = RusclimatApi(
+            client: ApiInterface = Api(
                 host,
                 username,
                 password,

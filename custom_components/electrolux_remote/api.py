@@ -59,6 +59,22 @@ class ApiInterface(metaclass=abc.ABCMeta):
         raise NotImplementedError
 
 
+class Api(ApiInterface):
+    """ Wrapper class to the General API """
+
+    def __init__(self, host: str, username: str, password: str, appcode: str, session: ClientSession):
+        self._api = RusclimatApi(host, username, password, appcode, session)
+
+    async def login(self) -> []:
+        return await self._api.login()
+
+    async def get_data(self) -> []:
+        return await self._api.get_data()
+
+    async def set_device_params(self, uid: str, params: dict) -> bool:
+        return await self._api.set_device_params(uid, params)
+
+
 class RusclimatApi(ApiInterface):
     """ Wrapper class to the Rusclimat API """
 
@@ -72,7 +88,6 @@ class RusclimatApi(ApiInterface):
 
     async def login(self) -> []:
         """Auth on server"""
-
         payload = {
             "login": self._username,
             "password": self._password,
@@ -500,12 +515,159 @@ class TestApi(ApiInterface):
             "curr_scene_dropped": "0",
             "online": "1"
         }
+        convector = {
+            'tempid': '193048',
+            'state': '0',
+            'temp_goal': '23',
+            'temp_goal_day': '23',
+            'temp_goal_night': '19',
+            'power': '6',
+            'mode': '1',
+            'hours': '0',
+            'minutes': '0',
+            'timer': '0',
+            'lock': '0',
+            'online': '1',
+            'current_temp': '19',
+            'led': '0',
+            'error': '0',
+            'type': 'conv',
+            'current_power': '5',
+            'code': '0',
+            'uid': '184656',
+            'mac': 'set',
+            'room': 'Балкон',
+            'sort': '0',
+            'curr_slot': '0',
+            'active_slot': '0',
+            'slop': '0',
+            'curr_scene': '0',
+            'curr_scene_id': '0',
+            'wait_slot': '0',
+            'curr_slot_dropped': '0',
+            'curr_scene_dropped': '0'
+        }
+        smart = {
+            'tempid': '196934',
+            'mode': '1',
+            'current_temp': '36',
+            'temp_goal': '35',
+            'undefined1': '0',
+            'undefined2': '0',
+            'undefined3': '4',
+            'undefined4': '0',
+            'self_clean': '0',
+            'volume': '0',
+            'error': '0',
+            'type': 'smart',
+            'code': '0',
+            'self_clean_state': 'disabled',
+            'timezone': '3',
+            'economy_morning': '0',
+            'economy_evening': '0',
+            'economy_pause': '0',
+            'power_per_h_1': '1300',
+            'power_per_h_2': '2000',
+            'tariff_1': '0',
+            'tariff_2': '0',
+            'tariff_3': '0',
+            'uid': '196934',
+            'mac': 'set',
+            'room': 'Дача',
+            'sort': '0',
+            'clock_hours': '21',
+            'clock_minutes': '03',
+            'curr_slot': '0',
+            'active_slot': '0',
+            'slop': '0',
+            'curr_scene': '0',
+            'curr_scene_id': '0',
+            'wait_slot': '0',
+            'curr_slot_dropped': '0',
+            'curr_scene_dropped': '0',
+            'online': '1'
+        }
+        centurio2 = {
+            'tempid': '188709',
+            'mode': '5',
+            'current_temp': '33',
+            'temp_goal': '35',
+            'timer': '0',
+            'timer_hours': '6',
+            'timer_minutes': '0',
+            'clock_hours': '12',
+            'clock_minutes': '40',
+            'self_clean': '1',
+            'volume': '50',
+            'error': '0',
+            'type': 'centurio2',
+            'code': '0',
+            'economy_morning': '0',
+            'economy_evening': '0',
+            'economy_pause': '0',
+            'power_per_h_1': '700',
+            'power_per_h_2': '1300',
+            'power_per_h_3': '2000',
+            'tariff_1': '0',
+            'tariff_2': '0',
+            'tariff_3': '0',
+            'minutes_diff': '0',
+            'seconds_diff': '0',
+            'timer_hours_store': '0',
+            'timer_minutes_store': '0',
+            'timezone': '3',
+            'uid': '131458',
+            'mac': 'set',
+            'room': 'Водонагреватель',
+            'sort': '0',
+            'curr_slot': '0',
+            'active_slot': '0',
+            'slop': '0',
+            'curr_scene': '0',
+            'curr_scene_id': '0',
+            'wait_slot': '0',
+            'curr_slot_dropped': '0',
+            'curr_scene_dropped': '0',
+            'online': '1'
+        }
+        regency = {
+            'tempid': '197924',
+            'state': '3',
+            'timezone': '0',
+            'current_temp': '39',
+            'temp_goal': '75',
+            'error': '0',
+            'type': 'regency',
+            'code': '0',
+            'uid': '197924',
+            'mac': 'set',
+            'room': 'баня',
+            'sort': '0',
+            'curr_slot': '0',
+            'active_slot': '0',
+            'slop': '0',
+            'curr_scene': '0',
+            'curr_scene_id': '0',
+            'wait_slot': '0',
+            'curr_slot_dropped': '0',
+            'curr_scene_dropped': '0',
+            'clock_hours': '0',
+            'clock_minutes': '47',
+            'timer_hours': '0',
+            'timer_minutes': '0',
+            'self_clean': '1',
+            'online': '1'
+        }
 
         self.devices = [
             floor_1,
             floor_2,
             convector2,
-            centurio
+            centurio,
+            convector,
+            smart,
+            centurio2,
+            regency
         ]
 
     async def login(self) -> []:
@@ -526,6 +688,8 @@ class TestApi(ApiInterface):
     async def set_device_params(self, uid: str, params: dict) -> bool:
         for i, device in enumerate(self.devices):
             if device["uid"] == uid:
+                _LOGGER.debug(f"{uid} update params: {params}")
+
                 for param in params:
                     self.devices[i][param] = params[param]
 

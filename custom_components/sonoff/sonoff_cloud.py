@@ -291,12 +291,19 @@ class EWeLinkCloud(ResponseWaiter, EWeLinkApp):
 
         region = resp['region']
         if region != 'eu':
-            self._baseurl = self._baseurl.replace('eu', region)
+            # Users in Mainland China use: https://cn-api.coolkit.cn:8080
+            # Other regions please use:    https//{region}-api.coolkit.cc:8080
+            self._baseurl = self._baseurl.replace('eu', region) \
+                if region != 'cn' else 'https://cn-api.coolkit.cn:8080/'
             _LOGGER.debug(f"Redirect to region: {region}")
             resp = await self._api('login', 'api/user/login', payload)
 
-        self._apikey = resp['user']['apikey']
-        self._token = resp['at']
+        try:
+            self._apikey = resp['user']['apikey']
+            self._token = resp['at']
+        except:
+            _LOGGER.error(f"Login error: {resp}, region: {region}")
+            return False
 
         return True
 

@@ -19,6 +19,11 @@ try:  # support old Home Assistant version
 except:
     from homeassistant.components.cover import CoverDevice as CoverEntity
 
+try:  # support old Home Assistant version
+    from homeassistant.components.remote import RemoteEntity
+except:
+    from homeassistant.components.remote import RemoteDevice as RemoteEntity
+
 _LOGGER = logging.getLogger(__name__)
 
 
@@ -106,6 +111,9 @@ def guess_device_class(config: dict):
     be displayed as 4 switches.
     """
     uiid = config.get('uiid')
+    # DualR3 in cover mode
+    if uiid == 126 and config.get('params', {}).get('workMode') == 2:
+        return 'cover'
     return UIIDS.get(uiid)
 
 

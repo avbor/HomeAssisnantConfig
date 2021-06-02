@@ -1,0 +1,3 @@
+fetch_state:
+  description: >
+    Fetch the last state of the devices from server.

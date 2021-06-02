@@ -93,7 +93,7 @@ cards:
             name: Питание
             icon: mdi:water-boiler
       - type: "custom:simple-thermostat"
-        entity: climate.boiler_194340
+        entity: climate.centurio_iq_194340
         header: false
 #        header:
 #          name: Centurio IQ 2.0

@@ -1,11 +1,10 @@
 import logging
-from typing import Optional
 
-from homeassistant.components.cover import ATTR_POSITION, ATTR_CURRENT_POSITION
+from homeassistant.components.cover import ATTR_POSITION
 from homeassistant.const import STATE_OPENING, STATE_CLOSING
 
 from . import DOMAIN
-from .sonoff_main import EWeLinkDevice
+from .sonoff_main import EWeLinkEntity
 from .utils import CoverEntity
 
 _LOGGER = logging.getLogger(__name__)
@@ -18,10 +17,14 @@ async def async_setup_platform(hass, config, add_entities,
 
     deviceid = discovery_info['deviceid']
     registry = hass.data[DOMAIN]
-    add_entities([EWeLinkCover(registry, deviceid)])
+    uiid = registry.devices[deviceid].get('uiid')
+    if uiid == 126:
+        add_entities([DualR3Cover(registry, deviceid)])
+    else:
+        add_entities([EWeLinkCover(registry, deviceid)])
 
 
-class EWeLinkCover(CoverEntity, EWeLinkDevice):
+class EWeLinkCover(EWeLinkEntity, CoverEntity):
     """King Art - King Q4 Cover
     switch=on - open
     switch=off - close
@@ -29,9 +32,6 @@ class EWeLinkCover(CoverEntity, EWeLinkDevice):
     """
     _position = None
     _action = None
-
-    async def async_added_to_hass(self) -> None:
-        self._init()
 
     def _update_handler(self, state: dict, attrs: dict):
         self._attrs.update(attrs)
@@ -62,30 +62,6 @@ class EWeLinkCover(CoverEntity, EWeLinkDevice):
                 self._action = None
 
         self.schedule_update_ha_state()
-
-    @property
-    def should_poll(self) -> bool:
-        return False
-
-    @property
-    def unique_id(self) -> Optional[str]:
-        return self.deviceid
-
-    @property
-    def name(self) -> Optional[str]:
-        return self._name
-
-    @property
-    def state_attributes(self):
-        return {
-            **self._attrs,
-            ATTR_CURRENT_POSITION: self.current_cover_position
-        }
-
-    @property
-    def available(self) -> bool:
-        device: dict = self.registry.devices[self.deviceid]
-        return device['available']
 
     @property
     def current_cover_position(self):
@@ -125,3 +101,31 @@ class EWeLinkCover(CoverEntity, EWeLinkDevice):
     async def async_stop_cover(self, **kwargs):
         self._action = None
         await self.registry.send(self.deviceid, {'switch': 'pause'})
+
+
+ACTIONS = [None, STATE_OPENING, STATE_CLOSING]
+
+
+class DualR3Cover(EWeLinkCover):
+    def _update_handler(self, state: dict, attrs: dict):
+        self._attrs.update(attrs)
+        if 'currLocation' in state:
+            # 0 - closed, 100 - opened
+            self._position = state['currLocation']
+        if 'motorTurn' in state:
+            self._action = ACTIONS[state['motorTurn']]
+
+        self.schedule_update_ha_state()
+
+    async def async_open_cover(self, **kwargs):
+        await self.registry.send(self.deviceid, {'motorTurn': 1})
+
+    async def async_close_cover(self, **kwargs):
+        await self.registry.send(self.deviceid, {'motorTurn': 2})
+
+    async def async_set_cover_position(self, **kwargs):
+        position = kwargs.get(ATTR_POSITION)
+        await self.registry.send(self.deviceid, {'location': position})
+
+    async def async_stop_cover(self, **kwargs):
+        await self.registry.send(self.deviceid, {'motorTurn': 0})

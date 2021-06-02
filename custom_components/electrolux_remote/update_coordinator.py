@@ -22,12 +22,15 @@ class Coordinator(DataUpdateCoordinator):
     def __init__(self, hass: HomeAssistant, client: ApiInterface, ) -> None:
         """Initialize."""
         self.api = client
-        self.platforms = []
         super().__init__(hass, _LOGGER, name=DOMAIN, update_interval=SCAN_INTERVAL)
 
     async def _async_update_data(self):
         """Update data via library."""
         try:
-            return await self.api.get_data()
+            data = await self.api.get_data()
+
+            _LOGGER.debug(f"received data: {data}")
+
+            return data
         except Exception as exception:
             raise UpdateFailed() from exception

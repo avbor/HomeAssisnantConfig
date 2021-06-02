@@ -1,6 +1,7 @@
 import datetime
 import logging
 import functools
+import sys
 import time
 from logging import Logger
 
@@ -23,6 +24,7 @@ class SauresHA:
         self._debug = is_debug
         self._last_login_time = datetime.datetime(2000, 1, 1, 1, 1, 1)
         self._last_getMeters_time = datetime.datetime(2000, 1, 1, 1, 1, 1)
+        self._last_getControllers_time = datetime.datetime(2000, 1, 1, 1, 1, 1)
         self._sensors = list()
 
     @property
@@ -52,9 +54,9 @@ class SauresHA:
                 else:
                     bln_return = True
 
-        except Exception:
+        except Exception as e:  # catch *all* exceptions
             if self._debug:
-                _LOGGER.warning(Exception)
+                _LOGGER.warning(str(e))
 
         return bln_return
 
@@ -80,25 +82,25 @@ class SauresHA:
                     'date': date_time
                 }).json()['data']['sensors']
                 self._sensors = sensors
-            except Exception:
+            except Exception as e:  # catch *all* exceptions
                 if self._debug:
-                    _LOGGER.warning(Exception)
+                    _LOGGER.warning(str(e))
 
         return functools.reduce(list.__add__, map(lambda sensor: sensor['meters'], self._sensors))
 
     def get_controllers(self, flat_id):
         now = datetime.datetime.now()
-        period = now - self._last_getMeters_time
+        period = now - self._last_getControllers_time
         if (period.total_seconds() / 60) > 5:
-            self._last_getMeters_time = datetime.datetime.now()
+            self._last_getControllers_time = datetime.datetime.now()
             try:
                 controllers = self.__session.get(f'https://api.saures.ru/1.0/object/meters', params={
                     'id': flat_id,
                     'sid': self._sid
                 }).json()['data']['sensors']
-            except Exception:
+            except Exception as e:
                 if self._debug:
-                    _LOGGER.warning(Exception)
+                    _LOGGER.warning(str(e))
 
             self._sensors = controllers
         return functools.reduce(list.__add__, map(lambda sensor: self._sensors, self._sensors))
@@ -179,11 +181,10 @@ class Controller:
         self.cap_state = bool(data.get('cap_state'))
         self.power_supply = bool(data.get('power_supply'))
 
-
-#if __name__ == "__main__":
-    #s = SauresHA('demo@saures.ru', 'demo')
-    #meter = s.get_flats()
-   # meter = s.get_meter(358, '136661693')
-    # print(meter.data)
-    # controller = s.get_controller(4731, '155100360017')
-    # print(controller.data)
+# if __name__ == "__main__":
+# s = SauresHA('demo@saures.ru', 'demo')
+# meter = s.get_flats()
+# meter = s.get_meter(358, '136661693')
+# print(meter.data)
+# controller = s.get_controller(4731, '155100360017')
+# print(controller.data)
