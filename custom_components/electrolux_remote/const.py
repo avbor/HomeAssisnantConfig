@@ -3,7 +3,7 @@
 NAME = "{{ Electrolux remote }}"
 DOMAIN = "electrolux_remote"
 DOMAIN_DATA = f"{DOMAIN}_data"
-VERSION = "1.0.1"
+VERSION = "2.0.1"
 ISSUE_URL = "https://github.com/Ailme/home_assistant_electrolux_remote/issues"
 
 CONF_APPCODE = "appcode"

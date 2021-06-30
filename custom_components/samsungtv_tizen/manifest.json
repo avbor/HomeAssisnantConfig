@@ -5,7 +5,7 @@
   "requirements": [
     "websocket-client==0.56.0",
     "wakeonlan==1.1.6",
-    "numpy==1.19.2"
+    "numpy==1.20.0"
   ],
   "dependencies": [],
   "codeowners": ["@jaruba"],

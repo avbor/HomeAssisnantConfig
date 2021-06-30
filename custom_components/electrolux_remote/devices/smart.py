@@ -216,7 +216,7 @@ class Smart:
             BaseSwitch(
                 uid=data["uid"],
                 coordinator=coordinator,
-                name=f"Self Clean",
+                name=f"{DEFAULT_NAME} {data['uid']} Self Clean",
                 icon_on="mdi:ghost",
                 icon_off="mdi:ghost-off",
                 device=Smart(),

@@ -33,7 +33,7 @@ class BaseSwitch(CoordinatorEntity, SwitchEntity):
         super().__init__(coordinator)
 
         self._uid = uid
-        self._name = f"{name} {uid}"
+        self._name = name
         self._icon_on = icon_on
         self._icon_off = icon_off
         self._device = device

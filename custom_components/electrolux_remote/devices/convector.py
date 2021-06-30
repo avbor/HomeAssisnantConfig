@@ -182,7 +182,7 @@ class Convector:
             BaseSwitch(
                 uid=data["uid"],
                 coordinator=coordinator,
-                name=f"Led",
+                name=f"{DEFAULT_NAME} {data['uid']} Led",
                 icon_on="mdi:led-on",
                 icon_off="mdi:led-off",
                 device=Convector(),
@@ -195,7 +195,7 @@ class Convector:
             BaseSwitch(
                 uid=data["uid"],
                 coordinator=coordinator,
-                name=f"Lock",
+                name=f"{DEFAULT_NAME} {data['uid']} Lock",
                 icon_on="mdi:lock",
                 icon_off="mdi:lock-open",
                 device=Convector(),
@@ -208,7 +208,7 @@ class Convector:
             BaseSwitch(
                 uid=data["uid"],
                 coordinator=coordinator,
-                name=f"Timer",
+                name=f"{DEFAULT_NAME} {data['uid']} Timer",
                 icon_on="mdi:timer",
                 icon_off="mdi:timer-off",
                 device=Convector(),

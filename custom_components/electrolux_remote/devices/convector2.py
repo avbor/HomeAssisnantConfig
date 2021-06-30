@@ -488,7 +488,7 @@ class Convector2:
             BaseSwitch(
                 uid=data["uid"],
                 coordinator=coordinator,
-                name=f"Led off auto",
+                name=f"{DEFAULT_NAME} {data['uid']} Led off auto",
                 icon_on="mdi:brightness-auto",
                 icon_off="mdi:brightness-auto",
                 device=Convector2(),
@@ -501,7 +501,7 @@ class Convector2:
             BaseSwitch(
                 uid=data["uid"],
                 coordinator=coordinator,
-                name=f"Lcd",
+                name=f"{DEFAULT_NAME} {data['uid']} Lcd",
                 icon_on="mdi:led-on",
                 icon_off="mdi:led-off",
                 device=Convector2(),
@@ -514,7 +514,7 @@ class Convector2:
             BaseSwitch(
                 uid=data["uid"],
                 coordinator=coordinator,
-                name=f"Brightness",
+                name=f"{DEFAULT_NAME} {data['uid']} Brightness",
                 icon_on="mdi:brightness-5",
                 icon_off="mdi:brightness-6",
                 device=Convector2(),
@@ -527,7 +527,7 @@ class Convector2:
             BaseSwitch(
                 uid=data["uid"],
                 coordinator=coordinator,
-                name=f"Window Open",
+                name=f"{DEFAULT_NAME} {data['uid']} Window Open",
                 icon_on="mdi:window-open",
                 icon_off="mdi:window-closed",
                 device=Convector2(),
@@ -540,7 +540,7 @@ class Convector2:
             BaseSwitch(
                 uid=data["uid"],
                 coordinator=coordinator,
-                name=f"Mute",
+                name=f"{DEFAULT_NAME} {data['uid']} Mute",
                 icon_on="mdi:volume-off",
                 icon_off="mdi:volume-high",
                 device=Convector2(),
@@ -553,7 +553,7 @@ class Convector2:
             BaseSwitch(
                 uid=data["uid"],
                 coordinator=coordinator,
-                name=f"Lock",
+                name=f"{DEFAULT_NAME} {data['uid']} Lock",
                 icon_on="mdi:lock",
                 icon_off="mdi:lock-open",
                 device=Convector2(),
@@ -566,7 +566,7 @@ class Convector2:
             BaseSwitch(
                 uid=data["uid"],
                 coordinator=coordinator,
-                name=f"Timer",
+                name=f"{DEFAULT_NAME} {data['uid']} Timer",
                 icon_on="mdi:timer",
                 icon_off="mdi:timer-off",
                 device=Convector2(),

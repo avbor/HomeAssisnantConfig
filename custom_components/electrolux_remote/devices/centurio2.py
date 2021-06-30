@@ -249,7 +249,7 @@ class Centurio2:
             BaseSwitch(
                 uid=data["uid"],
                 coordinator=coordinator,
-                name=f"Bacteria stop system",
+                name=f"{DEFAULT_NAME} {data['uid']} Bacteria stop system",
                 icon_on="mdi:ghost",
                 icon_off="mdi:ghost-off",
                 device=Centurio2(),
@@ -262,14 +262,14 @@ class Centurio2:
             Timer(
                 uid=data["uid"],
                 coordinator=coordinator,
-                name=f"Timer",
+                name=f"{DEFAULT_NAME} {data['uid']} Timer",
                 device=Centurio2(),
             ),
 
             BaseSwitch(
                 uid=data["uid"],
                 coordinator=coordinator,
-                name=f"Economy pause",
+                name=f"{DEFAULT_NAME} {data['uid']} Economy pause",
                 icon_on="mdi:pause",
                 icon_off="mdi:play",
                 device=Centurio2(),
@@ -536,7 +536,7 @@ class Timer(CoordinatorEntity, SwitchEntity):
         super().__init__(coordinator)
 
         self._uid = uid
-        self._name = f"{name} {uid}"
+        self._name = name
         self._icon_on = "mdi:timer"
         self._icon_off = "mdi:timer-off"
         self._device = device

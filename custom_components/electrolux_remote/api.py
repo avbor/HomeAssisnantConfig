@@ -3,6 +3,7 @@
 import logging
 import abc
 import async_timeout
+import time
 
 from aiohttp import ClientSession, ClientError
 from asyncio import TimeoutError, get_event_loop
@@ -31,6 +32,7 @@ API_UPDATE_CALENDAR_SLOTS = "api/setTimeSlot"
 ERROR_INCORRECT_LOGIN_OR_PASSWORD = "106"
 ERROR_INCORRECT_PHONE = "112"  # Слишком короткий номер телефона
 ERROR_TOKEN_NOT_FOUND = "121"  # Токен не найден
+ERROR_WRITE_PARAM_UNAVAILABLE = "130"  # Параметр не доступен для записи: <param>
 ERROR_USER_NOT_FOUND = "136"  # Пользователь не найден
 ERROR_DEVICE_UNAVAILABLE = "153"  # Ошибка - устройство не в сети или неизвестный тип
 
@@ -43,6 +45,7 @@ HEADERS = {
 }
 
 TIMEOUT = 10
+SLEEP = 3
 
 
 class ApiInterface(metaclass=abc.ABCMeta):
@@ -146,38 +149,51 @@ class RusclimatApi(ApiInterface):
         _LOGGER.debug(f"request: {url}")
         _LOGGER.debug(f"payload: {payload}")
 
-        try:
-            async with async_timeout.timeout(TIMEOUT, loop=get_event_loop()):
-                response = await self._session.post(f"{self._host}/{url}", json=payload, headers=HEADERS)
-                json = await response.json()
+        for i in range(0, 3):
+            while True:
+                try:
+                    async with async_timeout.timeout(TIMEOUT, loop=get_event_loop()):
+                        response = await self._session.post(f"{self._host}/{url}", json=payload, headers=HEADERS)
+                        json = await response.json()
 
-                _LOGGER.debug(f"response: {json}")
+                        _LOGGER.debug(f"response: {json}")
 
-                if json is None:
-                    raise InvalidResponse(f"Response error: json is None")
+                        if json is None:
+                            raise InvalidResponse(f"Response error: json is None")
 
-                return json
-        except TimeoutError as exception:
-            _LOGGER.error(
-                "Timeout error fetching information from %s - %s",
-                url,
-                exception,
-            )
+                        return json
+                except TimeoutError as exception:
+                    _LOGGER.error(
+                        "Timeout error fetching information from %s - %s",
+                        url,
+                        exception,
+                    )
 
-        except (KeyError, TypeError) as exception:
-            _LOGGER.error(
-                "Error parsing information from %s - %s",
-                url,
-                exception,
-            )
-        except (ClientError, gaierror) as exception:
-            _LOGGER.error(
-                "Error fetching information from %s - %s",
-                url,
-                exception,
-            )
-        except Exception as exception:  # pylint: disable=broad-except
-            _LOGGER.error("Something really wrong happened! - %s", exception)
+                    time.sleep(SLEEP)
+                    continue
+                except (KeyError, TypeError) as exception:
+                    _LOGGER.error(
+                        "Error parsing information from %s - %s",
+                        url,
+                        exception,
+                    )
+
+                    time.sleep(SLEEP)
+                    continue
+                except (ClientError, gaierror) as exception:
+                    _LOGGER.error(
+                        "Error fetching information from %s - %s",
+                        url,
+                        exception,
+                    )
+
+                    time.sleep(SLEEP)
+                    continue
+                except Exception as exception:  # pylint: disable=broad-except
+                    _LOGGER.error("Something really wrong happened! - %s", exception)
+
+                    time.sleep(SLEEP)
+                    continue
 
     async def _update_device_params(self, params: dict) -> dict:
         if self._token is None:
